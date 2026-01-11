@@ -12,13 +12,14 @@ import com.ctre.phoenix6.swerve.*;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-
+import edu.wpi.first.units.measure.LinearVelocity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class TunerConstants {
     // Check if the "isTestBot" file exists in the deploy directory
     public static final boolean isTestBot = Files.exists(Paths.get("/home/lvuser/deploy/isTestBot"));
 
+    public static final LinearVelocity kSpeedAt12Volts = isTestBot ? TestTunerConstants.kSpeedAt12Volts : ProdTunerConstants.kSpeedAt12Volts;
     public static final SwerveDrivetrainConstants DrivetrainConstants = isTestBot ? TestTunerConstants.DrivetrainConstants : ProdTunerConstants.DrivetrainConstants;
     public static final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> FrontLeft = isTestBot ? TestTunerConstants.FrontLeft :ProdTunerConstants.FrontLeft;
     public static final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> FrontRight = isTestBot ? TestTunerConstants.FrontRight :ProdTunerConstants.FrontRight;    
