@@ -1,0 +1,171 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.lib.utils;
+
+import static edu.wpi.first.units.Units.Celsius;
+import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.Fahrenheit;
+import static edu.wpi.first.units.Units.RPM;
+
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
+
+/** A container to generalize motor controllers */
+public class TalonFxContainer implements MotorContainer{
+    public TalonFX motor;
+    public TalonFXConfiguration configurator;
+    
+    /**
+     * Creates a new TalonFxContainer
+     * @param id the can id of the motor
+     * THIS ASSUMES THE MOTOR IS BRUSHLESS
+     */
+    public TalonFxContainer(int id) {
+        this.motor = new TalonFX(id);
+        this.configurator = new TalonFXConfiguration();
+    }
+
+    private void applyConfig(){
+        this.motor.getConfigurator().apply(this.configurator);
+    }
+
+    /**
+     * Assigns the defualt PID values to the motor assumes P = 0.1, I = 0, D = 0
+     * see also {@link #assignPIDValues(double, double, double)}
+     */
+    @Override
+    public void assignPIDValues() {
+        this.assignPIDValues(0.1, 0, 0);
+    }
+
+    /**
+     * Assigns the PID values to the motor
+     * @param P the P value
+     * @param I the I value
+     * @param D the D value
+     * See also {@link #assignPIDValues()}
+     */
+    @Override
+    public void assignPIDValues(double P, double I, double D) {
+        var slot = configurator.Slot0;
+        slot.kP = P;
+        slot.kI = I;
+        slot.kD = D;
+        this.applyConfig();
+    }
+
+    /**
+     * DO NOT CAL THIS FUNCTION IT WILL CRASH THE ROBOT
+     */
+    @Override
+    public void assignPIDValues(double P, double I, double D, double IZone, double FF, double Min, double Max) {
+        throw new UnsupportedOperationException("TalonFx's does not support IZone, FF, Min, or Max");
+    }
+
+    /**
+     * Assigns this motor to follow another Motor of the same type
+     * * @param leader the motorContainer this should follow (Must be a TalonFXContainer)
+     * * @param invert weither or not this motor should be inverted from the other
+     */
+    @Override
+    public void setupAsFollowerMotor(MotorContainer leader, boolean invert) {
+        if(leader instanceof TalonFxContainer) {
+            TalonFxContainer lead = (TalonFxContainer) leader;
+            this.motor.setControl(
+                new Follower(
+                    lead.motor.getDeviceID(),
+                    invert ? MotorAlignmentValue.Opposed : MotorAlignmentValue.Aligned
+                )
+            );
+        }
+        else {
+            throw new IllegalArgumentException("Leader must be a TalonFX");
+        }
+    }
+    /**
+     * Unimpleted until needed
+     */
+    @Override
+    public void setGearRatio(double gearRatio) {
+        throw new UnsupportedOperationException("Unimplemented method 'setGearRatio'");
+    }
+
+    /**
+     * Sends the motor to a specific position, returns true if it is within the deadband (4 encoder ticks)
+     * @param pos desired postion
+     */
+    @Override
+    public boolean goToPostion(double pos) {
+        return goToPostion(pos, 4);
+    }
+
+
+    /**
+     * Sends the motor to a specific position, returns true if it is within the deadband see also {@link #goToPostion(double)}
+     * @param pos desired postion
+     * @param deadband the deadband to be within, deadband should not be 0 but can be as small as 1
+     */
+    @Override
+    public boolean goToPostion(double pos, int deadband) {
+        var request = new PositionDutyCycle(pos);
+        motor.setControl(request);
+        return motor.getPosition().getValue().isNear(Angle.ofBaseUnits(pos, Degree), deadband);
+    }
+    /**
+     * sets the current limit of the motor
+     */
+    @Override
+    public void setCurrentLimit(double limit) {
+        CurrentLimitsConfigs currentLimitsConfigs = configurator.CurrentLimits;
+        currentLimitsConfigs.SupplyCurrentLimit = limit;
+        currentLimitsConfigs.SupplyCurrentLimitEnable = true;
+        this.applyConfig();
+    }
+
+    /**
+     * Sets the break mode of the motor
+     * @param isBreakMode true for break mode, false for coast mode
+     */
+    @Override
+    public void setBreakMode(boolean isBreakMode) {
+        motor.setNeutralMode(isBreakMode ? NeutralModeValue.Brake : NeutralModeValue.Coast);
+    }
+
+    /**
+     * Gets the temperature of the motor in Celsius
+     */
+    @Override
+    public double getMotorTemperatureInC() {
+        return this.motor.getDeviceTemp().getValue().in(Celsius);        
+    }
+
+    /**
+     * Gets the temperature of the motor in Fahrenheit
+     */
+    @Override
+    public double getMotorTemperatureInF() {
+        return this.motor.getDeviceTemp().getValue().in(Fahrenheit);
+    }
+
+    /**
+     * Reports the motor data to the SmartDashboard
+     * can be paired with a {@link SmartDashboard.isFMSConnected()} for optimization reasons
+     * @param key the key to report the data under
+     */
+    @Override
+    public void reportMotor(String key) {
+        SmartDashboard.putNumber(key + "/Encoder Value", motor.getPosition().getValue().in(Degree));
+        SmartDashboard.putNumber(key + "/Velocity", motor.getVelocity().getValue().in(RPM));
+        SmartDashboard.putNumber(key + "/Current", motor.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber(key + "/Applied Output", motor.getMotorOutputStatus().getValueAsDouble());
+    }}
