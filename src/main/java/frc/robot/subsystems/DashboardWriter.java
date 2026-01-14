@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.generated.TunerConstants;
 
-public class DataSupplier extends SubsystemBase {
+public class DashboardWriter extends SubsystemBase {
   /** Creates a new DataSupplier. */
-  public DataSupplier() {}
+  public DashboardWriter() {}
 
   @Override
   public void periodic() {
