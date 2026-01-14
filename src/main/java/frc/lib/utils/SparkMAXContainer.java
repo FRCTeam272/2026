@@ -254,6 +254,15 @@ public class SparkMAXContainer implements MotorContainer {
     return encoder.getPosition();
   }
 
+  public double getVelocity(){
+    return encoder.getVelocity();
+  }
+
+  public double setVelocity(double velocity){
+    motor.getClosedLoopController().setSetpoint(velocity, ControlType.kVelocity);
+    return velocity;
+  }
+  
   /**
    * Sends information about the motor to SmartDashboard, these calls should be
    * contained in an if(!DriverStation.isFMSAttached()) block to avoid flooding
