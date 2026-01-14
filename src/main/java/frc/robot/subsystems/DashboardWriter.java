@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.generated.TunerConstants;
 
 public class DashboardWriter extends SubsystemBase {
-  /** Creates a new DataSupplier. */
+  /** Creates a new Dashboard Writer. */
   public DashboardWriter() {}
 
   @Override
