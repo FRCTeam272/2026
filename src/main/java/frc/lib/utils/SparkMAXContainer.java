@@ -258,6 +258,10 @@ public class SparkMAXContainer implements MotorContainer {
     return encoder.getPosition();
   }
 
+  /**
+   * gets the velocity of the motor in RPM
+   * @return velocity in RPM
+   */
   public double getVelocity(){
     if(encoder == null){
       DriverStation.reportError("Trying to get velocity of a brushed motor without an encoder", false);
@@ -266,6 +270,11 @@ public class SparkMAXContainer implements MotorContainer {
     return encoder.getVelocity();
   }
 
+  /**
+   * sets the velocity of the motor in RPM
+   * @param velocity desired velocity in RPM
+   * @return the set velocity
+   */
   public double setVelocity(double velocity){
     motor.getClosedLoopController().setSetpoint(velocity, ControlType.kVelocity);
     return velocity;
