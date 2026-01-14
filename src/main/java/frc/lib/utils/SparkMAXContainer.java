@@ -251,10 +251,18 @@ public class SparkMAXContainer implements MotorContainer {
   }
 
   public double getPosition(){
+    if(encoder == null){
+      DriverStation.reportError("Trying to get position of a brushed motor without an encoder", false);
+      return 0;
+    }
     return encoder.getPosition();
   }
 
   public double getVelocity(){
+    if(encoder == null){
+      DriverStation.reportError("Trying to get velocity of a brushed motor without an encoder", false);
+      return 0;
+    }
     return encoder.getVelocity();
   }
 
