@@ -25,12 +25,11 @@ public class DriveBaseContainer {
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
-
-    private final CommandXboxController joystick = new CommandXboxController(0);
-
+    CommandXboxController joystick;
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    public DriveBaseContainer() {
+    public DriveBaseContainer(CommandXboxController driverController) {
+        joystick = driverController;
         configureBindings();
     }
 
