@@ -26,7 +26,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean SpinWheel(double target_velocity){
-    const current_velocity = flywheel.setVelocity(target_velocity);
+    final double current_velocity = flywheel.setVelocity(target_velocity);
     return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
