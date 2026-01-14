@@ -277,7 +277,7 @@ public class SparkMAXContainer implements MotorContainer {
    */
   public double setVelocity(double velocity){
     motor.getClosedLoopController().setSetpoint(velocity, ControlType.kVelocity);
-    return velocity;
+    return this.getVelocity();
   }
   
   /**
