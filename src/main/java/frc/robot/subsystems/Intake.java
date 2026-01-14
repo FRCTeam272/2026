@@ -9,19 +9,24 @@ import frc.lib.utils.SparkMAXContainer;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
+  SparkMAXContainer motor;
+  public final int intake_id = 1;
+  public final double set_speed = .5;
+
   public Intake() {
-    Motor= new SparkMAXContainer(1)
+    motor= new SparkMAXContainer(intake_id);
   }
-SparkMAXContainer Motor;
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  
+  public void intake() {
+    motor.motor.set(set_speed);
   }
 
-  public void intake() {
-    Motor.motor.set(.5);
+  public void release() {
+    motor.motor.set(-set_speed);
   }
-public void release() {
-  Motor.motor.set(-.5);
-}
+  
+  @Override
+  public void periodic() {
+    motor.reportMotor("Intake");
+  }
 }
