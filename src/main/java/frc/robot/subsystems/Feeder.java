@@ -8,18 +8,23 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
 
-public class Feeder extends SubsystemBase {
+public class Feeder extends SubsystemBase { 
+  SparkMAXContainer motor;
+  int motorPort = 7;
   /** Creates a new Feeder. */
   public Feeder() {
-    Motor = new SparkMAXContainer(7);
+    motor = new SparkMAXContainer(motorPort);
+
   }
 
-  SparkMAXContainer Motor;
+  public void stop() {
+    motor.motor.set(0);
+
+  }
+
   public void PushForward(){
-    Motor.goToPostion(0);
+    motor.motor.set(.5);
   }
-  
-
 
   @Override
   public void periodic() {
