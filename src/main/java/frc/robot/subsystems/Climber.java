@@ -8,23 +8,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
 
 public class Climber extends SubsystemBase {
+  SparkMAXContainer motor;
+  int port = 3;
+  double speedup = 0.5;
+  double speeddown = -0.5;
   /** Creates a new Climber. */
   public Climber() {
-    Motor = new SparkMAXContainer(3)
-    Motor = new SparkMAXContainer(2)
+    motor = new SparkMAXContainer(port);
   }
-SparkMAXContainer Motor;
   @Override
   public void periodic() {
+    motor.reportMotor("Climber");
     // This method will be called once per scheduler run
   }
 
   public void climbup() {
-    Motor.motor.set(.5);
+    motor.motor.set(speedup);
   }
 
   public void climbdown() {
-    Motor.motor.set(-0.5);
+    motor.motor.set(speeddown);
   }
 
   
