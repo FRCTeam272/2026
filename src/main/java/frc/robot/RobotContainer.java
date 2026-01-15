@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.drivetrain.AlignToHub;
 import frc.robot.sub_containers.DriveBaseContainer;
 import frc.robot.subsystems.DashboardWriter;
 
@@ -26,7 +27,7 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        
+        driverController.leftTrigger().onTrue(new AlignToHub(driveBaseContainer.drivetrain, driverController));
     }
 
     public Command getAutonomousCommand() {

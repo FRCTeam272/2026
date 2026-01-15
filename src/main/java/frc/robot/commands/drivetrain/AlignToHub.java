@@ -6,18 +6,21 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import java.util.function.DoubleSupplier;
+import edu.wpi.first.wpilibj.DriverStation;
+
 
 public class AlignToHub extends Command {
     private final CommandSwerveDrivetrain m_drivetrain;
     private final DoubleSupplier m_translationXSupplier;
     private final DoubleSupplier m_translationYSupplier;
     
-    // Coordinates of the Hub (Update these based on the specific game year/field)
-    // Example: 2022 Hub was roughly at (8.22, 4.11)
-    private static final Translation2d kHubCenter = new Translation2d(8.22, 4.11); 
+    private static final Translation2d kHubCenter = DriverStation.getAlliance().equals(DriverStation.Alliance.Red) ? 
+    new Translation2d(12.22, 4.027) :
+    new Translation2d(4.69, 4.02); 
 
     // Rotation PID Controller
     // Tune these values: kP, kI, kD
@@ -55,6 +58,14 @@ public class AlignToHub extends Command {
         m_rotationController.setTolerance(Math.toRadians(1.0));
 
         addRequirements(drivetrain);
+    }
+
+    public AlignToHub(CommandSwerveDrivetrain drivetrain, CommandXboxController controller){
+        this(
+            drivetrain, 
+            () -> controller.getLeftX(), 
+            () -> controller.getLeftY()           
+        );
     }
 
     @Override
