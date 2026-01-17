@@ -28,6 +28,7 @@ public class DriveBaseContainer {
 
     public DriveBaseContainer(CommandXboxController driverController) {
         joystick = driverController;
+        
         configureBindings();
     }
 

@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -23,6 +26,12 @@ public class RobotContainer {
 
     public RobotContainer() {
         driveBaseContainer = new DriveBaseContainer(driverController);
+        driveBaseContainer.drivetrain.resetPose(
+            new Pose2d(
+                new Translation2d(2.299, 3.913),
+                new Rotation2d()
+            )
+        );
         configureBindings();
     }
 
