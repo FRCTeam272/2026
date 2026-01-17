@@ -12,6 +12,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AlignToHub extends Command {
     private final CommandSwerveDrivetrain m_drivetrain;
@@ -28,8 +29,6 @@ public class AlignToHub extends Command {
                     Math.PI * 8 // Max acceleration (rad/s^2)
             ));
 
-    // The request to apply to the swerve
-    private final SwerveRequest.FieldCentricFacingAngle m_driveRequest = new SwerveRequest.FieldCentricFacingAngle();
 
     /**
      * Creates a new AlignToHub command.
@@ -51,7 +50,7 @@ public class AlignToHub extends Command {
         m_rotationController.enableContinuousInput(-Math.PI, Math.PI);
 
         // Tolerance for when we consider ourselves "aligned"
-        m_rotationController.setTolerance(Math.toRadians(1.0));
+        m_rotationController.setTolerance(Math.toRadians(.1));
 
         kHubCenter = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
                 ? new Translation2d(12.22, 4.027)
@@ -72,18 +71,32 @@ public class AlignToHub extends Command {
     public void execute() {
         // 1. Get current robot pose
         Pose2d currentPose = m_drivetrain.getState().Pose;
+        double currentRotationRadians = currentPose.getRotation().getRadians();
 
         // 2. Calculate the angle to the hub
         // Math.atan2(dy, dx) gives the angle from the robot to the target
         double dx = kHubCenter.getX() - currentPose.getX();
         double dy = kHubCenter.getY() - currentPose.getY();
         Rotation2d targetAngle = new Rotation2d(Math.atan2(dy, dx));
+        double targetRotationRadians = targetAngle.getRadians();
+        
+        SmartDashboard.putString("Align/TargetAngle", targetAngle.toString());
+        SmartDashboard.putString("Align/Current", currentPose.getRotation().toString());
+        
+        double rotationSpeed = m_rotationController.calculate(
+            currentRotationRadians, 
+            targetRotationRadians
+        );
 
-        m_drivetrain.setControl(
-                m_driveRequest
-                        .withVelocityX(DriveBaseContainer.speedFactor * m_translationXSupplier.getAsDouble())
-                        .withVelocityY(DriveBaseContainer.speedFactor * m_translationYSupplier.getAsDouble())
-                        .withTargetDirection(targetAngle));
+        final double controlledX = m_translationXSupplier.getAsDouble() * DriveBaseContainer.speedFactor;
+        final double controlledY = m_translationYSupplier.getAsDouble() * DriveBaseContainer.speedFactor;
+
+        m_drivetrain.drive(
+            controlledX, 
+            controlledY, 
+            rotationSpeed,
+            true
+        );
     }
 
     @Override

@@ -36,7 +36,11 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        driverController.leftTrigger().onTrue(new AlignToHub(driveBaseContainer.drivetrain, driverController));
+        driverController.leftTrigger().onTrue(
+            new AlignToHub(driveBaseContainer.drivetrain, driverController)
+        ).onFalse(
+            driveBaseContainer.driveHider()
+        );
     }
 
     public Command getAutonomousCommand() {
