@@ -47,6 +47,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective = false;
 
+    private VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
     // private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
@@ -243,7 +245,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
         SmartDashboard.putData("Field", m_field);
         m_field.setRobotPose(this.getState().Pose);
+        
 
+        m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
+            this.addVisionMeasurement(
+                measurement.pose(),
+                measurement.timestamp(),
+                measurement.stdDevs()
+            );
+        });
     }
     private final Field2d m_field = new Field2d();
 

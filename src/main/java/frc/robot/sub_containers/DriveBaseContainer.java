@@ -14,8 +14,8 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class DriveBaseContainer {
     
-    public static double speedFactor = .1;
-    public static double rotationFactor = .1;
+    public static double speedFactor = .5;
+    public static double rotationFactor = .5;
     
     static {
         edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber("Speed Factor", speedFactor);

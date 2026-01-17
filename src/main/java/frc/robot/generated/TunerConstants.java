@@ -12,7 +12,6 @@ import com.ctre.phoenix6.swerve.*;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
-import edu.wpi.first.units.LinearVelocityUnit;
 import edu.wpi.first.units.measure.LinearVelocity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
