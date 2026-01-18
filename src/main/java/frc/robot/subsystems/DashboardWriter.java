@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.swerve.jni.SwerveJNI.DriveState;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,21 +16,24 @@ import frc.robot.sub_containers.DriveBaseContainer;
 public class DashboardWriter extends SubsystemBase {
   /** Creates a new Dashboard Writer. */
   private Alliance autoWinner;
-  private boolean isOurTurnShooting;
+  private boolean isOurTurnShooting = true;
 
   private final int[][] WINNER_SHOOT_TIMES = new int[][] {
     // start sec, end sec
-    {timeToInt("1:45"), timeToInt("1:20")},  // Period Two
-    {timeToInt("0:55"), timeToInt("0:00")}   // Period Four
+    {timeToInt("1:20"), timeToInt("1:45")},  // TWO SHIFT
+    {timeToInt("0:30"), timeToInt("0:55")}   // FOUR SHIFT
   };
 
   private final int[][] EVERYONE_SHOOT_TIMES = new int[][] {
     // start sec, end sec
-    {timeToInt("2:20"), timeToInt("2:10")},  // Period One
-    {timeToInt("0:55"), timeToInt("0:30")},  // Period Three
+    {timeToInt("2:10"), timeToInt("2:20")},  // TRANSITION SHIFT
+    {timeToInt("0:30"), timeToInt("0:00")},  // END GAME SHIFT
   };
   
-  public DashboardWriter() {}
+  public DashboardWriter() {
+    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Is Production", TunerConstants.isTestBot ? 0 : 1);
+  }
 
   private void updateAutoWinner() {
     var gameData = DriverStation.getGameSpecificMessage();
@@ -54,18 +59,18 @@ public class DashboardWriter extends SubsystemBase {
     return time >= start && time <= end;
   }
 
-  private boolean updateOurTurnShootingProd(){
+  private boolean updateOurTurnShooting(){
     var ourAlliance = DriverStation.getAlliance().get();
-    var time = DriverStation.getMatchTime();
+    var time = (int)DriverStation.getMatchTime();
     
     for (int[] values : EVERYONE_SHOOT_TIMES) {
-      if (isBetween((int)time, values[0], values[1])) {
+      if (isBetween(time, values[0], values[1])) {
         return true;
       }
     }
 
     for (int[] values : WINNER_SHOOT_TIMES) {
-      if (isBetween((int)time, values[0], values[1])) {
+      if (isBetween(time, values[0], values[1])) {
         return ourAlliance == autoWinner;
       }
     }
@@ -75,21 +80,20 @@ public class DashboardWriter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Is Production", TunerConstants.isTestBot ? 0 : 1);
+    // only allow for these to be managed when not connected to FMS
+    if(!DriverStation.isFMSAttached()){
+      double newSpeed = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Speed Factor", DriveBaseContainer.speedFactor);
+      DriveBaseContainer.speedFactor = Math.max(-1.0, Math.min(1.0, newSpeed));
+      
+      double newRotation = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Rotation Factor", DriveBaseContainer.rotationFactor);
+      DriveBaseContainer.rotationFactor = Math.max(-1.0, Math.min(1.0, newRotation));
+    }
 
-    double newSpeed = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Speed Factor", DriveBaseContainer.speedFactor);
-    DriveBaseContainer.speedFactor = Math.max(-1.0, Math.min(1.0, newSpeed));
-    
-    double newRotation = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Rotation Factor", DriveBaseContainer.rotationFactor);
-    DriveBaseContainer.rotationFactor = Math.max(-1.0, Math.min(1.0, newRotation));
+    // only run these checks if we are in teleop and connected to FMS
+    if(DriverStation.isFMSAttached() && DriverStation.isTeleop()){
+      if (autoWinner == null) updateAutoWinner();
 
-    if (autoWinner == null) updateAutoWinner();
-
-    if(DriverStation.isTeleop()){
-      // match time counts up in home mode, down in production mode
-      // if (DriverStation.isFMSAttached()) 
-        isOurTurnShooting = updateOurTurnShootingProd();
+      isOurTurnShooting = updateOurTurnShooting();
     }
 
     SmartDashboard.putBoolean("Is Our Turn Shooting", isOurTurnShooting);
