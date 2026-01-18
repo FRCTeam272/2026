@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.intake.IntakeDeploy;
 import frc.robot.commands.intake.IntakeIntake;
+import frc.robot.commands.intake.IntakeRetract;
 import frc.robot.commands.intake.IntakeStop;
 import frc.robot.sub_containers.DriveBaseContainer;
 import frc.robot.subsystems.DashboardWriter;
@@ -31,7 +33,9 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        driverController.a().onTrue(new IntakeIntake(intake)).onFalse(new IntakeStop(intake));
+        // driverController.a().onTrue(new IntakeIntake(intake)).onFalse(new IntakeStop(intake));
+        driverController.a().onTrue(new IntakeDeploy(intake));
+        driverController.b().onTrue(new IntakeRetract(intake));
         
     }
 

@@ -9,27 +9,42 @@ import frc.lib.utils.SparkMAXContainer;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
-  SparkMAXContainer motor;
+  SparkMAXContainer rollerMotor;
+  SparkMAXContainer deployMotor;
   public final int intake_id = 1;
+  public final int deploy_id = 2;
   public final double defult_speed = .5;
 
+  public final double deploy_position = 10.0;
+  public final double retract_postion = 0; 
+
   public Intake() {
-    motor= new SparkMAXContainer(intake_id);
+    rollerMotor= new SparkMAXContainer(intake_id);
+    deployMotor = new SparkMAXContainer(deploy_id);
   }
   
   public void intake() {
-    motor.motor.set(defult_speed);
+    rollerMotor.motor.set(defult_speed);
   }
 
   public void release() {
-    motor.motor.set(-defult_speed);
+    rollerMotor.motor.set(-defult_speed);
   }
   
   public void stop() {
-    motor.motor.set(0);
+    rollerMotor.motor.set(0);
   }
+
+  public void deploy() {
+    deployMotor.goToPostion(deploy_position);
+  }
+
+  public void retract() {
+    deployMotor.goToPostion(retract_postion);
+  }
+  
   @Override
   public void periodic() {
-    motor.reportMotor("Intake");
+    rollerMotor.reportMotor("Intake");
   }
 }
