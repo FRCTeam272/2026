@@ -88,8 +88,8 @@ public class AlignToHub extends Command {
             targetRotationRadians
         );
 
-        final double controlledX = m_translationXSupplier.getAsDouble() * DriveBaseContainer.speedFactor;
-        final double controlledY = m_translationYSupplier.getAsDouble() * DriveBaseContainer.speedFactor;
+        final double controlledX = m_translationXSupplier.getAsDouble() * DriveBaseContainer.MaxSpeed.getAsDouble();
+        final double controlledY = m_translationYSupplier.getAsDouble() * DriveBaseContainer.MaxSpeed.getAsDouble();
 
         m_drivetrain.drive(
             controlledX, 
