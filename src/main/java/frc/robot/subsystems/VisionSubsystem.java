@@ -145,7 +145,9 @@ public class VisionSubsystem extends SubsystemBase {
 
         // 3. Update estimator with this specific result
         // This prevents race conditions where we might get a different result for stdDevs
-        return estimator.update(result).map(estimatedRobotPose -> {
+        // we may need to optimize the estimator type 
+        // https://javadocs.photonvision.org/release/org/photonvision/estimation/VisionEstimation.html
+        return estimator.estimateCoprocMultiTagPose(result).map(estimatedRobotPose -> {
             Pose2d estPose = estimatedRobotPose.estimatedPose.toPose2d();
             double timestamp = estimatedRobotPose.timestampSeconds;
             
