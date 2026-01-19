@@ -33,9 +33,9 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        // driverController.a().onTrue(new IntakeIntake(intake)).onFalse(new IntakeStop(intake));
-        driverController.a().onTrue(new IntakeDeploy(intake));
-        driverController.b().onTrue(new IntakeRetract(intake));
+        driverController.a().onTrue(new IntakeIntake(intake)).onFalse(new IntakeStop(intake));
+        // driverController.a().onTrue(new IntakeDeploy(intake));
+        // driverController.b().onTrue(new IntakeRetract(intake));
         
     }
 
