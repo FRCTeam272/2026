@@ -11,8 +11,8 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   SparkMAXContainer rollerMotor;
   SparkMAXContainer deployMotor;
-  public final int intake_id = 1;
-  public final int deploy_id = 2;
+  public final int intake_id = 2;
+  public final int deploy_id = 3;
   public final double defult_speed = .5;
 
   public final double deploy_position = 10.0;
