@@ -14,8 +14,8 @@ public class Shooter extends SubsystemBase {
   SparkMAXContainer flywheel;
   SparkMAXContainer hood;
 
-  final int FLYWHEEL_LOCATION = 2;
-  final int HOOD_LOCATION = 3;
+  final int FLYWHEEL_LOCATION = 4;
+  final int HOOD_LOCATION = 5;
 
   int speedThreshold = 50;
   int angleThreshold = 2;
