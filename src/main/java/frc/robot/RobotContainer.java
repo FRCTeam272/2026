@@ -39,10 +39,10 @@ public class RobotContainer {
         driverController.leftTrigger().onTrue(
             new AlignToHub(driveBaseContainer.drivetrain, driverController)
         ).onFalse(
-            driveBaseContainer.driveHider()
+            Commands.runOnce(() -> driveBaseContainer.driveHider())
         );
     }
-
+    
     public Command getAutonomousCommand() {
         return Commands.none();
     }
