@@ -28,11 +28,10 @@ public interface MotorContainer {
      * @param I     the I value
      * @param D     the D value
      * @param IZone the IZone value
-     * @param FF    the FF value
      * @param Min   the Min value
      * @param Max   the Max value
      */
-    public void assignPIDValues(double P, double I, double D, double IZone, double FF, double Min, double Max);
+    public void assignPIDValues(double P, double I, double D, double IZone, double Min, double Max);
 
     /**
      * Assigns this motor to follow another Motor of the same type

@@ -75,7 +75,7 @@ public class SparkMAXContainer implements MotorContainer {
    */
   @Override
   public void assignPIDValues() {
-    assignPIDValues(0.1, 0, 0, 0, 0, -1, 1);
+    assignPIDValues(0.1, 0, 0, 0, -1, 1);
   }
 
   /**
@@ -87,7 +87,26 @@ public class SparkMAXContainer implements MotorContainer {
    */
   @Override
   public void assignPIDValues(double P, double I, double D) {
-    assignPIDValues(P, I, D, 0, 0, -1, 1);
+    assignPIDValues(P, I, D, 0, -1, 1);
+  }
+
+  /**
+  * @param kS UNITS: Volts
+  * @param kV UNITS:Volts per velocity, DESC: Volts per motor RPM by default
+  * @param kA UNITS:Volts per velocity/s, DESC: Volts per motor RPM/s by default
+  * @param kG UNITS:Volts, DESC Elevator/linear mechanism gravity feedforward
+  * @param kCos UNITS:Volts, DESC Arm/rotary mechanism gravity feedforward. Feedback sensor must be configured to 0 = horizontal
+  * @paramCosRatio UNITS: Ratio, Converts feedback sensor readings to mechanism rotations
+  * @see https://docs.revrobotics.com/revlib/spark/closed-loop/feed-forward-control
+  */ 
+  public void assignFeedForwardValues(double kS, double kV, double kA, double kG, double kCos, double kCosRatio){
+    config.closedLoop.feedForward.kA(kA).kV(kV).kA(kA).kG(kG).kCos(kCos).kCosRatio(kCosRatio);
+    motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+  }
+
+  public void assignFeedForwardValuesForVelocity(double kV){
+    this.assignFeedForwardValues(0, kV, 0, 0, 0, 0);
+    motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
   /**
@@ -99,7 +118,6 @@ public class SparkMAXContainer implements MotorContainer {
    * @param I     the I value
    * @param D     the D value
    * @param IZone the IZone value
-   * @param FF    the FF value
    * @param Min   the Min value
    * @param Max   the Max value
    */
@@ -109,7 +127,6 @@ public class SparkMAXContainer implements MotorContainer {
       double I,
       double D,
       double IZone,
-      double FF,
       double Min,
       double Max) {
     // this.pid = PIDAssigner.assignPIDValues(pid, P, I, D, IZone, FF, Min, Max,
@@ -118,15 +135,11 @@ public class SparkMAXContainer implements MotorContainer {
     config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         .pid(P, I, D)
         .iZone(IZone)
-        .outputRange(Min, Max)
-        .feedForward.kV(FF);
+        .outputRange(Min, Max);
 
     motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
-  public void assignPIDValues(double p, double i, double d, double ff){
-    this.assignPIDValues(p, i, d, 0, ff, -1, 1);
-  }
 
   /**
    * Assigns this motor to follow another SparkMaxContainer
