@@ -36,3 +36,8 @@ flyweel radius: ??
 flyweel weight: ??
 
 flyweel shooter ratio: ??
+
+### Feedback Gains with sources
+Loop Time: 20 ms ([src](https://docs.revrobotics.com/revlib/spark/sim/simulation-getting-started))
+
+Measurment Delay: 32 ms ([src](https://www.chiefdelphi.com/t/split-thread-spark-max-speed-feedback-control/418107/6?u=gadzygadz))
