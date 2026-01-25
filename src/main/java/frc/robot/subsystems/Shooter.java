@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
@@ -33,6 +34,12 @@ public class Shooter extends SubsystemBase {
     
     hood = new SparkMAXContainer(HOOD_LOCATION);  
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
+
+    SmartDashboard.putNumber("Shooter/P", shooterPID.kP);
+    SmartDashboard.putNumber("Shooter/I", shooterPID.kI);
+    SmartDashboard.putNumber("Shooter/D", shooterPID.kD);
+    SmartDashboard.putNumber("Shooter/kV", shooterPID.kV);
+    SmartDashboard.putNumber("Shooter/kA", shooterPID.kA);
   }
 
   public boolean SpinWheel(double target_velocity){
@@ -51,10 +58,31 @@ public class Shooter extends SubsystemBase {
     return hood.goToPostion(target_angle, angleThreshold);
   }
 
+  private void dynamicPID(double kP, double kI, double kD){
+    flywheel.assignPIDValues(kP, kI, kD);
+  }
+  
+  private void dynamicFeedForward(double kV, double kA){
+    flywheel.assignFeedForward(kV, kA);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     targetVelocity = SmartDashboard.getNumber("FlyWheel/TargetVelocity", targetVelocity);
     SmartDashboard.putNumber("FlyWheel/CurrentVelocity", flywheel.getVelocity());
+
+    // If we aren't connected to FMS, allow for dynamic PID tuning
+    if(!DriverStation.isFMSAttached()){
+      final double p = SmartDashboard.getNumber("Shooter/P", shooterPID.kP);
+      final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
+      final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
+      final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
+      final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);
+      
+      dynamicPID(p, i, d);
+      dynamicFeedForward(v, a);
+    }
+    
   }
 }
