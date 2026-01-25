@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.hal.HAL.SimPeriodicAfterCallback;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
@@ -33,12 +32,15 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean SpinWheel(double target_velocity){
-    if(target_velocity > 0) target_velocity = -target_velocity;
-    flywheel.motor.set(target_velocity);
-    return true;
     // if(target_velocity > 0) target_velocity = -target_velocity;
-    // final double current_velocity = flywheel.setVelocity(target_velocity);
-    // return Math.abs(current_velocity - target_velocity) < speedThreshold;
+    // flywheel.motor.set(target_velocity);
+    // return true;
+    
+    // forces flywheel to be negative
+    if(target_velocity > 0) target_velocity = -target_velocity;
+    
+    final double current_velocity = flywheel.setVelocity(target_velocity);
+    return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
   public boolean AdjustHood(double target_angle){
