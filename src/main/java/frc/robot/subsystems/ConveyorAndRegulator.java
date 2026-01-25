@@ -13,6 +13,8 @@ import frc.lib.utils.PIDSettings;
 
 public class ConveyorAndRegulator extends SubsystemBase {
   /** Creates a new Conveyor. */
+  public boolean ConveryorUsePID = true;
+  public boolean RegulatorUsePID = true;
   public SparkMAXContainer conveyorMotor;
   public SparkMAXContainer regulatorMotor;
 
@@ -22,11 +24,11 @@ public class ConveyorAndRegulator extends SubsystemBase {
   private static PIDSettings conveyorPID = Constants.CONVEYOR_PID_SETTINGS;
   private static PIDSettings regulatorPID = Constants.REGULATOR_PID_SETTINGS;
 
-  // private double converyorSpeed = -.75;
-  // private double regulatorSpeed = .99;
+  private double converyorVoltage = -.75;
+  private double regulatorVoltage = .99;
   
-  private double converyorSpeed = -1500;
-  private double regulatorSpeed = 1500;
+  private double converyorVelocity = -1500;
+  private double regulatorVelocity = 1500;
   
 
   public ConveyorAndRegulator() {
@@ -37,24 +39,36 @@ public class ConveyorAndRegulator extends SubsystemBase {
     regulatorMotor.assignPIDValues(regulatorPID.kP, regulatorPID.kI, regulatorPID.kD);  
 
 
-    SmartDashboard.putNumber("Conveyor/Speed", converyorSpeed);
-    SmartDashboard.putNumber("Regulator/Speed", regulatorSpeed);
+    SmartDashboard.putNumber("Conveyor/Velocity", converyorVelocity);
+    SmartDashboard.putNumber("Conveyor/Voltage", converyorVoltage);
+    SmartDashboard.putNumber("Regulator/Velocity", regulatorVelocity);
+    SmartDashboard.putNumber("Regulator/Voltage", regulatorVoltage);
+
     SmartDashboard.putNumber("Conveyor/P", conveyorPID.kP);
     SmartDashboard.putNumber("Conveyor/I", conveyorPID.kI);
     SmartDashboard.putNumber("Conveyor/D", conveyorPID.kD);
     SmartDashboard.putNumber("Regulator/P", regulatorPID.kP);
     SmartDashboard.putNumber("Regulator/I", regulatorPID.kI);
     SmartDashboard.putNumber("Regulator/D", regulatorPID.kD);
+
+    SmartDashboard.putBoolean("Conveyor/UsePID", ConveryorUsePID);
   }
 
   public void conveyorLoad() {
-    conveyorMotor.setVelocity(converyorSpeed);
-    // conveyorMotor.motor.set(converyorSpeed);
+    if (ConveryorUsePID) {
+      conveyorMotor.setVelocity(converyorVelocity);
+    }
+     else {
+      conveyorMotor.motor.set(converyorVoltage);
+    }
   }
 
   public void conveyorUnload() {
-    conveyorMotor.setVelocity(-converyorSpeed);
-    // conveyorMotor.motor.set(-converyorSpeed);
+    if (ConveryorUsePID) {
+      conveyorMotor.setVelocity(-converyorVelocity);
+    } else {
+      conveyorMotor.motor.set(-converyorVoltage);
+    }
   }
 
   public void stopConveyor() {
@@ -62,13 +76,19 @@ public class ConveyorAndRegulator extends SubsystemBase {
   }
   
   public void regulatorLoad() {
-    regulatorMotor.setVelocity(regulatorSpeed);
-    // regulatorMotor.motor.set(regulatorSpeed);
+    if (RegulatorUsePID) {
+      regulatorMotor.setVelocity(regulatorVelocity);
+    } else {
+      regulatorMotor.motor.set(regulatorVoltage);
+    }
   }
 
   public void regulatorUnload() {
-    regulatorMotor.setVelocity(-regulatorSpeed);
-    // regulatorMotor.motor.set(-regulatorSpeed);
+    if (RegulatorUsePID) {
+      regulatorMotor.setVelocity(-regulatorVelocity);
+    } else {
+      regulatorMotor.motor.set(-regulatorVoltage);
+    }
   }
 
   public void stopRegulator() {
@@ -113,8 +133,13 @@ public class ConveyorAndRegulator extends SubsystemBase {
       dynamicConveyorPID(p, i, d);
       dynamicRegulatorPID(rp, ri, rd);
 
-      this.converyorSpeed = SmartDashboard.getNumber("Conveyor/Speed", converyorSpeed);
-      this.regulatorSpeed = SmartDashboard.getNumber("Regulator/Speed", regulatorSpeed);
+      this.converyorVelocity = SmartDashboard.getNumber("Conveyor/Velocity", converyorVelocity);
+      this.regulatorVelocity = SmartDashboard.getNumber("Regulator/Velocity", regulatorVelocity);
+      this.converyorVoltage = SmartDashboard.getNumber("Conveyor/Voltage", converyorVoltage);
+      this.regulatorVoltage = SmartDashboard.getNumber("Regulator/Voltage", regulatorVoltage);
+
+      this.ConveryorUsePID = SmartDashboard.getBoolean("Conveyor/UsePID", ConveryorUsePID);
+      this.RegulatorUsePID = SmartDashboard.getBoolean("Regulator/UsePID", RegulatorUsePID);
     }
     
   }
