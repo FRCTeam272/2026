@@ -87,7 +87,8 @@ public class SparkMAXContainer implements MotorContainer {
    */
   @Override
   public void assignPIDValues(double P, double I, double D) {
-    assignPIDValues(P, I, D, 0, 0, -1, 1);
+    config.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(P, I, D);
+    motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
   public void assignFeedForward(double kV, double kA){
