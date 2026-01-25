@@ -6,11 +6,13 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.sub_containers.DriveBaseContainer;
 import frc.robot.subsystems.DashboardWriter;
+import frc.robot.subsystems.ConveyorAndRegulator;
 import frc.robot.subsystems.Shooter;
 
 public class RobotContainer {
@@ -19,6 +21,7 @@ public class RobotContainer {
     // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     public final Shooter shooter = new Shooter();
+    public final ConveyorAndRegulator regulator = new ConveyorAndRegulator();
 
     // Controllers
     private final CommandXboxController driverController = new CommandXboxController(0);
@@ -29,7 +32,17 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        driverController.rightTrigger().whileTrue(new ShooterShoot(shooter, ()  -> 3000)).onFalse(new ShooterStop(shooter));
+        driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
+                // .onFalse(new InstantCommand(() -> shooter.SpinWheel(0)));
+        
+        driverController.b().onTrue(new InstantCommand(() -> {
+            shooter.SpinWheel(0);
+            regulator.stopConveyor();
+            regulator.stopRegulator();
+        })).onFalse(new InstantCommand());
+
+        driverController.a().onTrue(new InstantCommand(() -> regulator.conveyorLoad()));
+        driverController.x().onTrue(new InstantCommand(() -> regulator.regulatorLoad()));
     }
 
     public Command getAutonomousCommand() {

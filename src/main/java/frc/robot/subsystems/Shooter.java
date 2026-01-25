@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.hal.HAL.SimPeriodicAfterCallback;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
 
@@ -20,14 +22,23 @@ public class Shooter extends SubsystemBase {
   int speedThreshold = 50;
   int angleThreshold = 2;
 
+  public double targetVelocity = 3000;
+
   public Shooter() {
     flywheel = new SparkMAXContainer(FLYWHEEL_LOCATION);
+    flywheel.assignPIDValues(0.03, 0, 0);
+    flywheel.assignFeedForward(.01, .01);
     hood = new SparkMAXContainer(HOOD_LOCATION);  
+    SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
   }
 
   public boolean SpinWheel(double target_velocity){
-    final double current_velocity = flywheel.setVelocity(target_velocity);
-    return Math.abs(current_velocity - target_velocity) < speedThreshold;
+    if(target_velocity > 0) target_velocity = -target_velocity;
+    flywheel.motor.set(target_velocity);
+    return true;
+    // if(target_velocity > 0) target_velocity = -target_velocity;
+    // final double current_velocity = flywheel.setVelocity(target_velocity);
+    // return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
   public boolean AdjustHood(double target_angle){
@@ -37,5 +48,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    targetVelocity = SmartDashboard.getNumber("FlyWheel/TargetVelocity", targetVelocity);
+    SmartDashboard.putNumber("FlyWheel/CurrentVelocity", flywheel.getVelocity());
   }
 }

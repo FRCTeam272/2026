@@ -90,6 +90,11 @@ public class SparkMAXContainer implements MotorContainer {
     assignPIDValues(P, I, D, 0, 0, -1, 1);
   }
 
+  public void assignFeedForward(double kV, double kA){
+    config.closedLoop.feedForward.kV(kV).kA(kA);
+    motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+  }
+
   /**
    * Assigns the PID values to the motor see also
    * {@link #assignPIDValues(double, double, double)} and
