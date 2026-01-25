@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
+import frc.robot.Constants;
+import frc.lib.utils.PIDSettings;
 
 
 public class Shooter extends SubsystemBase {
@@ -17,7 +19,7 @@ public class Shooter extends SubsystemBase {
 
   final int FLYWHEEL_LOCATION = 4;
   final int HOOD_LOCATION = 5;
-
+  final PIDSettings shooterPID = Constants.SHOOTER_PID_SETTINGS;
   int speedThreshold = 50;
   int angleThreshold = 2;
 
@@ -25,8 +27,10 @@ public class Shooter extends SubsystemBase {
 
   public Shooter() {
     flywheel = new SparkMAXContainer(FLYWHEEL_LOCATION);
-    flywheel.assignPIDValues(0.03, 0, 0);
-    flywheel.assignFeedForward(.01, .01);
+
+    flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
+    flywheel.assignFeedForward(shooterPID.kV, shooterPID.kA);
+    
     hood = new SparkMAXContainer(HOOD_LOCATION);  
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
   }

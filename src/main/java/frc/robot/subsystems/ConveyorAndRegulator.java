@@ -6,29 +6,43 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
+import frc.robot.Constants;
+import frc.lib.utils.PIDSettings;
 
 public class ConveyorAndRegulator extends SubsystemBase {
   /** Creates a new Conveyor. */
   public SparkMAXContainer conveyorMotor;
   public SparkMAXContainer regulatorMotor;
 
-  private double converyorSpeed = -.75;
-  private double regulatorSpeed = .99;
-  
-  public ConveyorAndRegulator() {
-    conveyorMotor = new SparkMAXContainer(7);
-    conveyorMotor.assignPIDValues(0.001, 0, 0);
+  public final int CONVEYOR_LOCATION = 7;
+  public final int REGULATOR_LOCATION = 8;
 
-    regulatorMotor = new SparkMAXContainer(8);
-    regulatorMotor.assignPIDValues(0.001, 0, 0);
+  private static PIDSettings conveyorPID = Constants.CONVEYOR_PID_SETTINGS;
+  private static PIDSettings regulatorPID = Constants.REGULATOR_PID_SETTINGS;
+
+  // private double converyorSpeed = -.75;
+  // private double regulatorSpeed = .99;
+  
+  private int converyorSpeed = -1500;
+  private int regulatorSpeed = 1500;
+  
+
+  public ConveyorAndRegulator() {
+    conveyorMotor = new SparkMAXContainer(CONVEYOR_LOCATION);
+    conveyorMotor.assignPIDValues(conveyorPID.kP, conveyorPID.kI, conveyorPID.kD);
+
+    regulatorMotor = new SparkMAXContainer(REGULATOR_LOCATION);
+    regulatorMotor.assignPIDValues(regulatorPID.kP, regulatorPID.kI, regulatorPID.kD);  
   }
 
   public void conveyorLoad() {
-    conveyorMotor.motor.set(converyorSpeed);
+    conveyorMotor.setVelocity(converyorSpeed);
+    // conveyorMotor.motor.set(converyorSpeed);
   }
 
   public void conveyorUnload() {
-    conveyorMotor.motor.set(-converyorSpeed);
+    conveyorMotor.setVelocity(-converyorSpeed);
+    // conveyorMotor.motor.set(-converyorSpeed);
   }
 
   public void stopConveyor() {
@@ -36,11 +50,13 @@ public class ConveyorAndRegulator extends SubsystemBase {
   }
   
   public void regulatorLoad() {
-    regulatorMotor.motor.set(regulatorSpeed);
+    regulatorMotor.setVelocity(regulatorSpeed);
+    // regulatorMotor.motor.set(regulatorSpeed);
   }
 
   public void regulatorUnload() {
-    regulatorMotor.motor.set(-regulatorSpeed);
+    regulatorMotor.setVelocity(-regulatorSpeed);
+    // regulatorMotor.motor.set(-regulatorSpeed);
   }
 
   public void stopRegulator() {
