@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
   public final double defult_speed = -.75;
 
   public final double deploy_position = 10.0;
-  public final double retract_postion = 0; 
+  public final double retract_position = 0; 
 
   public Intake() {
     rollerMotor= new SparkMAXContainer(intake_id);
@@ -35,12 +35,16 @@ public class Intake extends SubsystemBase {
     rollerMotor.motor.set(0);
   }
 
-  public void deploy() {
-    deployMotor.goToPostion(deploy_position);
+  public boolean deploy() {
+    return deployMotor.goToPostion(deploy_position);
   }
 
-  public void retract() {
-    deployMotor.goToPostion(retract_postion);
+  public boolean retract() {
+    return deployMotor.goToPostion(retract_position);
+  }
+
+  public void setCurrentLimitOfDeployMotor(int limit){
+    deployMotor.setCurrentLimit(limit);
   }
   
   @Override
