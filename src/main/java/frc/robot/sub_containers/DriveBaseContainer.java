@@ -6,6 +6,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -31,6 +32,7 @@ public class DriveBaseContainer {
     public DriveBaseContainer(CommandXboxController driverController) {
         joystick = driverController;
         configureBindings();
+        SmartDashboard.putBoolean("DriveBase Running",true);
     }
 
     private void configureBindings() {
