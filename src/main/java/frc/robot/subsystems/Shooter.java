@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
     flywheel = new SparkMAXContainer(FLYWHEEL_LOCATION);
 
     flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
-    flywheel.assignFeedForward(shooterPID.kV, shooterPID.kA);
+    flywheel.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
     
     hood = new SparkMAXContainer(HOOD_LOCATION);  
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
@@ -63,7 +63,7 @@ public class Shooter extends SubsystemBase {
   }
   
   private void dynamicFeedForward(double kV, double kA){
-    flywheel.assignFeedForward(kV, kA);
+    flywheel.assignFF(0, kV, kA, 0);
   }
 
   @Override
