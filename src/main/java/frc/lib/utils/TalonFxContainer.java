@@ -35,6 +35,26 @@ public class TalonFxContainer implements MotorContainer{
         this.configurator = new TalonFXConfiguration();
     }
 
+    public TalonFxContainer(int id, boolean isAKraken){
+        this(id);
+        if(isAKraken){
+            // Current Limits (Important for Krakens!)
+            this.configurator.CurrentLimits.StatorCurrentLimit = 60.0;
+            this.configurator.CurrentLimits.StatorCurrentLimitEnable = true;
+            this.configurator.CurrentLimits.SupplyCurrentLimit = 40.0;
+            this.configurator.CurrentLimits.SupplyCurrentLimitEnable = true;
+            this.applyConfig();
+        }
+    }
+
+    public void setupKraken(){
+        this.configurator.CurrentLimits.StatorCurrentLimit = 60.0;
+        this.configurator.CurrentLimits.StatorCurrentLimitEnable = true;
+        this.configurator.CurrentLimits.SupplyCurrentLimit = 40.0;
+        this.configurator.CurrentLimits.SupplyCurrentLimitEnable = true;
+        this.applyConfig();
+    }
+
     private void applyConfig(){
         this.motor.getConfigurator().apply(this.configurator);
     }
@@ -65,11 +85,20 @@ public class TalonFxContainer implements MotorContainer{
     }
 
     /**
-     * DO NOT CAL THIS FUNCTION IT WILL CRASH THE ROBOT
-     */
+    * Assigns the Feed Forward values to the motor
+    * @param A Acceleration feedforward gain. The units for this gain is dependent on the control mode. Since this gain is multiplied by the requested acceleration, the units should be defined as units of output per unit of requested input acceleration. For example, when controlling velocity using a duty cycle closed loop, the units for the acceleration feedfoward gain will be duty cycle per requested rot per sec², or 1/(rot per sec²).
+    * @param G Gravity feedforward/feedback gain. The type of gravity compensation is selected by GravityType. This is added to the closed loop output. The sign is determined by the gravity type. The unit for this constant is dependent on the control mode, typically fractional duty cycle, voltage, or torque current.
+    * @param S Static feedforward gain. This is added to the closed loop output. The unit for this constant is dependent on the control mode, typically fractional duty cycle, voltage, or torque current. The sign is typically determined by reference velocity when using position, velocity, and Motion Magic® closed loop modes. However, when using position closed loop with zero velocity reference (no motion profiling), the application can instead use the position closed loop error by setting the Static Feedforward Sign configuration parameter. When doing so, we recommend the minimal amount of kS, otherwise the motor output may dither when closed loop error is near zero.
+    * @param V Velocity feedforward gain. The units for this gain is dependent on the control mode. Since this gain is multiplied by the requested velocity, the units should be defined as units of output per unit of requested input velocity. For example, when controlling velocity using a duty cycle closed loop, the units for the velocity feedfoward gain will be duty cycle per requested rps, or 1/rps.
+    */
     @Override
-    public void assignPIDValues(double P, double I, double D, double IZone, double FF, double Min, double Max) {
-        throw new UnsupportedOperationException("TalonFx's does not support IZone, FF, Min, or Max");
+    public void assignFF(double kS, double kV, double kA, double kG){
+        var slot = configurator.Slot0;
+        slot.kS = kS;
+        slot.kV = kV;
+        slot.kA = kA;
+        slot.kG = kG;
+        this.applyConfig();
     }
 
     /**
@@ -97,7 +126,8 @@ public class TalonFxContainer implements MotorContainer{
      */
     @Override
     public void setGearRatio(double gearRatio) {
-        throw new UnsupportedOperationException("Unimplemented method 'setGearRatio'");
+        configurator.Feedback.SensorToMechanismRatio = gearRatio;
+        this.applyConfig();
     }
 
     /**
@@ -168,4 +198,5 @@ public class TalonFxContainer implements MotorContainer{
         SmartDashboard.putNumber(key + "/Velocity", motor.getVelocity().getValue().in(RPM));
         SmartDashboard.putNumber(key + "/Current", motor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber(key + "/Applied Output", motor.getMotorOutputStatus().getValueAsDouble());
-    }}
+    }
+}
