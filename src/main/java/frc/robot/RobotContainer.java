@@ -37,19 +37,20 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        driverController.a().whileTrue((new IntakeIntake(intake))).onFalse(new IntakeStop(intake));
+        driverController.leftTrigger().whileTrue((new IntakeIntake(intake))).onFalse(new IntakeStop(intake));
         // driverController.a().onTrue(new IntakeDeploy(intake));
         // driverController.b().onTrue(new IntakeRetract(intake));
         driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
                 // .onFalse(new InstantCommand(() -> shooter.SpinWheel(0)));
         
-        driverController.leftTrigger().onTrue(new InstantCommand(() -> {
+        driverController.rightBumper().onTrue(new InstantCommand(() -> {
             shooter.SpinWheel(0);
             regulator.stopConveyor();
             regulator.stopRegulator();
+            intake.stop();
         })).onFalse(new InstantCommand());
 
-        driverController.a().onTrue(new InstantCommand(() -> {
+        driverController.b().onTrue(new InstantCommand(() -> {
             regulator.conveyorLoad();
             regulator.regulatorLoad();
         }));
