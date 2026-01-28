@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
+import frc.lib.utils.TalonFxContainer;
 import frc.robot.Constants;
 import frc.lib.utils.PIDSettings;
 
@@ -15,10 +16,12 @@ import frc.lib.utils.PIDSettings;
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   
-  SparkMAXContainer flywheel;
+  TalonFxContainer flywheelLeader;
+  TalonFxContainer flywheelFollower;
   SparkMAXContainer hood;
 
   final int FLYWHEEL_LOCATION = 4;
+  final int FLYWHEEL_FOLLOWER_LOCATION = 6;
   final int HOOD_LOCATION = 5;
   final PIDSettings shooterPID = Constants.SHOOTER_PID_SETTINGS;
   int speedThreshold = 50;
@@ -27,11 +30,13 @@ public class Shooter extends SubsystemBase {
   public double targetVelocity = 3000;
 
   public Shooter() {
-    flywheel = new SparkMAXContainer(FLYWHEEL_LOCATION);
+    flywheelLeader = new TalonFxContainer(FLYWHEEL_LOCATION, true);
+    flywheelFollower = new TalonFxContainer(FLYWHEEL_FOLLOWER_LOCATION, true);
+    flywheelFollower.setupAsFollowerMotor(flywheelLeader, true);
 
-    flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
-    flywheel.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
-    flywheel.setBreakMode(false);
+    flywheelLeader.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
+    flywheelLeader.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
+    flywheelLeader.setBreakMode(false);
     hood = new SparkMAXContainer(HOOD_LOCATION);  
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
 
@@ -44,7 +49,7 @@ public class Shooter extends SubsystemBase {
 
   public boolean SpinWheel(double target_velocity){
     if(target_velocity > 0) target_velocity = -target_velocity;
-    flywheel.motor.set(target_velocity);
+    flywheelLeader.motor.set(target_velocity);
     return true;
     
     // forces flywheel to be negative
@@ -59,18 +64,20 @@ public class Shooter extends SubsystemBase {
   }
 
   private void dynamicPID(double kP, double kI, double kD){
-    flywheel.assignPIDValues(kP, kI, kD);
+    flywheelLeader.assignPIDValues(kP, kI, kD);
+    flywheelFollower.assignPIDValues(kP, kI, kD);
   }
   
   private void dynamicFeedForward(double kV, double kA){
-    flywheel.assignFF(0, kV, kA, 0);
+    flywheelLeader.assignFF(0, kV, kA, 0);
+    flywheelFollower.assignFF(0, kV, kA, 0);
   }
 
-  @Override
+  @Override 
   public void periodic() {
     // This method will be called once per scheduler run
     targetVelocity = SmartDashboard.getNumber("FlyWheel/TargetVelocity", targetVelocity);
-    SmartDashboard.putNumber("FlyWheel/CurrentVelocity", flywheel.getVelocity());
+    SmartDashboard.putNumber("FlyWheel/CurrentVelocity", flywheelLeader.getVelocity());
 
     // If we aren't connected to FMS, allow for dynamic PID tuning
     if(!DriverStation.isFMSAttached()){
@@ -82,8 +89,8 @@ public class Shooter extends SubsystemBase {
       dynamicPID(p, i, d);
       dynamicFeedForward(v, a);
 
-      flywheel.getPID("Shooter/PID_Actual/");
-      flywheel.reportMotor("ShooterVals");
+      flywheelLeader.getPID("Shooter/PID_Actual/");
+      flywheelLeader.reportMotor("ShooterVals");
     }
     
   }

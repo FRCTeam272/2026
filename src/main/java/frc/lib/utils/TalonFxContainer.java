@@ -187,6 +187,10 @@ public class TalonFxContainer implements MotorContainer{
         return this.motor.getDeviceTemp().getValue().in(Fahrenheit);
     }
 
+    public double getVelocity(){
+        return this.motor.getVelocity().getValue().in(RPM);
+    }
+
     /**
      * Reports the motor data to the SmartDashboard
      * can be paired with a {@link SmartDashboard.isFMSConnected()} for optimization reasons
