@@ -27,7 +27,7 @@ public class Shooter extends SubsystemBase {
   int speedThreshold = 50;
   int angleThreshold = 2;
 
-  public double targetVelocity = 3000;
+  public double targetVelocity = 3200;
 
   public Shooter() {
     flywheelLeader = new TalonFxContainer(FLYWHEEL_LOCATION, true);
