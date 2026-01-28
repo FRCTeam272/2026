@@ -47,6 +47,7 @@ public class RobotContainer {
             shooter.SpinWheel(0);
             regulator.stopConveyor();
             regulator.stopRegulator();
+            intake.stop();
         })).onFalse(new InstantCommand());
 
         driverController.b().onTrue(new InstantCommand(() -> {
