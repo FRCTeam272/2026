@@ -288,4 +288,16 @@ public class SparkMAXContainer implements MotorContainer {
     }
     
   }
+
+  @Override
+  public void getPID(String key) {
+    // PID
+    SmartDashboard.putNumber(key + "P", motor.configAccessor.closedLoop.getP());
+    SmartDashboard.putNumber(key + "I", motor.configAccessor.closedLoop.getI());
+    SmartDashboard.putNumber(key + "D", motor.configAccessor.closedLoop.getD());
+    // FF
+    SmartDashboard.putNumber(key + "FF/A", motor.configAccessor.closedLoop.feedForward.getkA());
+    SmartDashboard.putNumber(key + "FF/V", motor.configAccessor.closedLoop.feedForward.getkV());
+    SmartDashboard.putNumber(key + "FF/G", motor.configAccessor.closedLoop.feedForward.getkG());
+  }
 }

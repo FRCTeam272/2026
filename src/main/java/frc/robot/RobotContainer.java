@@ -33,14 +33,17 @@ public class RobotContainer {
         driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
                 // .onFalse(new InstantCommand(() -> shooter.SpinWheel(0)));
         
-        driverController.b().onTrue(new InstantCommand(() -> {
+        driverController.leftTrigger().onTrue(new InstantCommand(() -> {
             shooter.SpinWheel(0);
             regulator.stopConveyor();
             regulator.stopRegulator();
         })).onFalse(new InstantCommand());
 
-        driverController.a().onTrue(new InstantCommand(() -> regulator.conveyorLoad()));
-        driverController.x().onTrue(new InstantCommand(() -> regulator.regulatorLoad()));
+        driverController.a().onTrue(new InstantCommand(() -> {
+            regulator.conveyorLoad();
+            regulator.regulatorLoad();
+        }));
+        //  driverController.b().onTrue(new InstantCommand(() -> regulator.regulatorLoad()));
     }
 
     public Command getAutonomousCommand() {

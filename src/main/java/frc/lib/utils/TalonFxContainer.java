@@ -199,4 +199,18 @@ public class TalonFxContainer implements MotorContainer{
         SmartDashboard.putNumber(key + "/Current", motor.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber(key + "/Applied Output", motor.getMotorOutputStatus().getValueAsDouble());
     }
+
+    @Override
+    public void getPID(String key) {
+        TalonFXConfiguration configs = new TalonFXConfiguration();
+        
+        // PID
+        SmartDashboard.putNumber(key + "P", configs.Slot0.kP);
+        SmartDashboard.putNumber(key + "I", configs.Slot0.kI);
+        SmartDashboard.putNumber(key + "D", configs.Slot0.kD);
+        // FF
+        SmartDashboard.putNumber(key + "FF/A", configs.Slot0.kA);
+        SmartDashboard.putNumber(key + "FF/V", configs.Slot0.kV);
+        SmartDashboard.putNumber(key + "FF/G", configs.Slot0.kG);
+    }
 }

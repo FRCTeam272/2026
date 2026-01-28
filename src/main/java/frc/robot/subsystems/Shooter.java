@@ -31,7 +31,7 @@ public class Shooter extends SubsystemBase {
 
     flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
     flywheel.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
-    
+    flywheel.setBreakMode(false);
     hood = new SparkMAXContainer(HOOD_LOCATION);  
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
 
@@ -43,15 +43,15 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean SpinWheel(double target_velocity){
-    // if(target_velocity > 0) target_velocity = -target_velocity;
-    // flywheel.motor.set(target_velocity);
-    // return true;
+    if(target_velocity > 0) target_velocity = -target_velocity;
+    flywheel.motor.set(target_velocity);
+    return true;
     
     // forces flywheel to be negative
-    if(target_velocity > 0) target_velocity = -target_velocity;
+    // if(target_velocity > 0) target_velocity = -target_velocity;
     
-    final double current_velocity = flywheel.setVelocity(target_velocity);
-    return Math.abs(current_velocity - target_velocity) < speedThreshold;
+    // final double current_velocity = flywheel.setVelocity(target_velocity);
+    // return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
   public boolean AdjustHood(double target_angle){
@@ -78,10 +78,12 @@ public class Shooter extends SubsystemBase {
       final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
       final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
       final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
-      final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);
-      
+      final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);      
       dynamicPID(p, i, d);
       dynamicFeedForward(v, a);
+
+      flywheel.getPID("Shooter/PID_Actual/");
+      flywheel.reportMotor("ShooterVals");
     }
     
   }

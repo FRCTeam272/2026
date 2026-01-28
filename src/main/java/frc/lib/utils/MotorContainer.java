@@ -81,6 +81,10 @@ public interface MotorContainer {
     public double getMotorTemperatureInF();
 
     /**
+     * Gets PID as an array
+     */
+    public void getPID(String key);
+    /**
      * Sends information about the motor to SmartDashboard, these calls should be
      * contained in an if(!DriverStation.isFMSAttached()) block to avoid flooding
      * the system in competition

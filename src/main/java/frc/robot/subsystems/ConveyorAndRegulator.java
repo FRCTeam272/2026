@@ -13,8 +13,8 @@ import frc.lib.utils.PIDSettings;
 
 public class ConveyorAndRegulator extends SubsystemBase {
   /** Creates a new Conveyor. */
-  public boolean ConveryorUsePID = true;
-  public boolean RegulatorUsePID = true;
+  public boolean ConveryorUsePID = false;
+  public boolean RegulatorUsePID = false;
   public SparkMAXContainer conveyorMotor;
   public SparkMAXContainer regulatorMotor;
 
@@ -23,8 +23,7 @@ public class ConveyorAndRegulator extends SubsystemBase {
 
   private static PIDSettings conveyorPID = Constants.CONVEYOR_PID_SETTINGS;
   private static PIDSettings regulatorPID = Constants.REGULATOR_PID_SETTINGS;
-
-  private double converyorVoltage = -.75;
+  private double converyorVoltage = -.99;
   private double regulatorVoltage = .99;
   
   private double converyorVelocity = -1500;
@@ -52,6 +51,8 @@ public class ConveyorAndRegulator extends SubsystemBase {
     SmartDashboard.putNumber("Regulator/D", regulatorPID.kD);
 
     SmartDashboard.putBoolean("Conveyor/UsePID", ConveryorUsePID);
+    SmartDashboard.putBoolean("Regulator/UsePID", RegulatorUsePID);
+
   }
 
   public void conveyorLoad() {
@@ -140,6 +141,9 @@ public class ConveyorAndRegulator extends SubsystemBase {
 
       this.ConveryorUsePID = SmartDashboard.getBoolean("Conveyor/UsePID", ConveryorUsePID);
       this.RegulatorUsePID = SmartDashboard.getBoolean("Regulator/UsePID", RegulatorUsePID);
+
+      this.conveyorMotor.getPID("Converyor/PID_Actual/");
+      this.regulatorMotor.getPID("Regulator/PID_Actual/");
     }
     
   }
