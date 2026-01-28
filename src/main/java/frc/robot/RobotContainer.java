@@ -15,6 +15,8 @@ import frc.robot.commands.intake.IntakeStop;
 import frc.robot.sub_containers.DriveBaseContainer;
 import frc.robot.subsystems.DashboardWriter;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ConveyorAndRegulator;
+import frc.robot.subsystems.Shooter;
 
 public class RobotContainer {
     // Sub-Containers
@@ -23,6 +25,8 @@ public class RobotContainer {
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     public final Intake intake = new Intake();
 
+    public final Shooter shooter = new Shooter();
+    public final ConveyorAndRegulator regulator = new ConveyorAndRegulator();
 
     // Controllers
     private final CommandXboxController driverController = new CommandXboxController(0);
@@ -36,7 +40,20 @@ public class RobotContainer {
         driverController.a().whileTrue((new IntakeIntake(intake))).onFalse(new IntakeStop(intake));
         // driverController.a().onTrue(new IntakeDeploy(intake));
         // driverController.b().onTrue(new IntakeRetract(intake));
+        driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
+                // .onFalse(new InstantCommand(() -> shooter.SpinWheel(0)));
         
+        driverController.leftTrigger().onTrue(new InstantCommand(() -> {
+            shooter.SpinWheel(0);
+            regulator.stopConveyor();
+            regulator.stopRegulator();
+        })).onFalse(new InstantCommand());
+
+        driverController.a().onTrue(new InstantCommand(() -> {
+            regulator.conveyorLoad();
+            regulator.regulatorLoad();
+        }));
+        //  driverController.b().onTrue(new InstantCommand(() -> regulator.regulatorLoad()));
     }
 
     public Command getAutonomousCommand() {
