@@ -42,6 +42,7 @@ public class DriveBaseContainer {
         joystick = driverController;
         
         configureBindings();
+        SmartDashboard.putBoolean("DriveBase Running",true);
     }
 
     public Command driveHider(){

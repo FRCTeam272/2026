@@ -19,20 +19,7 @@ public interface MotorContainer {
      */
     public void assignPIDValues(double P, double I, double D);
 
-    /**
-     * Assigns the PID values to the motor see also
-     * {@link #assignPIDValues(double, double, double)} and
-     * {@link #assignPIDValues()}
-     * 
-     * @param P     the P value
-     * @param I     the I value
-     * @param D     the D value
-     * @param IZone the IZone value
-     * @param FF    the FF value
-     * @param Min   the Min value
-     * @param Max   the Max value
-     */
-    public void assignPIDValues(double P, double I, double D, double IZone, double FF, double Min, double Max);
+    public void assignFF(double kS, double kV, double kA, double kG);
 
     /**
      * Assigns this motor to follow another Motor of the same type
@@ -93,6 +80,10 @@ public interface MotorContainer {
     */
     public double getMotorTemperatureInF();
 
+    /**
+     * Gets PID as an array
+     */
+    public void getPID(String key);
     /**
      * Sends information about the motor to SmartDashboard, these calls should be
      * contained in an if(!DriverStation.isFMSAttached()) block to avoid flooding
