@@ -20,11 +20,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
+import frc.robot.generated.TunerConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 /**
@@ -46,10 +48,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective = false;
 
+    private VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
-    private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
-    private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
+    // private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
+    // private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
@@ -68,47 +72,47 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     );
 
     /* SysId routine for characterizing steer. This is used to find PID gains for the steer motors. */
-    private final SysIdRoutine m_sysIdRoutineSteer = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            null,        // Use default ramp rate (1 V/s)
-            Volts.of(7), // Use dynamic voltage of 7 V
-            null,        // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdSteer_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            volts -> setControl(m_steerCharacterization.withVolts(volts)),
-            null,
-            this
-        )
-    );
+    // private final SysIdRoutine m_sysIdRoutineSteer = new SysIdRoutine(
+    //     new SysIdRoutine.Config(
+    //         null,        // Use default ramp rate (1 V/s)
+    //         Volts.of(7), // Use dynamic voltage of 7 V
+    //         null,        // Use default timeout (10 s)
+    //         // Log state with SignalLogger class
+    //         state -> SignalLogger.writeString("SysIdSteer_State", state.toString())
+    //     ),
+    //     new SysIdRoutine.Mechanism(
+    //         volts -> setControl(m_steerCharacterization.withVolts(volts)),
+    //         null,
+    //         this
+    //     )
+    // );
 
     /*
      * SysId routine for characterizing rotation.
      * This is used to find PID gains for the FieldCentricFacingAngle HeadingController.
      * See the documentation of SwerveRequest.SysIdSwerveRotation for info on importing the log to SysId.
      */
-    private final SysIdRoutine m_sysIdRoutineRotation = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            /* This is in radians per second², but SysId only supports "volts per second" */
-            Volts.of(Math.PI / 6).per(Second),
-            /* This is in radians per second, but SysId only supports "volts" */
-            Volts.of(Math.PI),
-            null, // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdRotation_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            output -> {
-                /* output is actually radians per second, but SysId only supports "volts" */
-                setControl(m_rotationCharacterization.withRotationalRate(output.in(Volts)));
-                /* also log the requested output for SysId */
-                SignalLogger.writeDouble("Rotational_Rate", output.in(Volts));
-            },
-            null,
-            this
-        )
-    );
+    // private final SysIdRoutine m_sysIdRoutineRotation = new SysIdRoutine(
+    //     new SysIdRoutine.Config(
+    //         /* This is in radians per second², but SysId only supports "volts per second" */
+    //         Volts.of(Math.PI / 6).per(Second),
+    //         /* This is in radians per second, but SysId only supports "volts" */
+    //         Volts.of(Math.PI),
+    //         null, // Use default timeout (10 s)
+    //         // Log state with SignalLogger class
+    //         state -> SignalLogger.writeString("SysIdRotation_State", state.toString())
+    //     ),
+    //     new SysIdRoutine.Mechanism(
+    //         output -> {
+    //             /* output is actually radians per second, but SysId only supports "volts" */
+    //             setControl(m_rotationCharacterization.withRotationalRate(output.in(Volts)));
+    //             /* also log the requested output for SysId */
+    //             SignalLogger.writeDouble("Rotational_Rate", output.in(Volts));
+    //         },
+    //         null,
+    //         this
+    //     )
+    // );
 
     /* The SysId routine to test */
     private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation;
@@ -238,13 +242,26 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
                     allianceColor == Alliance.Red
-                        ? kRedAlliancePerspectiveRotation
+                        ? kRedAlliancePerspectiveRotation   
                         : kBlueAlliancePerspectiveRotation
                 );
                 m_hasAppliedOperatorPerspective = true;
             });
         }
+        SmartDashboard.putData("Field", m_field);
+        m_field.setRobotPose(this.getState().Pose);
+        
+
+        m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
+            this.addVisionMeasurement(
+                measurement.pose(),
+                measurement.timestamp(),
+                measurement.stdDevs()
+            );
+        });
     }
+    private final Field2d m_field = new Field2d();
+
 
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
@@ -305,4 +322,31 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
+
+    public void resetPose(Pose2d pose) {
+        super.resetPose(pose);
+    }
+
+    private final SwerveRequest.FieldCentric m_driveRequest = new SwerveRequest.FieldCentric();
+    public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+        // TunerConstants.kSpeedAt12VoltsMps is generated by Tuner X. 
+        // It represents the theoretical max speed of the modules.
+        double maxSpeed = TunerConstants.kSpeedAt12VoltsMps;
+
+        if (fieldRelative) {
+            m_driveRequest.VelocityX = xSpeed * maxSpeed;
+            m_driveRequest.VelocityY = ySpeed * maxSpeed;
+            m_driveRequest.RotationalRate = rot; // Already in Rad/s from PID
+        } else {
+            // If robot centric is needed, we would switch to SwerveRequest.RobotCentric.
+            // For now, we assume field centric for this command structure.
+            m_driveRequest.VelocityX = xSpeed * maxSpeed;
+            m_driveRequest.VelocityY = ySpeed * maxSpeed;
+            m_driveRequest.RotationalRate = rot;
+        }
+
+        // Apply the request
+        this.setControl(m_driveRequest);
+    }
+    
 }

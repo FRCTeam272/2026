@@ -4,14 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.intake.IntakeDeploy;
-import frc.robot.commands.intake.IntakeIntake;
-import frc.robot.commands.intake.IntakeRetract;
-import frc.robot.commands.intake.IntakeStop;
+import frc.robot.commands.drivetrain.AlignToHub;
 import frc.robot.sub_containers.DriveBaseContainer;
 import frc.robot.subsystems.DashboardWriter;
 import frc.robot.subsystems.Intake;
@@ -33,30 +33,23 @@ public class RobotContainer {
 
     public RobotContainer() {
         driveBaseContainer = new DriveBaseContainer(driverController);
+        driveBaseContainer.drivetrain.resetPose(
+            new Pose2d(
+                new Translation2d(2.299, 3.913),
+                new Rotation2d()
+            )
+        );
         configureBindings();
     }
 
     private void configureBindings() {
-        driverController.leftTrigger().whileTrue((new IntakeIntake(intake))).onFalse(new IntakeStop(intake));
-        // driverController.a().onTrue(new IntakeDeploy(intake));
-        // driverController.b().onTrue(new IntakeRetract(intake));
-        driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
-                // .onFalse(new InstantCommand(() -> shooter.SpinWheel(0)));
-        
-        driverController.rightBumper().onTrue(new InstantCommand(() -> {
-            shooter.SpinWheel(0);
-            regulator.stopConveyor();
-            regulator.stopRegulator();
-            intake.stop();
-        })).onFalse(new InstantCommand());
-
-        driverController.b().onTrue(new InstantCommand(() -> {
-            regulator.conveyorLoad();
-            regulator.regulatorLoad();
-        }));
-        //  driverController.b().onTrue(new InstantCommand(() -> regulator.regulatorLoad()));
+        driverController.leftTrigger().onTrue(
+            new AlignToHub(driveBaseContainer.drivetrain, driverController)
+        ).onFalse(
+            Commands.runOnce(() -> driveBaseContainer.driveHider())
+        );
     }
-
+    
     public Command getAutonomousCommand() {
         return Commands.none();
     }
