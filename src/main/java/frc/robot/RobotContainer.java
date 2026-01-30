@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.drivetrain.AlignToHub;
+import frc.robot.commands.intake.IntakeIntake;
+import frc.robot.commands.intake.IntakeStop;
 import frc.robot.sub_containers.DriveBaseContainer;
 import frc.robot.subsystems.DashboardWriter;
 import frc.robot.subsystems.Intake;
@@ -48,6 +50,8 @@ public class RobotContainer {
         ).onFalse(
             Commands.runOnce(() -> driveBaseContainer.driveHider())
         );
+
+        driverController.a().whileTrue(new IntakeIntake(intake)).onFalse(new IntakeStop(intake));
     }
     
     public Command getAutonomousCommand() {
