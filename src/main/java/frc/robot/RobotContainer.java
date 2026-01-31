@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.drivetrain.AlignToHub;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeStop;
+import frc.robot.sub_containers.AutoContainer;
 import frc.robot.sub_containers.DriveBaseContainer;
 import frc.robot.subsystems.DashboardWriter;
 import frc.robot.subsystems.Intake;
@@ -23,6 +24,7 @@ import frc.robot.subsystems.Shooter;
 public class RobotContainer {
     // Sub-Containers
     public final DriveBaseContainer driveBaseContainer; // HINT: looking for DriveBase Controls look in here
+    public final AutoContainer autoContainer;
     // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     public final Intake intake = new Intake();
@@ -35,6 +37,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         driveBaseContainer = new DriveBaseContainer(driverController);
+        autoContainer = new AutoContainer(); // this will need to add subsystems (all of them pretty much)
         driveBaseContainer.drivetrain.resetPose(
             new Pose2d(
                 new Translation2d(2.299, 3.913),
