@@ -6,11 +6,14 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
+import frc.lib.utils.TalonFxContainer;
+
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   SparkMAXContainer rollerMotor;
   SparkMAXContainer deployMotor;
+  TalonFxContainer test;
   public final int intake_id = 2;
   public final int deploy_id = 3;
   public final double defult_speed = -.75;

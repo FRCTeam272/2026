@@ -37,17 +37,11 @@ public class TalonFxContainer implements MotorContainer{
 
     public TalonFxContainer(int id, boolean isAKraken){
         this(id);
-        if(isAKraken){
-            // Current Limits (Important for Krakens!)
-            this.configurator.CurrentLimits.StatorCurrentLimit = 60.0;
-            this.configurator.CurrentLimits.StatorCurrentLimitEnable = true;
-            this.configurator.CurrentLimits.SupplyCurrentLimit = 40.0;
-            this.configurator.CurrentLimits.SupplyCurrentLimitEnable = true;
-            this.applyConfig();
-        }
+        if(isAKraken) this.setupKraken();
     }
 
     public void setupKraken(){
+        // Current Limits (Important for Krakens!)
         this.configurator.CurrentLimits.StatorCurrentLimit = 60.0;
         this.configurator.CurrentLimits.StatorCurrentLimitEnable = true;
         this.configurator.CurrentLimits.SupplyCurrentLimit = 40.0;
