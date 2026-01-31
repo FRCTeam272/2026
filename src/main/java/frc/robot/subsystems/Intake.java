@@ -11,7 +11,7 @@ import frc.lib.utils.TalonFxContainer;
 
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
-  SparkMAXContainer rollerMotor;
+  TalonFxContainer rollerMotor;
   SparkMAXContainer deployMotor;
   TalonFxContainer test;
   public final int intake_id = 2;
@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
   public final double retract_position = 0; 
 
   public Intake() {
-    rollerMotor= new SparkMAXContainer(intake_id);
+    rollerMotor= new TalonFxContainer(intake_id);
     deployMotor = new SparkMAXContainer(deploy_id);
   }
   
