@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
+import frc.lib.utils.TalonFxContainer;
 import frc.robot.Constants;
 import frc.lib.utils.PIDSettings;
 
@@ -15,7 +16,7 @@ import frc.lib.utils.PIDSettings;
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   
-  SparkMAXContainer flywheel;
+  TalonFxContainer flywheel;
   SparkMAXContainer hood;
 
   final int FLYWHEEL_LOCATION = 4;
@@ -27,7 +28,7 @@ public class Shooter extends SubsystemBase {
   public double targetVelocity = 3000;
 
   public Shooter() {
-    flywheel = new SparkMAXContainer(FLYWHEEL_LOCATION);
+    flywheel = new TalonFxContainer(FLYWHEEL_LOCATION);
 
     flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
     flywheel.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
