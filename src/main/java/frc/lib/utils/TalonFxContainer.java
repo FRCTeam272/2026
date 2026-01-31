@@ -200,6 +200,10 @@ public class TalonFxContainer implements MotorContainer{
         SmartDashboard.putNumber(key + "/Applied Output", motor.getMotorOutputStatus().getValueAsDouble());
     }
 
+    public double getVelocity(){
+        return motor.getVelocity().getValue().in(RPM);
+    }
+
     @Override
     public void getPID(String key) {
         TalonFXConfiguration configs = new TalonFXConfiguration();
