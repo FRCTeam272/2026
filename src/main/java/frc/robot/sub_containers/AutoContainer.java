@@ -7,11 +7,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class AutoContainer {
-    private SendableChooser<Command> autoChooser; 
-    
-    public AutoContainer(){
+    private SendableChooser<Command> autoChooser;
+    private CommandSwerveDrivetrain drivetrain; 
+        
+    public AutoContainer(CommandSwerveDrivetrain drivetrain){
+        this.drivetrain = drivetrain;
+        // this.drivetrain.configureAutoBuilder();
         this.configureAutoBindings();
     }
 

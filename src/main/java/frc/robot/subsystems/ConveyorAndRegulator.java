@@ -37,12 +37,9 @@ public class ConveyorAndRegulator extends SubsystemBase {
     regulatorMotor = new SparkMAXContainer(REGULATOR_LOCATION);
     regulatorMotor.assignPIDValues(regulatorPID.kP, regulatorPID.kI, regulatorPID.kD);  
 
-
     SmartDashboard.putNumber("Conveyor/Velocity", converyorVelocity);
-    SmartDashboard.putNumber("Conveyor/Voltage", converyorVoltage);
     SmartDashboard.putNumber("Regulator/Velocity", regulatorVelocity);
-    SmartDashboard.putNumber("Regulator/Voltage", regulatorVoltage);
-
+    
     SmartDashboard.putNumber("Conveyor/P", conveyorPID.kP);
     SmartDashboard.putNumber("Conveyor/I", conveyorPID.kI);
     SmartDashboard.putNumber("Conveyor/D", conveyorPID.kD);
@@ -144,6 +141,8 @@ public class ConveyorAndRegulator extends SubsystemBase {
 
       this.conveyorMotor.getPID("Converyor/PID_Actual/");
       this.regulatorMotor.getPID("Regulator/PID_Actual/");
+      regulatorMotor.reportMotor("Regulator");
+      conveyorMotor.reportMotor("Converyor");
     }
     
   }

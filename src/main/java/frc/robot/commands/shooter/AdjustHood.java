@@ -23,7 +23,7 @@ public class AdjustHood extends Command{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.AdjustHood(50);
+    // shooter.AdjustHood(50);
     System.out.println("Hey Sean");
   }
 

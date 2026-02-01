@@ -2,6 +2,7 @@ package frc.robot.sub_containers;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.io.Console;
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
@@ -16,9 +17,9 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class DriveBaseContainer {
-    
-    public static double speedFactor = .5;
-    public static double rotationFactor = .5;
+    public AutoContainer autoContainer;
+    public static double speedFactor = .4;
+    public static double rotationFactor = .4;
     
     static {
         edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber("Speed Factor", speedFactor);
@@ -41,17 +42,32 @@ public class DriveBaseContainer {
 
     public DriveBaseContainer(CommandXboxController driverController) {
         joystick = driverController;
-        
+        drivetrain.configureAutoBuilder();
         configureBindings();
         SmartDashboard.putBoolean("DriveBase Running",true);
+    
+        if(!TunerConstants.isTestBot){
+            SmartDashboard.putString("MESSAGE", "we are at autoSetup");
+            autoContainer = new AutoContainer(drivetrain); 
+        }
     }
 
     public Command driveHider(){
-        return drivetrain.applyRequest(() ->
-                drive.withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+        if(TunerConstants.isTestBot){
+            return drivetrain.applyRequest(() ->
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
             );
+        } else {
+            return drivetrain.applyRequest(() ->
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
+            );
+ 
+        }
+        
     }
 
     private void configureBindings() {

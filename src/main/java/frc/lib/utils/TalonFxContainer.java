@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 
 /** A container to generalize motor controllers */
 public class TalonFxContainer implements MotorContainer{
@@ -42,14 +43,14 @@ public class TalonFxContainer implements MotorContainer{
 
     public void setupKraken(){
         // Current Limits (Important for Krakens!)
-        this.configurator.CurrentLimits.StatorCurrentLimit = 60.0;
+        this.configurator.CurrentLimits.StatorCurrentLimit = 50.0;
         this.configurator.CurrentLimits.StatorCurrentLimitEnable = true;
-        this.configurator.CurrentLimits.SupplyCurrentLimit = 40.0;
+        this.configurator.CurrentLimits.SupplyCurrentLimit = 50.0;
         this.configurator.CurrentLimits.SupplyCurrentLimitEnable = true;
         this.applyConfig();
     }
 
-    private void applyConfig(){
+    public void applyConfig(){
         this.motor.getConfigurator().apply(this.configurator);
     }
 
@@ -198,17 +199,24 @@ public class TalonFxContainer implements MotorContainer{
         return motor.getVelocity().getValue().in(RPM);
     }
 
+    private final VelocityVoltage velocityRequest = new VelocityVoltage(0);
+    public boolean setVelocity(double target_velocity){
+        // this.motor.setControl(null)
+        motor.setControl(velocityRequest.withVelocity(target_velocity));
+        return getVelocity() == target_velocity;
+    }
+
     @Override
     public void getPID(String key) {
-        TalonFXConfiguration configs = new TalonFXConfiguration();
+        motor.getConfigurator().refresh(this.configurator);
         
         // PID
-        SmartDashboard.putNumber(key + "P", configs.Slot0.kP);
-        SmartDashboard.putNumber(key + "I", configs.Slot0.kI);
-        SmartDashboard.putNumber(key + "D", configs.Slot0.kD);
+        SmartDashboard.putNumber(key + "P", this.configurator.Slot0.kP);
+        SmartDashboard.putNumber(key + "I", this.configurator.Slot0.kI);
+        SmartDashboard.putNumber(key + "D", this.configurator.Slot0.kD);
         // FF
-        SmartDashboard.putNumber(key + "FF/A", configs.Slot0.kA);
-        SmartDashboard.putNumber(key + "FF/V", configs.Slot0.kV);
-        SmartDashboard.putNumber(key + "FF/G", configs.Slot0.kG);
+        SmartDashboard.putNumber(key + "FF/A", this.configurator.Slot0.kA);
+        SmartDashboard.putNumber(key + "FF/V", this.configurator.Slot0.kV);
+        SmartDashboard.putNumber(key + "FF/G", this.configurator.Slot0.kG);
     }
 }
