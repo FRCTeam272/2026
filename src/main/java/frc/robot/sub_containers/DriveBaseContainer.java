@@ -2,7 +2,6 @@ package frc.robot.sub_containers;
 
 import static edu.wpi.first.units.Units.*;
 
-import java.io.Console;
 import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
@@ -42,7 +41,6 @@ public class DriveBaseContainer {
 
     public DriveBaseContainer(CommandXboxController driverController) {
         joystick = driverController;
-        drivetrain.configureAutoBuilder();
         configureBindings();
         SmartDashboard.putBoolean("DriveBase Running",true);
     
