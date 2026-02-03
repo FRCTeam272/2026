@@ -45,6 +45,11 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter/kA", shooterPID.kA);
   }
 
+  public boolean TrueStop(){
+    flywheel.motor.set(0);
+    return true;
+  }
+
   public boolean SpinWheel(double target_velocity){
     if(target_velocity > 0) target_velocity = -target_velocity;
     flywheel.setVelocity(target_velocity);

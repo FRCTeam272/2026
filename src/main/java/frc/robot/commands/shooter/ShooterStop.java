@@ -24,7 +24,7 @@ public class ShooterStop extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.SpinWheel(0);
+    shooter.TrueStop();
   }
 
   // Called once the command ends or is interrupted.
