@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
+import frc.lib.utils.TalonFxContainer;
 import frc.robot.Constants;
 import frc.lib.utils.PIDSettings;
 
@@ -15,7 +16,7 @@ import frc.lib.utils.PIDSettings;
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   
-  SparkMAXContainer flywheel;
+  TalonFxContainer flywheel;
   SparkMAXContainer hood;
 
   final int FLYWHEEL_LOCATION = 4;
@@ -24,15 +25,17 @@ public class Shooter extends SubsystemBase {
   int speedThreshold = 50;
   int angleThreshold = 2;
 
-  public double targetVelocity = 3000;
+  public double targetVelocity = 4000;
 
   public Shooter() {
-    flywheel = new SparkMAXContainer(FLYWHEEL_LOCATION);
+    flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
 
     flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
     flywheel.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
     flywheel.setBreakMode(false);
-    hood = new SparkMAXContainer(HOOD_LOCATION);  
+    flywheel.configurator.Audio.BeepOnConfig = false;
+    flywheel.applyConfig();
+    // hood = new SparkMAXContainer(HOOD_LOCATION);  
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
 
     SmartDashboard.putNumber("Shooter/P", shooterPID.kP);
@@ -42,9 +45,15 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter/kA", shooterPID.kA);
   }
 
+  public boolean TrueStop(){
+    flywheel.motor.set(0);
+    return true;
+  }
+
   public boolean SpinWheel(double target_velocity){
     if(target_velocity > 0) target_velocity = -target_velocity;
-    flywheel.motor.set(target_velocity);
+    flywheel.setVelocity(target_velocity);
+    // flywheel.motor.set(-.75);
     return true;
     
     // forces flywheel to be negative
@@ -54,9 +63,9 @@ public class Shooter extends SubsystemBase {
     // return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
-  public boolean AdjustHood(double target_angle){
-    return hood.goToPostion(target_angle, angleThreshold);
-  }
+  // public boolean AdjustHood(double target_angle){
+  //   return hood.goToPostion(target_angle, angleThreshold);
+  // }
 
   private void dynamicPID(double kP, double kI, double kD){
     flywheel.assignPIDValues(kP, kI, kD);
@@ -78,7 +87,9 @@ public class Shooter extends SubsystemBase {
       final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
       final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
       final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
-      final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);      
+      final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);  
+      this.targetVelocity = SmartDashboard.getNumber("TargetVelocity", this.targetVelocity);
+      System.out.println("" + targetVelocity);      
       dynamicPID(p, i, d);
       dynamicFeedForward(v, a);
 

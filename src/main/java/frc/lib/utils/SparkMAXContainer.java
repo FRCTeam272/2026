@@ -275,6 +275,7 @@ public class SparkMAXContainer implements MotorContainer {
     SmartDashboard.putNumber(key + "/Velocity", encoder.getVelocity());
     SmartDashboard.putNumber(key + "/Current", motor.getOutputCurrent());
     SmartDashboard.putNumber(key + "/Applied Output", motor.getAppliedOutput());
+    SmartDashboard.putNumber(key + "/Voltage", motor.getBusVoltage());
     SmartDashboard.putNumber(key + "/CurrentLimit/Smart Limit", motor.configAccessor.getSmartCurrentLimit());
     SmartDashboard.putNumber(key + "/CurrentLimit/Secondary Limit", motor.configAccessor.getSecondaryCurrentLimit()); 
     try{

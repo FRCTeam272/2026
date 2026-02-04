@@ -13,12 +13,12 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.units.measure.LinearVelocity;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class TunerConstants {
     // Check if the "isTestBot" file exists in the deploy directory
     public static final boolean isTestBot = Files.exists(Paths.get("/home/lvuser/deploy/isTestBot"));
-
      
     public static final LinearVelocity kSpeedAt12Volts = isTestBot ? TestTunerConstants.kSpeedAt12Volts : ProdTunerConstants.kSpeedAt12Volts;
     public static final double kSpeedAt12VoltsMps = kSpeedAt12Volts.baseUnitMagnitude();
@@ -60,6 +60,7 @@ public class TunerConstants {
                 TalonFX::new, TalonFX::new, CANcoder::new,
                 drivetrainConstants, modules
             );
+            SmartDashboard.putBoolean("Is Production", !isTestBot);
         }
 
         /**

@@ -32,7 +32,7 @@ public class DashboardWriter extends SubsystemBase {
   
   public DashboardWriter() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Is Production", TunerConstants.isTestBot ? 0 : 1);
+    SmartDashboard.putBoolean("Is Production", !TunerConstants.isTestBot);
   }
 
   private void updateAutoWinner() {

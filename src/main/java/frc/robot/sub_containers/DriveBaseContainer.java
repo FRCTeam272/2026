@@ -7,7 +7,9 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.Telemetry;
@@ -15,9 +17,9 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class DriveBaseContainer {
-    
-    public static double speedFactor = .5;
-    public static double rotationFactor = .5;
+    public AutoContainer autoContainer;
+    public static double speedFactor = .2;
+    public static double rotationFactor = .2;
     
     static {
         edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber("Speed Factor", speedFactor);
@@ -40,17 +42,31 @@ public class DriveBaseContainer {
 
     public DriveBaseContainer(CommandXboxController driverController) {
         joystick = driverController;
-        
         configureBindings();
         SmartDashboard.putBoolean("DriveBase Running",true);
+    
+        if(!TunerConstants.isTestBot){
+            SmartDashboard.putString("MESSAGE", "we are at autoSetup");
+            autoContainer = new AutoContainer(drivetrain); 
+        }
     }
 
     public Command driveHider(){
-        return drivetrain.applyRequest(() ->
-                drive.withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+        if(TunerConstants.isTestBot){
+            return drivetrain.applyRequest(() ->
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
             );
+        } else {
+            return drivetrain.applyRequest(() ->
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
+            );
+ 
+        }
+        
     }
 
     private void configureBindings() {
@@ -84,5 +100,12 @@ public class DriveBaseContainer {
         joystick.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
+    }
+
+    public Command GetAutonCommand(){
+        if(TunerConstants.isTestBot){
+            return Commands.none();
+        }
+        return this.autoContainer.getAutonomousCommand();
     }
 }
