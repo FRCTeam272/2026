@@ -388,6 +388,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.ApplyRobotSpeeds autoRequest = new SwerveRequest.ApplyRobotSpeeds();
 
     private void configurePathPlanner() {
+        if(TunerConstants.isTestBot){
+            return;
+        }
         RobotConfig config;
         try {
             config = RobotConfig.fromGUISettings();

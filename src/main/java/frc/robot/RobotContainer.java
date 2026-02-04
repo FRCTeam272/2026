@@ -29,11 +29,11 @@ public class RobotContainer {
     public final DriveBaseContainer driveBaseContainer; // HINT: looking for DriveBase Controls look in here
     // // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
-    public final Intake intake = new Intake();
+    // public final Intake intake = new Intake();
 
-    public final Shooter shooter = new Shooter();
-    public final ConveyorAndRegulator regulator = new ConveyorAndRegulator();
-    public final FlyWheelAutoTuner flyWheelAutoTuner = new FlyWheelAutoTuner();
+    // public final Shooter shooter = new Shooter();
+    // public final ConveyorAndRegulator regulator = new ConveyorAndRegulator();
+    // public final FlyWheelAutoTuner flyWheelAutoTuner = new FlyWheelAutoTuner();
 
     // Controllers
     private final CommandXboxController driverController = new CommandXboxController(0);
@@ -49,17 +49,19 @@ public class RobotContainer {
         // ).onFalse(
         //     Commands.runOnce(() -> driveBaseContainer.driveHider())
         // );
-        driverController.leftTrigger().onTrue(new AlignToHub(driveBaseContainer.drivetrain, driverController)).onFalse(Commands.runOnce(() -> driveBaseContainer.driveHider()));
-        // Intake - Driver Controler Left Bumper
-        driverController.leftBumper().whileTrue(ComplexCommands.Intake(intake)).onFalse(ComplexCommands.StopIntake(intake));
-
-        // Stop Shooter - Left Bumper
-        driverController.rightBumper().onTrue(new ShooterStop(shooter));
-        // Shoot - Right Trigger
-        driverController.rightTrigger().onTrue(new ShooterShoot(shooter, () -> shooter.targetVelocity));
-        // Conveyor and Regulator - Driver A Button
-        driverController.a().whileTrue(Commands.run(() -> regulator.startAll(), regulator)).onFalse(Commands.run(() -> regulator.stopAll(), regulator));
         
+        // real controls
+        // driverController.leftTrigger().onTrue(new AlignToHub(driveBaseContainer.drivetrain, driverController)).onFalse(Commands.runOnce(() -> driveBaseContainer.driveHider()));
+        // // Intake - Driver Controler Left Bumper
+        // driverController.leftBumper().whileTrue(ComplexCommands.Intake(intake)).onFalse(ComplexCommands.StopIntake(intake));
+
+        // // Stop Shooter - Left Bumper
+        // driverController.rightBumper().onTrue(new ShooterStop(shooter));
+        // // Shoot - Right Trigger
+        // driverController.rightTrigger().onTrue(new ShooterShoot(shooter, () -> shooter.targetVelocity));
+        // // Conveyor and Regulator - Driver A Button
+        // driverController.a().whileTrue(Commands.run(() -> regulator.startAll(), regulator)).onFalse(Commands.run(() -> regulator.stopAll(), regulator));
+
         // driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
         // driverController.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
         // driverController.a().whileTrue(new InstantCommand(() -> regulator.startAll())).onFalse(new InstantCommand(() -> regulator.stopAll()));
@@ -85,6 +87,6 @@ public class RobotContainer {
     }
     
     public Command getAutonomousCommand() {
-        return Commands.none();
+        return this.driveBaseContainer.GetAutonCommand();
     }
 }
