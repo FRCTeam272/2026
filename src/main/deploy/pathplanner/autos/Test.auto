@@ -11,15 +11,15 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "TestCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "test path 2"
           }
         }
       ]
