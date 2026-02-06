@@ -33,8 +33,7 @@ public class RobotContainer {
 
     // public final Shooter shooter = new Shooter();
     // public final ConveyorAndRegulator regulator = new ConveyorAndRegulator();
-    // public final FlyWheelAutoTuner flyWheelAutoTuner = new FlyWheelAutoTuner();
-
+    
     // Controllers
     private final CommandXboxController driverController = new CommandXboxController(0);
 
@@ -52,16 +51,17 @@ public class RobotContainer {
         
         // real controls
         // driverController.leftTrigger().onTrue(new AlignToHub(driveBaseContainer.drivetrain, driverController)).onFalse(Commands.runOnce(() -> driveBaseContainer.driveHider()));
-        // // Intake - Driver Controler Left Bumper
+        // Intake - Driver Controler Left Bumper
         // driverController.leftBumper().whileTrue(ComplexCommands.Intake(intake)).onFalse(ComplexCommands.StopIntake(intake));
 
-        // // Stop Shooter - Left Bumper
+        // // // Stop Shooter - Left Bumper
         // driverController.rightBumper().onTrue(new ShooterStop(shooter));
         // // Shoot - Right Trigger
         // driverController.rightTrigger().onTrue(new ShooterShoot(shooter, () -> shooter.targetVelocity));
         // // Conveyor and Regulator - Driver A Button
         // driverController.a().whileTrue(Commands.run(() -> regulator.startAll(), regulator)).onFalse(Commands.run(() -> regulator.stopAll(), regulator));
 
+        // TEST CONTROLS
         // driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
         // driverController.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
         // driverController.a().whileTrue(new InstantCommand(() -> regulator.startAll())).onFalse(new InstantCommand(() -> regulator.stopAll()));
@@ -69,7 +69,7 @@ public class RobotContainer {
         //     @Override
         //     public void initialize() {
         //         super.initialize();
-        //         shooter.SpinWheel(0);
+        //         // shooter.SpinWheel(0);
         //         regulator.stopAll();
         //         intake.stop();
         //     }

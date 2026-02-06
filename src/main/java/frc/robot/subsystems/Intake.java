@@ -15,7 +15,7 @@ public class Intake extends SubsystemBase {
   SparkMAXContainer deployMotor;
   public final int intake_id = 2;
   public final int deploy_id = 3;
-  public final double defult_speed = .99;
+  public final double defult_speed = .20;
 
   public final double deploy_position = 10.0;
   public final double retract_position = 0; 
