@@ -18,9 +18,10 @@ import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.sub_containers.AutoContainer;
 import frc.robot.sub_containers.DriveBaseContainer;
+import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DashboardWriter;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.ConveyorAndRegulator;
+import frc.robot.subsystems.Regulator;
 import frc.robot.subsystems.Shooter;
 import frc.tuner.FlyWheelAutoTuner;
 import frc.robot.commands.ComplexCommands;
@@ -32,7 +33,8 @@ public class RobotContainer {
     // public final Intake intake = new Intake();
 
     // public final Shooter shooter = new Shooter();
-    // public final ConveyorAndRegulator regulator = new ConveyorAndRegulator();
+    public final Regulator regulator = new Regulator();
+    public final Conveyor conveyor = new Conveyor();
     
     // Controllers
     private final CommandXboxController driverController = new CommandXboxController(0);
@@ -59,7 +61,14 @@ public class RobotContainer {
         // // Shoot - Right Trigger
         // driverController.rightTrigger().onTrue(new ShooterShoot(shooter, () -> shooter.targetVelocity));
         // // Conveyor and Regulator - Driver A Button
-        // driverController.a().whileTrue(Commands.run(() -> regulator.startAll(), regulator)).onFalse(Commands.run(() -> regulator.stopAll(), regulator));
+        driverController.a().whileTrue(
+            new InstantCommand(() -> this.regulator.Load())
+            .alongWith(new InstantCommand(() -> this.conveyor.Load()))
+        ).onFalse(
+            new InstantCommand(() -> this.regulator.Stop()).alongWith(
+                new InstantCommand(() -> this.conveyor.Stop())
+            )
+        );
 
         // TEST CONTROLS
         // driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
