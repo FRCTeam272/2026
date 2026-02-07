@@ -30,9 +30,9 @@ public class RobotContainer {
     public final DriveBaseContainer driveBaseContainer; // HINT: looking for DriveBase Controls look in here
     // // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
-    // public final Intake intake = new Intake();
+    public final Intake intake = new Intake();
 
-    // public final Shooter shooter = new Shooter();
+    public final Shooter shooter = new Shooter();
     public final Regulator regulator = new Regulator();
     public final Conveyor conveyor = new Conveyor();
     

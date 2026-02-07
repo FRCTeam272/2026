@@ -83,13 +83,13 @@ public class Shooter extends SubsystemBase {
 
     // If we aren't connected to FMS, allow for dynamic PID tuning
     if(!DriverStation.isFMSAttached()){
-      final double p = SmartDashboard.getNumber("Shooter/P", shooterPID.kP);
-      final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
-      final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
-      final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
-      final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);  
+      // final double p = SmartDashboard.getNumber("Shooter/P", shooterPID.kP);
+      // final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
+      // final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
+      // final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
+      // final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);  
       this.targetVelocity = SmartDashboard.getNumber("TargetVelocity", this.targetVelocity);
-      System.out.println("" + targetVelocity);      
+      // System.out.println("" + targetVelocity);      
       // dynamicPID(p, i, d);
       // dynamicFeedForward(v, a);
 

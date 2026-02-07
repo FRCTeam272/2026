@@ -54,11 +54,11 @@ public class Conveyor extends SubsystemBase {
         // This method will be called once per scheduler run
         // if we don't see FMS, allow for dynamic PID tuning
         if (!DriverStation.isFMSAttached()) {
-            final double p = SmartDashboard.getNumber("Conveyor/P", conveyorPID.kP);
-            final double i = SmartDashboard.getNumber("Conveyor/I", conveyorPID.kI);
-            final double d = SmartDashboard.getNumber("Conveyor/D", conveyorPID.kD);
+            // final double p = SmartDashboard.getNumber("Conveyor/P", conveyorPID.kP);
+            // final double i = SmartDashboard.getNumber("Conveyor/I", conveyorPID.kI);
+            // final double d = SmartDashboard.getNumber("Conveyor/D", conveyorPID.kD);
 
-            dynamicPID(p, i, d);
+            // dynamicPID(p, i, d);
             
             this.converyorVelocity = SmartDashboard.getNumber("Conveyor/Velocity", converyorVelocity);
             this.converyorVoltage = SmartDashboard.getNumber("Conveyor/Voltage", converyorVoltage);
