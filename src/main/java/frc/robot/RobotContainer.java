@@ -34,7 +34,7 @@ public class RobotContainer {
 
     // public final Shooter shooter = new Shooter();
     // public final Regulator regulator = new Regulator();
-    public final Conveyor conveyor = new Conveyor();
+    // public final Conveyor conveyor = new Conveyor();
     
     // Controllers
     private final CommandXboxController driverController = new CommandXboxController(0);
@@ -90,7 +90,8 @@ public class RobotContainer {
                intake.intake();
                // conveyor.Load();
            }
-        }).onFalse(new InstantCommand(() -> intake.stop()).andThen(new InstantCommand(() -> conveyor.Stop())));
+        }).onFalse(new InstantCommand(() -> intake.stop()));
+        //.andThen(new InstantCommand(() -> conveyor.Stop())));
 
         // driverController.leftBumper().whileTrue(new InstantCommand(() -> intake.release())).onFalse(new InstantCommand(() -> intake.stop()));
         
