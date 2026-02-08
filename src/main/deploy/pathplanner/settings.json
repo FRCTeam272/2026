@@ -2,8 +2,17 @@
   "robotWidth": 0.826,
   "robotLength": 0.884,
   "holonomicMode": true,
-  "pathFolders": [],
-  "autoFolders": [],
+  "pathFolders": [
+    "CenterFieldSide",
+    "CenterHumanPlayerSide",
+    "FieldSideClimb",
+    "FieldSideSweep",
+    "HumanPlayerClimb",
+    "HumanPlayerSideSweep"
+  ],
+  "autoFolders": [
+    "New Folder"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

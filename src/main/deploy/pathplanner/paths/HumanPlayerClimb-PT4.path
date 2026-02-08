@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.548,
-        "y": 3.9782110912343462
+        "x": 0.42651136363636344,
+        "y": 2.9424772727272726
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2725760286225403,
-        "y": 3.9619856887298743
+        "x": 1.4265113636363633,
+        "y": 2.942477272727272
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HPPT3"
     },
     {
       "anchor": {
-        "x": 3.548,
-        "y": 3.9782110912343462
+        "x": 1.3438181818181816,
+        "y": 2.9424772727272726
       },
       "prevControl": {
-        "x": 3.298,
-        "y": 3.9782110912343462
+        "x": 0.3438181818181816,
+        "y": 2.9424772727272726
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "CenterEnd"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 0.4,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -45,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HumanPlayerClimb",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

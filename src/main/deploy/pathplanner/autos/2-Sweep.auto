@@ -5,35 +5,40 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerSideSweep-Start"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center - On Field"
+                  "pathName": "HumanPlayerSideSweep-Part2"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "DeployIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StartIntake"
-                      }
-                    }
-                  ]
+                  "name": "DeployAndStartIntake"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerSideSweep-Part3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerSideSweep-Part4"
           }
         },
         {
@@ -45,13 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartingSidePt3"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "HumanPlayerSideSweep-Part5"
           }
         },
         {

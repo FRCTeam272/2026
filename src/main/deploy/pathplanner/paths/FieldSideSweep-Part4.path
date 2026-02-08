@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.951920454545454,
-        "y": 5.952068181818181
+        "x": 7.641284090909091,
+        "y": 4.818318181818182
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.951920454545454,
-        "y": 5.952068181818181
+        "x": 7.656166141811971,
+        "y": 5.169500475683454
       },
       "isLocked": false,
-      "linkedName": "OnFieldPt1"
+      "linkedName": "FieldSideSweepPt3"
     },
     {
       "anchor": {
-        "x": 0.6120340909055537,
-        "y": 5.952068181818181
+        "x": 6.239556818181818,
+        "y": 7.4465568181818185
       },
       "prevControl": {
-        "x": -0.3879659090944463,
-        "y": 5.952068181818181
+        "x": 6.004078582827901,
+        "y": 7.785118206833458
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "OnFieldPt2"
+      "linkedName": "FieldSideSweepPt4"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -177.66269414065926
+    "rotation": -22.380135051959677
   },
   "reversed": false,
-  "folder": null,
+  "folder": "FieldSideSweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 178.6597676138857
+    "rotation": -92.43664824681025
   },
   "useDefaultConstraints": true
 }

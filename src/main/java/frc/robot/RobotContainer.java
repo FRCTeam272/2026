@@ -32,8 +32,8 @@ public class RobotContainer {
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     public final Intake intake = new Intake();
 
-    public final Shooter shooter = new Shooter();
-    public final Regulator regulator = new Regulator();
+    // public final Shooter shooter = new Shooter();
+    // public final Regulator regulator = new Regulator();
     public final Conveyor conveyor = new Conveyor();
     
     // Controllers
@@ -61,15 +61,15 @@ public class RobotContainer {
         // // Shoot - Right Trigger
         // driverController.rightTrigger().onTrue(new ShooterShoot(shooter, () -> shooter.targetVelocity));
         // // Conveyor and Regulator - Driver A Button
-        driverController.a().whileTrue(
-            new InstantCommand(() -> this.regulator.Load())
-            .alongWith(new InstantCommand(() -> this.conveyor.Load()))
-        ).onFalse(
-            new InstantCommand(() -> this.regulator.Stop()).alongWith(
-                new InstantCommand(() -> this.conveyor.Stop())
-            )
-        );
-
+        // driverController.a().whileTrue(
+        //     new InstantCommand(() -> this.regulator.Load())
+        //     .alongWith(new InstantCommand(() -> this.conveyor.Load()))
+        // ).onFalse(
+        //     new InstantCommand(() -> this.regulator.Stop()).alongWith(
+        //         new InstantCommand(() -> this.conveyor.Stop())
+        //     )
+        // );
+        // driverController.a().whileTrue(new InstantCommand(() -> conveyor.Load())).onFalse(new InstantCommand(() -> conveyor.Stop()));
         // TEST CONTROLS
         // driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
         // driverController.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
@@ -83,13 +83,14 @@ public class RobotContainer {
         //         intake.stop();
         //     }
         // });
-        // driverController.leftTrigger().whileTrue(new Command() {
-        //    @Override
-        //    public void initialize() {
-        //        super.initialize();
-        //        intake.intake();
-        //    }
-        // }).onFalse(new InstantCommand(() -> intake.stop()));
+        driverController.leftTrigger().whileTrue(new Command() {
+           @Override
+           public void initialize() {
+               super.initialize();
+               intake.intake();
+               // conveyor.Load();
+           }
+        }).onFalse(new InstantCommand(() -> intake.stop()).andThen(new InstantCommand(() -> conveyor.Stop())));
 
         // driverController.leftBumper().whileTrue(new InstantCommand(() -> intake.release())).onFalse(new InstantCommand(() -> intake.stop()));
         

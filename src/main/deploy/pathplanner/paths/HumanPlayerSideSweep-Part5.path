@@ -3,48 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5185568181791007,
-        "y": 4.0040795454545455
+        "x": 5.672681818181818,
+        "y": 0.63375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7558522727245554,
-        "y": 3.9834659090909303
+        "x": 6.384023858413,
+        "y": 0.627145484770752
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HPSweepPT4"
     },
     {
       "anchor": {
-        "x": 2.312659090906374,
-        "y": 4.0040795454545455
+        "x": 3.2505795454545447,
+        "y": 0.63375
       },
       "prevControl": {
-        "x": 2.4775681818154642,
-        "y": 3.787636363636385
+        "x": 2.189235147005403,
+        "y": 0.6366616990953755
       },
       "nextControl": {
-        "x": 2.0002777718772444,
-        "y": 4.41408002668024
+        "x": 3.9849583045506454,
+        "y": 0.6317353005568714
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.0552272727228902,
-        "y": 4.591568181818182
+        "x": 2.5600227272727274,
+        "y": 2.385909090909091
       },
       "prevControl": {
-        "x": 1.5500738636319815,
-        "y": 4.565801136363637
+        "x": 2.4906084698983584,
+        "y": 2.1457390243454895
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -58,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 31.660751096636652
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HumanPlayerSideSweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 1.3971810272937668
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

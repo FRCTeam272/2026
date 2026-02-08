@@ -7,31 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start OnField Side"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.001
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DeployIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StartIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "On Field Pt2 "
+            "pathName": "FieldSideSweep-Start"
           }
         },
         {
@@ -41,7 +17,26 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "StartingSidePt3"
+                  "pathName": "FieldSideSweep-Part2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployAndStartIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "FieldSideSweep-Part3"
                 }
               },
               {
@@ -54,9 +49,15 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 2.0
+            "pathName": "FieldSideSweep-Part4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FieldSideSweep-Part5"
           }
         },
         {

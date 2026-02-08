@@ -17,9 +17,11 @@ public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   
   TalonFxContainer flywheel;
+  TalonFxContainer flywheelFollower;
   SparkMAXContainer hood;
 
   final int FLYWHEEL_LOCATION = 4;
+  final int FLYWHEEL_FOLLOWER_LOCATION = 6;
   final int HOOD_LOCATION = 5;
   final PIDSettings shooterPID = Constants.SHOOTER_PID_SETTINGS;
   int speedThreshold = 50;
@@ -29,12 +31,21 @@ public class Shooter extends SubsystemBase {
 
   public Shooter() {
     flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
-
+    flywheelFollower = new TalonFxContainer(FLYWHEEL_FOLLOWER_LOCATION, true);
     flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
     flywheel.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
     flywheel.setBreakMode(false);
     flywheel.configurator.Audio.BeepOnConfig = false;
     flywheel.applyConfig();
+
+    flywheelFollower.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
+    flywheelFollower.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
+    flywheelFollower.setBreakMode(false);
+    flywheelFollower.configurator.Audio.BeepOnConfig = false;
+    flywheelFollower.applyConfig();
+
+    flywheelFollower.setupAsFollowerMotor(flywheel, false);
+
     // hood = new SparkMAXContainer(HOOD_LOCATION);  
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
 

@@ -18,8 +18,8 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class DriveBaseContainer {
     public AutoContainer autoContainer;
-    public static double speedFactor = .1;
-    public static double rotationFactor = .1;
+    public static double speedFactor = .2;
+    public static double rotationFactor = .2;
     
     static {
         edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber("Speed Factor", speedFactor);
@@ -54,8 +54,8 @@ public class DriveBaseContainer {
     public Command driveHider(){
         if(TunerConstants.isTestBot){
             return drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
+                drive.withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+                    .withVelocityY(joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
             );
         } else {

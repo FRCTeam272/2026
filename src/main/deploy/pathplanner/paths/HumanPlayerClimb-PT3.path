@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.9933863636363633,
+        "y": 2.221
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.2566298016699946,
+        "y": 2.2406469830718407
+      },
+      "isLocked": false,
+      "linkedName": "HPPT2"
+    },
+    {
+      "anchor": {
+        "x": 0.42651136363636344,
+        "y": 2.9424772727272726
+      },
+      "prevControl": {
+        "x": 0.17678774409679385,
+        "y": 2.9542294573776386
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HPPT3"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "HumanPlayerClimb",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 27.18111108547721
+  },
+  "useDefaultConstraints": true
+}
