@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.commands.drivetrain.AlignToHub;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeStop;
@@ -24,7 +25,9 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Regulator;
 import frc.robot.subsystems.Shooter;
 import frc.tuner.FlyWheelAutoTuner;
+import frc.lib.utils.TrimPot;
 import frc.robot.commands.ComplexCommands;
+import frc.robot.commands.TrimPotCommands;
 
 public class RobotContainer {
     // Sub-Containers
@@ -44,6 +47,14 @@ public class RobotContainer {
         driveBaseContainer = new DriveBaseContainer(driverController);
         // configureBindings();
         configurTestBindings();
+
+        RobotModeTriggers.disabled().onTrue(new InstantCommand(() -> {
+            intake.stop();
+            shooter.SpinWheel(0);
+            regulator.Stop();
+            conveyor.Stop();
+
+        }).andThen(TrimPotCommands.SaveTrimPotValues(shooter, intake)));
     }
 
     private void configurTestBindings() {
