@@ -25,7 +25,6 @@ public class IntakeStop extends Command {
   @Override
   public void execute() {
     intake.stop();
-    System.out.println("Hey Chloe");
   }
 
   // Called once the command ends or is interrupted.
