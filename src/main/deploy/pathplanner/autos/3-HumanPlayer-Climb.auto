@@ -5,19 +5,31 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "CenterHumanPlayerSide-Start"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "SwipePt1"
+                  "name": "SpinFlywheel"
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "DeployIntake"
+                  "pathName": "HumanPlayerClimb-PT2"
                 }
               }
             ]
@@ -26,49 +38,37 @@
         {
           "type": "named",
           "data": {
-            "name": "StartIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Swipe PT 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Swipe PT 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SpinFlywheel"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Swipe PT 4"
+            "name": "Shoot"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 3.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "DeployClimber"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerClimb-PT3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HumanPlayerClimb-PT4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Climb"
           }
         }
       ]

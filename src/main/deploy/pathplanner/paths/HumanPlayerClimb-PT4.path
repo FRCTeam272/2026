@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.446409090909091,
-        "y": 7.5805454545454545
+        "x": 0.42651136363636344,
+        "y": 2.9424772727272726
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6338103756708406,
-        "y": 7.693828264758498
+        "x": 1.4265113636363633,
+        "y": 2.942477272727272
       },
       "isLocked": false,
-      "linkedName": "OnFieldStart"
+      "linkedName": "HPPT3"
     },
     {
       "anchor": {
-        "x": 1.951920454545454,
-        "y": 5.952068181818181
+        "x": 1.3438181818181816,
+        "y": 2.9424772727272726
       },
       "prevControl": {
-        "x": 3.1265474060822895,
-        "y": 6.00638640429338
+        "x": 0.3438181818181816,
+        "y": 2.9424772727272726
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "OnFieldPt1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 0.4,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 178.6597676138857
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HumanPlayerClimb",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -36,7 +36,7 @@ public class DriveBaseContainer {
     // private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     // private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
-    private final Telemetry logger = new Telemetry(MaxSpeed.getAsDouble());
+    // private final Telemetry logger = new Telemetry(MaxSpeed.getAsDouble());
     CommandXboxController joystick;
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
@@ -47,15 +47,15 @@ public class DriveBaseContainer {
     
         if(!TunerConstants.isTestBot){
             SmartDashboard.putString("MESSAGE", "we are at autoSetup");
-            autoContainer = new AutoContainer(drivetrain); 
+            autoContainer = new AutoContainer(); 
         }
     }
 
     public Command driveHider(){
         if(TunerConstants.isTestBot){
             return drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
+                drive.withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+                    .withVelocityY(joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
             );
         } else {
@@ -99,7 +99,9 @@ public class DriveBaseContainer {
         // Reset the field-centric heading on left bumper press.
         joystick.start().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
+        // if(!TunerConstants.isTestBot){
+        //     drivetrain.registerTelemetry(logger::telemeterize);
+        // }
     }
 
     public Command GetAutonCommand(){

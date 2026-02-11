@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5185568181791007,
-        "y": 4.0040795454545455
+        "x": 1.6633295454545451,
+        "y": 6.07575
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.7558522727245554,
-        "y": 3.9834659090909303
+        "x": 2.078886802844853,
+        "y": 6.079962051880624
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "FeildSideClimbPT1"
     },
     {
       "anchor": {
-        "x": 2.312659090906374,
-        "y": 4.0040795454545455
+        "x": 0.55,
+        "y": 6.076
       },
       "prevControl": {
-        "x": 2.4775681818154642,
-        "y": 3.787636363636385
-      },
-      "nextControl": {
-        "x": 2.0002777718772444,
-        "y": 4.41408002668024
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.0552272727228902,
-        "y": 4.591568181818182
-      },
-      "prevControl": {
-        "x": 1.5500738636319815,
-        "y": 4.565801136363637
+        "x": 0.30000270819841274,
+        "y": 6.074836345467071
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "FeildSideClimbPT2"
     }
   ],
   "rotationTargets": [],
@@ -58,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 179.7549296828856
   },
   "reversed": false,
-  "folder": null,
+  "folder": "FieldSideClimb",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 1.3971810272937668
+    "rotation": -178.87669728592448
   },
   "useDefaultConstraints": true
 }

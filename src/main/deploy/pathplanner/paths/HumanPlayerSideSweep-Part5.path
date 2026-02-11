@@ -3,64 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.9209999999999998,
-        "y": 6.5807840909090904
+        "x": 5.672681818181818,
+        "y": 0.63375
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.921,
-        "y": 6.5807840909090904
+        "x": 6.384023858413,
+        "y": 0.627145484770752
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HPSweepPT4"
     },
     {
       "anchor": {
-        "x": 3.4361022727272723,
-        "y": 6.5807840909090904
+        "x": 3.2505795454545447,
+        "y": 0.63375
       },
       "prevControl": {
-        "x": 2.397368352271271,
-        "y": 6.6500330189394905
+        "x": 2.189235147005403,
+        "y": 0.6366616990953755
       },
       "nextControl": {
-        "x": 4.209113636363636,
-        "y": 6.529249999999999
+        "x": 3.9849583045506454,
+        "y": 0.6317353005568714
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.271193181818181,
-        "y": 5.148136363636363
+        "x": 2.5600227272727274,
+        "y": 2.385909090909091
       },
       "prevControl": {
-        "x": 2.724931818181818,
-        "y": 6.147897727272726
-      },
-      "nextControl": {
-        "x": 3.8174545454545448,
-        "y": 4.148375
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.9209999999999998,
-        "y": 5.148136363636363
-      },
-      "prevControl": {
-        "x": 2.99290909090909,
-        "y": 5.106909090909092
+        "x": 2.4906084698983584,
+        "y": 2.1457390243454895
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -74,10 +63,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 89.18154453831139
+    "rotation": 31.660751096636652
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HumanPlayerSideSweep",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.5192727272727271,
-        "y": 0.6646704545454554
+        "x": 7.651590909090908,
+        "y": 3.138306818181818
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.519272727272727,
-        "y": 0.6646704545454556
+        "x": 8.107847533460244,
+        "y": 3.230339220454897
       },
       "isLocked": false,
-      "linkedName": "HPSidePt1"
+      "linkedName": "HPSweepPT3"
     },
     {
       "anchor": {
-        "x": 2.8279999999999994,
-        "y": 2.2003863636363645
+        "x": 5.672681818181818,
+        "y": 0.63375
       },
       "prevControl": {
-        "x": 1.8279999999999994,
-        "y": 2.2003863636363645
+        "x": 6.433526446003755,
+        "y": 1.9924011211105994
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HPSweepPT4"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 43.21008939175389
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HumanPlayerSideSweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }

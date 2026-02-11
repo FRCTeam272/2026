@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.548,
-        "y": 3.9782110912343462
+        "x": 3.6010113636363634,
+        "y": 0.39669318181818203
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.2725760286225403,
-        "y": 3.9619856887298743
+        "x": 4.086462398336717,
+        "y": 0.3729115571384878
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HPStart"
     },
     {
       "anchor": {
-        "x": 3.548,
-        "y": 3.9782110912343462
+        "x": 0.4162045454545453,
+        "y": 0.5512954545454545
       },
       "prevControl": {
-        "x": 3.298,
-        "y": 3.9782110912343462
+        "x": -0.2086803482564834,
+        "y": 0.5825473487530115
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "CenterEnd"
+      "linkedName": "HPPT1"
     }
   ],
   "rotationTargets": [],
@@ -45,7 +45,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HumanPlayerClimb",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

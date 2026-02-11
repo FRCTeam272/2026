@@ -11,10 +11,8 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class AutoContainer {
     private SendableChooser<Command> autoChooser;
-    private CommandSwerveDrivetrain drivetrain; 
         
-    public AutoContainer(CommandSwerveDrivetrain drivetrain){
-        this.drivetrain = drivetrain;
+    public AutoContainer(){
         // this.drivetrain.configureAutoBuilder();
         this.configureAutoBindings();
     }

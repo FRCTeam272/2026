@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.5494772727272723,
+        "y": 4.014386363636364
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.062167635704782,
+        "y": 4.457143183519443
+      },
+      "isLocked": false,
+      "linkedName": "CenterStart"
+    },
+    {
+      "anchor": {
+        "x": 0.4162045454545453,
+        "y": 0.5512954545454545
+      },
+      "prevControl": {
+        "x": 0.1662058162572486,
+        "y": 0.5520925741956291
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HPPT1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "CenterHumanPlayerSide",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -179.40934278535332
+  },
+  "useDefaultConstraints": true
+}

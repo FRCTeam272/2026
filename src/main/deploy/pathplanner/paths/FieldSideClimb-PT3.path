@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.55,
+        "y": 6.076
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.8683231154099444,
+        "y": 6.020968675565223
+      },
+      "isLocked": false,
+      "linkedName": "FeildSideClimbPT2"
+    },
+    {
+      "anchor": {
+        "x": 2.0859090909090905,
+        "y": 5.230590909090909
+      },
+      "prevControl": {
+        "x": 0.5067412177395143,
+        "y": 5.438280104999246
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "FeildSideClimbPT3"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -31.70142966950558
+  },
+  "reversed": false,
+  "folder": "FieldSideClimb",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.7549296828856
+  },
+  "useDefaultConstraints": true
+}

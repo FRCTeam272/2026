@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.548,
-        "y": 3.9782110912343462
+        "x": 6.03342045454121,
+        "y": 7.467170454540414
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.548,
-        "y": 3.9782110912343462
+        "x": 7.03342045454121,
+        "y": 7.467170454540414
       },
       "isLocked": false,
-      "linkedName": "CenterEnd"
+      "linkedName": "FieldSideSweepPt1"
     },
     {
       "anchor": {
-        "x": 2.2990518783542035,
-        "y": 5.8279069767441865
+        "x": 7.641284090909091,
+        "y": 6.766306818181818
       },
       "prevControl": {
-        "x": 2.282826475849731,
-        "y": 4.237817531305903
-      },
-      "nextControl": {
-        "x": 2.309693968931826,
-        "y": 6.870831853351187
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 0.6120340909055537,
-        "y": 5.952068181818181
-      },
-      "prevControl": {
-        "x": 1.1636977760576115,
-        "y": 6.000744389331597
+        "x": 6.641284090909091,
+        "y": 6.766306818181818
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "OnFieldPt2"
+      "linkedName": "FieldSideSweepPt2"
     }
   ],
   "rotationTargets": [],
@@ -58,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -177.66269414065926
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "FieldSideSweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

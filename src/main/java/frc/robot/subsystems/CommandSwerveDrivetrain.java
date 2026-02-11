@@ -226,9 +226,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      * @return Command to run
      */
     public Command applyRequest(Supplier<SwerveRequest> request) {
-        return run(() -> this.setControl(request.get())).andThen(
-                new InstantCommand(
-                        () -> System.out.println("Executing Snerve")));
+        return run(() -> this.setControl(request.get()));
     }
 
     /**
