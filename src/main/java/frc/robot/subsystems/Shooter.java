@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
 import frc.lib.utils.TalonFxContainer;
+import frc.lib.utils.TrimPot;
 import frc.robot.Constants;
 import frc.lib.utils.PIDSettings;
 
@@ -26,6 +27,9 @@ public class Shooter extends SubsystemBase {
   final PIDSettings shooterPID = Constants.SHOOTER_PID_SETTINGS;
   int speedThreshold = 50;
   int angleThreshold = 2;
+
+  public TrimPot hoodTrim = new TrimPot("HoodTrim");
+  public TrimPot flywheelTrim = new TrimPot("FlywheelTrim");
 
   public double targetVelocity = 4000;
 
@@ -62,10 +66,10 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean SpinWheel(double target_velocity){
-    if(target_velocity > 0) target_velocity = -target_velocity;
-    flywheel.setVelocity(target_velocity);
+    if(target_velocity == 0) return TrueStop();
+    target_velocity = -(Math.abs(target_velocity) + flywheelTrim.adjusterValue);
+    return flywheel.setVelocity(target_velocity, 250);
     // flywheel.motor.set(-.75);
-    return true;
     
     // forces flywheel to be negative
     // if(target_velocity > 0) target_velocity = -target_velocity;
@@ -74,9 +78,9 @@ public class Shooter extends SubsystemBase {
     // return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
-  // public boolean AdjustHood(double target_angle){
-  //   return hood.goToPostion(target_angle, angleThreshold);
-  // }
+  public boolean AdjustHood(double target_angle){
+    return hood.goToPostion(target_angle + hoodTrim.adjusterValue, angleThreshold);
+  }
 
   private void dynamicPID(double kP, double kI, double kD){
     flywheel.assignPIDValues(kP, kI, kD);

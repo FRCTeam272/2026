@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.SparkMAXContainer;
 import frc.lib.utils.TalonFxContainer;
+import frc.lib.utils.TrimPot;
 
 
 public class Intake extends SubsystemBase {
@@ -18,11 +19,15 @@ public class Intake extends SubsystemBase {
   public final double defult_speed = .75;
 
   public final double deploy_position = 10.0;
-  public final double retract_position = 0; 
+  public final double retract_position = 0;
+
+  public TrimPot deployTrim;
 
   public Intake() {
     rollerMotor= new TalonFxContainer(intake_id, true);
     deployMotor = new SparkMAXContainer(deploy_id);
+    deployMotor.assignPIDValues(0.0001, 0, 0);
+    deployTrim = new TrimPot("IntakeDeploy");
   }
   
   public void intake() {
@@ -38,7 +43,7 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean deploy() {
-    return deployMotor.goToPostion(deploy_position);
+    return deployMotor.goToPostion(deploy_position + deployTrim.adjusterValue);
   }
 
   public boolean retract() {

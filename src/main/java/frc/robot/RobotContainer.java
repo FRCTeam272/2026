@@ -25,6 +25,7 @@ import frc.robot.subsystems.Regulator;
 import frc.robot.subsystems.Shooter;
 import frc.tuner.FlyWheelAutoTuner;
 import frc.robot.commands.ComplexCommands;
+
 public class RobotContainer {
     // Sub-Containers
     public final DriveBaseContainer driveBaseContainer; // HINT: looking for DriveBase Controls look in here
@@ -32,72 +33,111 @@ public class RobotContainer {
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     public final Intake intake = new Intake();
 
-    // public final Shooter shooter = new Shooter();
-    // public final Regulator regulator = new Regulator();
-    // public final Conveyor conveyor = new Conveyor();
-    
+    public final Shooter shooter = new Shooter();
+    public final Regulator regulator = new Regulator();
+    public final Conveyor conveyor = new Conveyor();
+
     // Controllers
     private final CommandXboxController driverController = new CommandXboxController(0);
 
     public RobotContainer() {
         driveBaseContainer = new DriveBaseContainer(driverController);
-        configureBindings();
+        // configureBindings();
+        configurTestBindings();
+    }
+
+    private void configurTestBindings() {
+        driverController.rightTrigger()
+                .whileTrue(new InstantCommand(() -> {
+                    conveyor.Load();
+                    regulator.Load();
+                }, conveyor))
+                .onFalse(new InstantCommand(() -> {
+                    conveyor.Stop();
+                    regulator.Stop();
+                }));
+        driverController.leftTrigger()
+                .whileTrue(new InstantCommand(() -> {
+                    intake.deploy();
+                    // intake.intake();
+                })).onFalse(new InstantCommand(() -> {
+                    // intake.stop();
+                    intake.retract();
+                }));
+        driverController.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
+        driverController.b().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
+        driverController.a().onTrue(new InstantCommand(() -> {
+            shooter.AdjustHood(10);
+        }));
+        driverController.x().onTrue(new InstantCommand(() -> {
+            shooter.AdjustHood(0);
+        }));
     }
 
     private void configureBindings() {
         // driverController.leftTrigger().onTrue(
-        //     new AlignToHub(driveBaseContainer.drivetrain, driverController)
+        // new AlignToHub(driveBaseContainer.drivetrain, driverController)
         // ).onFalse(
-        //     Commands.runOnce(() -> driveBaseContainer.driveHider())
+        // Commands.runOnce(() -> driveBaseContainer.driveHider())
         // );
-        
+
         // real controls
-        // driverController.leftTrigger().onTrue(new AlignToHub(driveBaseContainer.drivetrain, driverController)).onFalse(Commands.runOnce(() -> driveBaseContainer.driveHider()));
+        // driverController.leftTrigger().onTrue(new
+        // AlignToHub(driveBaseContainer.drivetrain,
+        // driverController)).onFalse(Commands.runOnce(() ->
+        // driveBaseContainer.driveHider()));
         // Intake - Driver Controler Left Bumper
         // driverController.leftBumper().whileTrue(ComplexCommands.Intake(intake)).onFalse(ComplexCommands.StopIntake(intake));
 
         // // // Stop Shooter - Left Bumper
         // driverController.rightBumper().onTrue(new ShooterStop(shooter));
         // // Shoot - Right Trigger
-        // driverController.rightTrigger().onTrue(new ShooterShoot(shooter, () -> shooter.targetVelocity));
+        // driverController.rightTrigger().onTrue(new ShooterShoot(shooter, () ->
+        // shooter.targetVelocity));
         // // Conveyor and Regulator - Driver A Button
         // driverController.a().whileTrue(
-        //     new InstantCommand(() -> this.regulator.Load())
-        //     .alongWith(new InstantCommand(() -> this.conveyor.Load()))
+        // new InstantCommand(() -> this.regulator.Load())
+        // .alongWith(new InstantCommand(() -> this.conveyor.Load()))
         // ).onFalse(
-        //     new InstantCommand(() -> this.regulator.Stop()).alongWith(
-        //         new InstantCommand(() -> this.conveyor.Stop())
-        //     )
+        // new InstantCommand(() -> this.regulator.Stop()).alongWith(
+        // new InstantCommand(() -> this.conveyor.Stop())
+        // )
         // );
-        // driverController.a().whileTrue(new InstantCommand(() -> conveyor.Load())).onFalse(new InstantCommand(() -> conveyor.Stop()));
+        // driverController.a().whileTrue(new InstantCommand(() ->
+        // conveyor.Load())).onFalse(new InstantCommand(() -> conveyor.Stop()));
         // TEST CONTROLS
-        // driverController.rightTrigger().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
+        // driverController.rightTrigger().onTrue(new InstantCommand(() ->
+        // shooter.SpinWheel(shooter.targetVelocity)));
         // driverController.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
-        // driverController.a().whileTrue(new InstantCommand(() -> regulator.startAll())).onFalse(new InstantCommand(() -> regulator.stopAll()));
+        // driverController.a().whileTrue(new InstantCommand(() ->
+        // regulator.startAll())).onFalse(new InstantCommand(() ->
+        // regulator.stopAll()));
         // driverController.b().onTrue(new Command() {
-        //     @Override
-        //     public void initialize() {
-        //         super.initialize();
-        //         // shooter.SpinWheel(0);
-        //         regulator.stopAll();
-        //         intake.stop();
-        //     }
-        // });
-        driverController.leftTrigger().whileTrue(new Command() {
-           @Override
-           public void initialize() {
-               super.initialize();
-               intake.intake();
-               // conveyor.Load();
-           }
-        }).onFalse(new InstantCommand(() -> intake.stop()));
-        //.andThen(new InstantCommand(() -> conveyor.Stop())));
+        // @Override
+        // public void initialize() {
+        // super.initialize();
+        // // shooter.SpinWheel(0);
+        // regulator.stopAll();
+        // intake.stop();
+        // }
+        // // });
+        // driverController.leftTrigger().whileTrue(new Command() {
+        // @Override
+        // public void initialize() {
+        // super.initialize();
+        // intake.intake();
+        // // conveyor.Load();
+        // }
+        // }).onFalse(new InstantCommand(() -> intake.stop()));
+        // .andThen(new InstantCommand(() -> conveyor.Stop())));
 
-        // driverController.leftBumper().whileTrue(new InstantCommand(() -> intake.release())).onFalse(new InstantCommand(() -> intake.stop()));
-        
+        // driverController.leftBumper().whileTrue(new InstantCommand(() ->
+        // intake.release())).onFalse(new InstantCommand(() -> intake.stop()));
+
     }
-    
+
     public Command getAutonomousCommand() {
-        return this.driveBaseContainer.GetAutonCommand();
+        return Commands.none();
+        // return this.driveBaseContainer.GetAutonCommand();
     }
 }

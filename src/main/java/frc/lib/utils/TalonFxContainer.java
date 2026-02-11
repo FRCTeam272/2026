@@ -206,6 +206,12 @@ public class TalonFxContainer implements MotorContainer{
         return getVelocity() == target_velocity;
     }
 
+    public boolean setVelocity(double target_velocity, double velocityThreshold){
+        // this.motor.setControl(null)
+        motor.setControl(velocityRequest.withVelocity(target_velocity));
+        return Math.abs(getVelocity()) - Math.abs(target_velocity) < velocityThreshold;
+    }
+
     @Override
     public void getPID(String key) {
         motor.getConfigurator().refresh(this.configurator);
