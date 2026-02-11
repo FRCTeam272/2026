@@ -31,7 +31,6 @@ public class ShooterShoot extends Command {
   @Override
   public void execute() {
     shooter.SpinWheel(speed.getAsDouble());
-    System.out.println("Hi Sean");
   }
 
   // Called once the command ends or is interrupted.

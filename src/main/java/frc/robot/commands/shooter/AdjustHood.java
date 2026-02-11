@@ -24,7 +24,6 @@ public class AdjustHood extends Command{
   @Override
   public void execute() {
     // shooter.AdjustHood(50);
-    System.out.println("Hey Sean");
   }
 
   // Called once the command ends or is interrupted.

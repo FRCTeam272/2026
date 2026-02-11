@@ -103,8 +103,7 @@ public class Shooter extends SubsystemBase {
       // final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
       // final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
       // final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);  
-      this.targetVelocity = SmartDashboard.getNumber("TargetVelocity", this.targetVelocity);
-      // System.out.println("" + targetVelocity);      
+      this.targetVelocity = SmartDashboard.getNumber("TargetVelocity", this.targetVelocity);      
       // dynamicPID(p, i, d);
       // dynamicFeedForward(v, a);
 
