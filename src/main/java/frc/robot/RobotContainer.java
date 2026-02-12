@@ -20,15 +20,14 @@ import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.sub_containers.AutoContainer;
 import frc.robot.sub_containers.DriveBaseContainer;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.DashboardWriter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Regulator;
 import frc.robot.subsystems.Shooter;
-import frc.tuner.FlyWheelAutoTuner;
+
 import frc.lib.controllers.LC_2026Custom;
-import frc.lib.utils.TrimPot;
-import frc.robot.commands.ComplexCommands;
 import frc.robot.commands.TrimPotCommands;
 
 public class RobotContainer {
@@ -41,6 +40,7 @@ public class RobotContainer {
     public final Shooter shooter = new Shooter();
     public final Regulator regulator = new Regulator();
     public final Conveyor conveyor = new Conveyor();
+    // public final Climber climber = new Climber();
 
     // Controllers
     private final CommandXboxController DC = new CommandXboxController(0);
@@ -55,7 +55,7 @@ public class RobotContainer {
             shooter.SpinWheel(0);
             regulator.Stop();
             conveyor.Stop();
-
+            // climber.Stop();
         }).andThen(TrimPotCommands.SaveTrimPotValues(shooter, intake)));
     }
 
@@ -106,6 +106,11 @@ public class RobotContainer {
         OC.hoodTrimPotUpButton.onTrue(new InstantCommand(() -> shooter.hoodTrim.adjusterValue += 1));
         OC.hoodTrimPotDownButton.onTrue(new InstantCommand(() -> shooter.hoodTrim.adjusterValue -= 1));
         
+        // OC.ClimbTrimPotDownButton.onTrue(new InstantCommand(() -> climber.trim.adjusterValue -= 1));
+        // OC.ClimbTrimPotUpButton.onTrue(new InstantCommand(() -> climber.trim.adjusterValue += 1));
+        // OC.ClimberRaise.onTrue(new InstantCommand(() -> climber.Raise()));
+        // OC.ClimberLower.onTrue(new InstantCommand(() -> climber.Lower()));
+        // OC.ClimberZero.onTrue(new InstantCommand(() -> climber.Zero()));
     }
 
     public Command getAutonomousCommand() {

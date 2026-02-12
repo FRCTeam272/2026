@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -19,6 +20,16 @@ public class TrimPotCommands {
             shooter.hoodTrim.saveAdjusterValue();
             shooter.flywheelTrim.saveAdjusterValue();
             intake.deployTrim.saveAdjusterValue();
+
+        });
+    }
+
+    public static Command SaveTrimPotValues(Shooter shooter, Intake intake, Climber climber) {
+        return new InstantCommand(() -> {
+            shooter.hoodTrim.saveAdjusterValue();
+            shooter.flywheelTrim.saveAdjusterValue();
+            intake.deployTrim.saveAdjusterValue();
+            climber.trim.saveAdjusterValue();
         });
     }
 
