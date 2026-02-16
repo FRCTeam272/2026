@@ -12,14 +12,14 @@ public class Regulator extends SubsystemBase {
     public SparkMAXContainer regulatorMotor;
     public final int REGULATOR_LOCATION = 8;
     private static PIDSettings regulatorPID = Constants.REGULATOR_PID_SETTINGS;
-    private double regulatorVoltage = .99;
+    private double regulatorSpeed = -.99;
     private double regulatorVelocity = 1500;
 
     public Regulator() {
         regulatorMotor = new SparkMAXContainer(REGULATOR_LOCATION);
         regulatorMotor.assignPIDValues(regulatorPID.kP, regulatorPID.kI, regulatorPID.kD);
 
-        SmartDashboard.putNumber("Regulator/Velocity", regulatorVelocity);
+        SmartDashboard.putNumber("Regulator/Speed", regulatorVelocity);
 
         SmartDashboard.putNumber("Regulator/P", regulatorPID.kP);
         SmartDashboard.putNumber("Regulator/I", regulatorPID.kI);
@@ -32,7 +32,7 @@ public class Regulator extends SubsystemBase {
         if (RegulatorUsePID) {
             regulatorMotor.setVelocity(regulatorVelocity);
         } else {
-            regulatorMotor.motor.set(regulatorVoltage);
+            regulatorMotor.motor.set(regulatorSpeed);
         }
     }
 
@@ -40,7 +40,7 @@ public class Regulator extends SubsystemBase {
         if (RegulatorUsePID) {
             regulatorMotor.setVelocity(-regulatorVelocity);
         } else {
-            regulatorMotor.motor.set(-regulatorVoltage);
+            regulatorMotor.motor.set(-regulatorSpeed);
         }
     }
 
@@ -57,15 +57,17 @@ public class Regulator extends SubsystemBase {
         // This method will be called once per scheduler run
         // if we don't see FMS, allow for dynamic PID tuning
         if (!DriverStation.isFMSAttached()) {
-            // final double rp = SmartDashboard.getNumber("Regulator/P", regulatorPID.kP);
-            // final double ri = SmartDashboard.getNumber("Regulator/I", regulatorPID.kI);
-            // final double rd = SmartDashboard.getNumber("Regulator/D", regulatorPID.kD);
+            final double rp = SmartDashboard.getNumber("Regulator/P", regulatorPID.kP);
+            final double ri = SmartDashboard.getNumber("Regulator/I", regulatorPID.kI);
+            final double rd = SmartDashboard.getNumber("Regulator/D", regulatorPID.kD);
+            
+            if(rp != regulatorPID.kP || ri != regulatorPID.kI || rd != regulatorPID.kD){
+                dynamicRegulatorPID(rp, ri, rd);
+            }
 
-            // dynamicRegulatorPID(rp, ri, rd);
-
-            // this.regulatorVelocity = SmartDashboard.getNumber("Regulator/Velocity", regulatorVelocity);
-            // this.regulatorVoltage = SmartDashboard.getNumber("Regulator/Voltage", regulatorVoltage);
-            // this.RegulatorUsePID = SmartDashboard.getBoolean("Regulator/UsePID", RegulatorUsePID);
+            this.regulatorVelocity = SmartDashboard.getNumber("Regulator/Velocity", regulatorVelocity);
+            this.regulatorSpeed = SmartDashboard.getNumber("Regulator/Speed", regulatorSpeed);
+            this.RegulatorUsePID = SmartDashboard.getBoolean("Regulator/UsePID", RegulatorUsePID);
 
             this.regulatorMotor.getPID("Regulator/PID_Actual/");
             regulatorMotor.reportMotor("Regulator");

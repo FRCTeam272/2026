@@ -6,7 +6,7 @@ package frc.lib.controllers;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.button.Trigger; // if anything is an AXIS use this
 
 /** this is a custom printed controller and button names have been made to reflect that */
 public class LC_2026Custom {
@@ -39,5 +39,4 @@ public class LC_2026Custom {
         this.ClimberLower = new JoystickButton(controller, 10);
         this.ClimberZero = new JoystickButton(controller, 11);
     }
-
 }

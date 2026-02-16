@@ -21,11 +21,15 @@ public class Climber extends SubsystemBase {
         climberMotor.assignPIDValues(pid.kP, pid.kI, pid.kD);
     }
 
-    public boolean Raise(){
+    public void setValue(double value){
+        climberMotor.motor.set(value);
+    }
+
+    public boolean RaiseToPoint(){
         return climberMotor.goToPostion(raisedTarget + trim.adjusterValue);
     }
 
-    public boolean Lower(){
+    public boolean LowerToPoint(){
         return climberMotor.goToPostion(loweredTarget + trim.adjusterValue);
     }
 

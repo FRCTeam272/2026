@@ -11,6 +11,7 @@ import frc.lib.utils.SparkMAXContainer;
 import frc.lib.utils.TalonFxContainer;
 import frc.lib.utils.TrimPot;
 import frc.robot.Constants;
+import frc.lib.utils.MotorContainer;
 import frc.lib.utils.PIDSettings;
 
 
@@ -31,7 +32,7 @@ public class Shooter extends SubsystemBase {
   public TrimPot hoodTrim = new TrimPot("HoodTrim");
   public TrimPot flywheelTrim = new TrimPot("FlywheelTrim");
 
-  public double targetVelocity = 4000;
+  public double targetVelocity = 3500;
 
   public Shooter() {
     flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
@@ -50,7 +51,14 @@ public class Shooter extends SubsystemBase {
 
     flywheelFollower.setupAsFollowerMotor(flywheel, false);
 
-    // hood = new SparkMAXContainer(HOOD_LOCATION);  
+    hood = new SparkMAXContainer(HOOD_LOCATION);  
+    hood.setCurrentLimit(40);
+    
+    this.setupSmartDashboard();
+  }
+
+  private void setupSmartDashboard(){
+    
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
 
     SmartDashboard.putNumber("Shooter/P", shooterPID.kP);
@@ -69,25 +77,18 @@ public class Shooter extends SubsystemBase {
     if(target_velocity == 0) return TrueStop();
     target_velocity = -(Math.abs(target_velocity) + flywheelTrim.adjusterValue);
     return flywheel.setVelocity(target_velocity, 250);
-    // flywheel.motor.set(-.75);
-    
-    // forces flywheel to be negative
-    // if(target_velocity > 0) target_velocity = -target_velocity;
-    
-    // final double current_velocity = flywheel.setVelocity(target_velocity);
-    // return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
   public boolean AdjustHood(double target_angle){
     return hood.goToPostion(target_angle + hoodTrim.adjusterValue, angleThreshold);
   }
 
-  private void dynamicPID(double kP, double kI, double kD){
-    flywheel.assignPIDValues(kP, kI, kD);
+  private void dynamicPID(double kP, double kI, double kD, MotorContainer motor){
+    motor.assignPIDValues(kP, kI, kD);
   }
   
-  private void dynamicFeedForward(double kV, double kA){
-    flywheel.assignFF(0, kV, kA, 0);
+  private void dynamicFeedForward(double kV, double kA, MotorContainer motor){
+    motor.assignFF(0, kV, kA, 0);
   }
 
   @Override
@@ -98,15 +99,20 @@ public class Shooter extends SubsystemBase {
 
     // If we aren't connected to FMS, allow for dynamic PID tuning
     if(!DriverStation.isFMSAttached()){
-      // final double p = SmartDashboard.getNumber("Shooter/P", shooterPID.kP);
-      // final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
-      // final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
-      // final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
-      // final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);  
+      final double p = SmartDashboard.getNumber("Shooter/P", shooterPID.kP);
+      final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
+      final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
+      final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
+      final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);  
       this.targetVelocity = SmartDashboard.getNumber("TargetVelocity", this.targetVelocity);      
-      // dynamicPID(p, i, d);
-      // dynamicFeedForward(v, a);
-
+      
+      if(p != shooterPID.kP || i != shooterPID.kI || d != shooterPID.kD || v != shooterPID.kV || a != shooterPID.kA){
+        for (MotorContainer motor : new MotorContainer[]{flywheel, flywheelFollower}) {
+          dynamicPID(p, i, d, motor);
+          dynamicFeedForward(v, a, motor);
+        }
+      }
+      
       flywheel.getPID("Shooter/PID_Actual/");
       flywheel.reportMotor("ShooterVals");
     }

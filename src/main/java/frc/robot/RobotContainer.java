@@ -64,23 +64,29 @@ public class RobotContainer {
                 .whileTrue(new InstantCommand(() -> {
                     conveyor.Load();
                     regulator.Load();
+                    intake.setCurrentLimitOfDeployMotor(10);
+                    intake.retract();
+                    intake.intake(.5);
                 }, conveyor))
                 .onFalse(new InstantCommand(() -> {
                     conveyor.Stop();
                     regulator.Stop();
+                    intake.stop();
+                    intake.deploy();
+                    intake.setCurrentLimitOfDeployMotor(40);
                 }));
         DC.leftTrigger()
                 .whileTrue(new InstantCommand(() -> {
                     intake.deploy();
-                    // intake.intake();
+                    intake.intake();
                 })).onFalse(new InstantCommand(() -> {
-                    // intake.stop();
-                    intake.retract();
+                    intake.stop();
+                    // intake.retract();
                 }));
         DC.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
         DC.b().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
         DC.a().onTrue(new InstantCommand(() -> {
-            shooter.AdjustHood(10);
+            shooter.AdjustHood(-10);
         }));
         DC.x().onTrue(new InstantCommand(() -> {
             shooter.AdjustHood(0);
@@ -97,12 +103,12 @@ public class RobotContainer {
             // @TODO: add auto update to shooter velocity targets
             new InstantCommand(() -> {shooter.SpinWheel(shooter.targetVelocity);})
         );
+        DC.a().onTrue(new AlignToHub(driveBaseContainer.drivetrain, DC));
+        DC.b().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
 
         OC.AgitateButton.whileTrue(IntakeCommands.hopperAgitation(intake));
         OC.ShooterTrimPotUpButton.onTrue(new InstantCommand(() -> shooter.flywheelTrim.adjusterValue += 1));
         OC.ShooterTrimPotDownButton.onTrue(new InstantCommand(() -> shooter.flywheelTrim.adjusterValue -= 1));
-        OC.IntakeTrimPotUpButton.onTrue(new InstantCommand(() -> intake.deployTrim.adjusterValue += 1));
-        OC.IntakeTrimPotDownButton.onTrue(new InstantCommand(() -> intake.deployTrim.adjusterValue -= 1));
         OC.hoodTrimPotUpButton.onTrue(new InstantCommand(() -> shooter.hoodTrim.adjusterValue += 1));
         OC.hoodTrimPotDownButton.onTrue(new InstantCommand(() -> shooter.hoodTrim.adjusterValue -= 1));
         
