@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -18,7 +19,15 @@ public class TrimPotCommands {
         return new InstantCommand(() -> {
             shooter.hoodTrim.saveAdjusterValue();
             shooter.flywheelTrim.saveAdjusterValue();
-            intake.deployTrim.saveAdjusterValue();
+            
+        });
+    }
+
+    public static Command SaveTrimPotValues(Shooter shooter, Intake intake, Climber climber) {
+        return new InstantCommand(() -> {
+            shooter.hoodTrim.saveAdjusterValue();
+            shooter.flywheelTrim.saveAdjusterValue();
+            climber.trim.saveAdjusterValue();
         });
     }
 
@@ -39,15 +48,5 @@ public class TrimPotCommands {
      */
     public static Command SetShooterVelocityTrim(Shooter shooter, double value) {
         return new InstantCommand(() -> shooter.flywheelTrim.adjusterValue += value);
-    }
-
-    /**
-    * Increases the intake deploy trim by the given value. This will adjust the target position of the intake deploy by the given value. This is used to fine tune the intake deploy position without having to change the target position in the code.
-    * @param intake
-    * @param value
-    * @return
-    */
-    public static Command SetIntakeDeployTrim(Intake intake, double value) {
-        return new InstantCommand(() -> intake.deployTrim.adjusterValue += value);
     }
 }

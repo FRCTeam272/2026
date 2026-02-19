@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems;
 
+import java.util.HashMap;
+
+import com.pathplanner.lib.config.PIDConstants;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -11,12 +15,12 @@ import frc.lib.utils.SparkMAXContainer;
 import frc.lib.utils.TalonFxContainer;
 import frc.lib.utils.TrimPot;
 import frc.robot.Constants;
+import frc.lib.utils.MotorContainer;
 import frc.lib.utils.PIDSettings;
 
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
-  
   TalonFxContainer flywheel;
   TalonFxContainer flywheelFollower;
   SparkMAXContainer hood;
@@ -24,40 +28,60 @@ public class Shooter extends SubsystemBase {
   final int FLYWHEEL_LOCATION = 4;
   final int FLYWHEEL_FOLLOWER_LOCATION = 6;
   final int HOOD_LOCATION = 5;
-  final PIDSettings shooterPID = Constants.SHOOTER_PID_SETTINGS;
+  final PIDSettings shooterLowPID = Constants.SHOOTER_LOW_PID_SETTINGS;
+  final PIDSettings shooterMidPID = Constants.SHOOTER_MID_PID_SETTINGS;
   int speedThreshold = 50;
   int angleThreshold = 2;
 
   public TrimPot hoodTrim = new TrimPot("HoodTrim");
   public TrimPot flywheelTrim = new TrimPot("FlywheelTrim");
 
-  public double targetVelocity = 4000;
+  public double targetVelocity = 3500;
 
   public Shooter() {
     flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
     flywheelFollower = new TalonFxContainer(FLYWHEEL_FOLLOWER_LOCATION, true);
-    flywheel.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
-    flywheel.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
-    flywheel.setBreakMode(false);
-    flywheel.configurator.Audio.BeepOnConfig = false;
-    flywheel.applyConfig();
 
-    flywheelFollower.assignPIDValues(shooterPID.kP, shooterPID.kI, shooterPID.kD);
-    flywheelFollower.assignFF(shooterPID.kS, shooterPID.kV, shooterPID.kA, 0);
-    flywheelFollower.setBreakMode(false);
-    flywheelFollower.configurator.Audio.BeepOnConfig = false;
-    flywheelFollower.applyConfig();
+    for (var  motor : new TalonFxContainer[]{flywheel, flywheelFollower}) {
+      motor.assignPIDValues(shooterLowPID.kP, shooterLowPID.kI, shooterLowPID.kD, 0);
+      motor.assignFF(shooterLowPID.kS, shooterLowPID.kV, shooterLowPID.kA, 0, 0);
 
+      // TODO: add addtional Slots as needed      
+      motor.assignPIDValues(shooterMidPID.kP, shooterMidPID.kI, shooterMidPID.kD, 1);
+      motor.assignFF(shooterMidPID.kS, shooterMidPID.kV, shooterMidPID.kA, 0, 1);
+      
+      motor.setBreakMode(false);
+      motor.configurator.Audio.BeepOnConfig = false;
+      motor.motor.getVelocity().setUpdateFrequency(20);
+      motor.applyConfig();  
+    }
+    
     flywheelFollower.setupAsFollowerMotor(flywheel, false);
 
-    // hood = new SparkMAXContainer(HOOD_LOCATION);  
+    hood = new SparkMAXContainer(HOOD_LOCATION);
+    hood.assignPIDValues(.1, 0, 0);
+    hood.setCurrentLimit(40);
+    
+    this.setupSmartDashboard();
+  }
+
+  private void setupSmartDashboard(){
+    
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
 
-    SmartDashboard.putNumber("Shooter/P", shooterPID.kP);
-    SmartDashboard.putNumber("Shooter/I", shooterPID.kI);
-    SmartDashboard.putNumber("Shooter/D", shooterPID.kD);
-    SmartDashboard.putNumber("Shooter/kV", shooterPID.kV);
-    SmartDashboard.putNumber("Shooter/kA", shooterPID.kA);
+    SmartDashboard.putNumber("Shooter/P", shooterLowPID.kP);
+    SmartDashboard.putNumber("Shooter/I", shooterLowPID.kI);
+    SmartDashboard.putNumber("Shooter/D", shooterLowPID.kD);
+    SmartDashboard.putNumber("Shooter/kV", shooterLowPID.kV);
+    SmartDashboard.putNumber("Shooter/kA", shooterLowPID.kA);
+  }
+
+  private void setupSmartDashboard(PIDSettings pidConstants){
+    SmartDashboard.putNumber("Shooter/P", pidConstants.kP);
+    SmartDashboard.putNumber("Shooter/I", pidConstants.kI);
+    SmartDashboard.putNumber("Shooter/D", pidConstants.kD);
+    SmartDashboard.putNumber("Shooter/kV", pidConstants.kV);
+    SmartDashboard.putNumber("Shooter/kA", pidConstants.kA);
   }
 
   public boolean TrueStop(){
@@ -69,47 +93,61 @@ public class Shooter extends SubsystemBase {
     if(target_velocity == 0) return TrueStop();
     target_velocity = -(Math.abs(target_velocity) + flywheelTrim.adjusterValue);
     return flywheel.setVelocity(target_velocity, 250);
-    // flywheel.motor.set(-.75);
-    
-    // forces flywheel to be negative
-    // if(target_velocity > 0) target_velocity = -target_velocity;
-    
-    // final double current_velocity = flywheel.setVelocity(target_velocity);
-    // return Math.abs(current_velocity - target_velocity) < speedThreshold;
   }
 
   public boolean AdjustHood(double target_angle){
     return hood.goToPostion(target_angle + hoodTrim.adjusterValue, angleThreshold);
+    // hood.motor.set(.2 * Math.signum(target_angle));
+    // return true;
   }
 
-  private void dynamicPID(double kP, double kI, double kD){
-    flywheel.assignPIDValues(kP, kI, kD);
+  public boolean AdjustHoodIncremental(double value){
+    var target = hood.getPosition() + value;
+    if(target > 0) target = 0;
+    if(target < -6.6) target = -6.6;
+    return hood.goToPostion(target, 0);
+  }
+
+  private void dynamicPID(double kP, double kI, double kD, TalonFxContainer motor){
+    motor.assignPIDValues(kP, kI, kD, motor.currentSlot);
   }
   
-  private void dynamicFeedForward(double kV, double kA){
-    flywheel.assignFF(0, kV, kA, 0);
+  private void dynamicFeedForward(double kV, double kA, TalonFxContainer motor){
+    motor.assignFF(0, kV, kA, 0, motor.currentSlot);
   }
 
   @Override
   public void periodic() {
+    // if(targetVelocity < 3600){
+    //   flywheel.SetPIDSlot(0);
+    //   setupSmartDashboard(shooterLowPID);
+    // } else if(targetVelocity > 3600){
+    //   flywheel.SetPIDSlot(1);
+    //   setupSmartDashboard(shooterMidPID);
+    // }
+
     // This method will be called once per scheduler run
     targetVelocity = SmartDashboard.getNumber("FlyWheel/TargetVelocity", targetVelocity);
     SmartDashboard.putNumber("FlyWheel/CurrentVelocity", flywheel.getVelocity());
-
+    hood.reportMotor("ShooterHood");
     // If we aren't connected to FMS, allow for dynamic PID tuning
     if(!DriverStation.isFMSAttached()){
-      // final double p = SmartDashboard.getNumber("Shooter/P", shooterPID.kP);
-      // final double i = SmartDashboard.getNumber("Shooter/I", shooterPID.kI);
-      // final double d = SmartDashboard.getNumber("Shooter/D", shooterPID.kD);
-      // final double v = SmartDashboard.getNumber("Shooter/kV", shooterPID.kV);
-      // final double a = SmartDashboard.getNumber("Shooter/kA", shooterPID.kA);  
+      final double p = SmartDashboard.getNumber("Shooter/P", shooterLowPID.kP);
+      final double i = SmartDashboard.getNumber("Shooter/I", shooterLowPID.kI);
+      final double d = SmartDashboard.getNumber("Shooter/D", shooterLowPID.kD);
+      final double v = SmartDashboard.getNumber("Shooter/kV", shooterLowPID.kV);
+      final double a = SmartDashboard.getNumber("Shooter/kA", shooterLowPID.kA);  
       this.targetVelocity = SmartDashboard.getNumber("TargetVelocity", this.targetVelocity);      
-      // dynamicPID(p, i, d);
-      // dynamicFeedForward(v, a);
-
+      
+      if(p != shooterLowPID.kP || i != shooterLowPID.kI || d != shooterLowPID.kD || v != shooterLowPID.kV || a != shooterLowPID.kA){
+        for (TalonFxContainer motor : new TalonFxContainer[]{flywheel, flywheelFollower}) {
+          dynamicPID(p, i, d, motor);
+          dynamicFeedForward(v, a, motor);
+        }
+      }
+      
       flywheel.getPID("Shooter/PID_Actual/");
       flywheel.reportMotor("ShooterVals");
     }
-    
   }
 }
