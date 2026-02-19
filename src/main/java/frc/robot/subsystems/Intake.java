@@ -25,10 +25,11 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     rollerMotor= new TalonFxContainer(intake_id, true);
+    rollerMotor.motor.getVelocity().setUpdateFrequency(20);
     deployMotor = new SparkMAXContainer(deploy_id);
     deployMotor.assignPIDValues(0.01, 0, 0);
     deployMotor.setCurrentLimit(40);
-
+    
     this.setupSmartDashboard();
   }
   

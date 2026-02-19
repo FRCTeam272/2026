@@ -45,19 +45,20 @@ public class RobotContainer {
     private final LC_2026Custom OC = new LC_2026Custom(1);
     
     // Sub-Containers
-    // public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC); // HINT: looking for DriveBase Controls look in here
+    public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC); // HINT: looking for DriveBase Controls look in here
     
     public RobotContainer() {
         // configureBindings();
         configurTestBindings();
 
-        RobotModeTriggers.disabled().onTrue(new InstantCommand(() -> {
+        RobotModeTriggers.disabled().whileTrue(new InstantCommand(() -> {
+            TrimPotCommands.SaveTrimPotValues(shooter, intake);
             intake.stop();
             shooter.SpinWheel(0);
             regulator.Stop();
             conveyor.Stop();
             // climber.Stop();
-        }).andThen(TrimPotCommands.SaveTrimPotValues(shooter, intake)));
+        }, intake, shooter, regulator, conveyor));
     }
 
     private void configurTestBindings() {
