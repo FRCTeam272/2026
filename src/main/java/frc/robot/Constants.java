@@ -3,8 +3,13 @@ package frc.robot;
 import frc.lib.utils.PIDSettings;
 
 public class Constants {
-    public static final PIDSettings SHOOTER_PID_SETTINGS = new PIDSettings(
+    public static final PIDSettings SHOOTER_LOW_PID_SETTINGS = new PIDSettings(
         0.00003, 0.0, 0.0,
+        0.00195, 0
+    );
+
+    public static final PIDSettings SHOOTER_MID_PID_SETTINGS = new PIDSettings(
+        0.0002, 0.0, 0.0,
         0.00195, 0
     );
 

@@ -15,6 +15,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.ctre.phoenix6.controls.Follower;
@@ -25,6 +26,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 public class TalonFxContainer implements MotorContainer{
     public TalonFX motor;
     public TalonFXConfiguration configurator;
+    public int currentSlot = 0;
     
     /**
      * Creates a new TalonFxContainer
@@ -76,6 +78,93 @@ public class TalonFxContainer implements MotorContainer{
         slot.kP = P;
         slot.kI = I;
         slot.kD = D;
+        this.applyConfig();
+    }
+    
+    public void SetPIDSlot(int slot){
+        currentSlot = slot;   
+    }
+
+    public void assignPIDValues(double P, double I, double D, int slot){
+        switch (slot) {
+            case 0:
+                assignPIDSlot0(P, I, D);
+                break;
+            case 1:
+                assignPIDSlot1(P, I, D);
+                break;
+            case 2:
+                assignPIDSlot2(P, I, D);
+                break;
+            default:
+                DriverStation.reportWarning("Invalid PID slot: " + slot + ". Valid slots are 0, 1, or 2.", false);
+        }
+    }
+
+    private void assignPIDSlot0(double P, double I, double D){
+        var slot = configurator.Slot0;
+        slot.kP = P;
+        slot.kI = I;
+        slot.kD = D;
+        this.applyConfig();
+    }
+
+    private void assignPIDSlot1(double P, double I, double D){
+        var slot = configurator.Slot1;
+        slot.kP = P;
+        slot.kI = I;
+        slot.kD = D;
+        this.applyConfig();
+    }
+
+    private void assignPIDSlot2(double P, double I, double D){
+        var slot = configurator.Slot2;
+        slot.kP = P;
+        slot.kI = I;
+        slot.kD = D;
+        this.applyConfig();
+    }
+
+    public void assignFF(double S, double V, double A, double G, int slot){
+        switch (slot) {
+            case 0:
+                assignFFSlot0(S, V, A, G);
+                break;
+            case 1:
+                assignFFSlot1(S, V, A, G);
+                break;
+            case 2:
+                assignFFSlot2(S, V, A, G);
+                break;
+            default:
+                DriverStation.reportWarning("Invalid PID slot: " + slot + ". Valid slots are 0, 1, or 2.", false);
+        }
+    }
+
+    private void assignFFSlot0(double S, double V, double A, double G){
+        var slot = configurator.Slot0;
+        slot.kS = S;
+        slot.kV = V;
+        slot.kA = A;
+        slot.kG = G;
+        this.applyConfig();
+    }
+    
+    private void assignFFSlot1(double S, double V, double A, double G){
+        var slot = configurator.Slot1;
+        slot.kS = S;
+        slot.kV = V;
+        slot.kA = A;
+        slot.kG = G;
+        this.applyConfig();
+    }
+
+    private void assignFFSlot2(double S, double V, double A, double G){
+        var slot = configurator.Slot2;
+        slot.kS = S;
+        slot.kV = V;
+        slot.kA = A;
+        slot.kG = G;
         this.applyConfig();
     }
 
@@ -142,7 +231,7 @@ public class TalonFxContainer implements MotorContainer{
      */
     @Override
     public boolean goToPostion(double pos, int deadband) {
-        var request = new PositionDutyCycle(pos);
+        var request = new PositionDutyCycle(pos).withSlot(currentSlot);
         motor.setControl(request);
         return motor.getPosition().getValue().isNear(Angle.ofBaseUnits(pos, Degree), deadband);
     }
@@ -215,14 +304,34 @@ public class TalonFxContainer implements MotorContainer{
     @Override
     public void getPID(String key) {
         motor.getConfigurator().refresh(this.configurator);
+        if(currentSlot == 0){
+            // PID
+            SmartDashboard.putNumber(key + "P", this.configurator.Slot0.kP);
+            SmartDashboard.putNumber(key + "I", this.configurator.Slot0.kI);
+            SmartDashboard.putNumber(key + "D", this.configurator.Slot0.kD);
+            // FF
+            SmartDashboard.putNumber(key + "FF/A", this.configurator.Slot0.kA);
+            SmartDashboard.putNumber(key + "FF/V", this.configurator.Slot0.kV);
+            SmartDashboard.putNumber(key + "FF/G", this.configurator.Slot0.kG);
+        } else if(currentSlot == 1){
+            // PID
+            SmartDashboard.putNumber(key + "P", this.configurator.Slot1.kP);
+            SmartDashboard.putNumber(key + "I", this.configurator.Slot1.kI);
+            SmartDashboard.putNumber(key + "D", this.configurator.Slot1.kD);
+            // FF
+            SmartDashboard.putNumber(key + "FF/A", this.configurator.Slot1.kA);
+            SmartDashboard.putNumber(key + "FF/V", this.configurator.Slot1.kV);
+            SmartDashboard.putNumber(key + "FF/G", this.configurator.Slot1.kG);
+        } else if(currentSlot == 2){
+            // PID
+            SmartDashboard.putNumber(key + "P", this.configurator.Slot2.kP);
+            SmartDashboard.putNumber(key + "I", this.configurator.Slot2.kI);
+            SmartDashboard.putNumber(key + "D", this.configurator.Slot2.kD);
+            // FF
+            SmartDashboard.putNumber(key + "FF/A", this.configurator.Slot2.kA);
+            SmartDashboard.putNumber(key + "FF/V", this.configurator.Slot2.kV);
+            SmartDashboard.putNumber(key + "FF/G", this.configurator.Slot2.kG);
+        }
         
-        // PID
-        SmartDashboard.putNumber(key + "P", this.configurator.Slot0.kP);
-        SmartDashboard.putNumber(key + "I", this.configurator.Slot0.kI);
-        SmartDashboard.putNumber(key + "D", this.configurator.Slot0.kD);
-        // FF
-        SmartDashboard.putNumber(key + "FF/A", this.configurator.Slot0.kA);
-        SmartDashboard.putNumber(key + "FF/V", this.configurator.Slot0.kV);
-        SmartDashboard.putNumber(key + "FF/G", this.configurator.Slot0.kG);
     }
 }

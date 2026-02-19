@@ -31,8 +31,6 @@ import frc.lib.controllers.LC_2026Custom;
 import frc.robot.commands.TrimPotCommands;
 
 public class RobotContainer {
-    // Sub-Containers
-    public final DriveBaseContainer driveBaseContainer; // HINT: looking for DriveBase Controls look in here
     // // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     public final Intake intake = new Intake();
@@ -45,8 +43,11 @@ public class RobotContainer {
     // Controllers
     private final CommandXboxController DC = new CommandXboxController(0);
     private final LC_2026Custom OC = new LC_2026Custom(1);
+    
+    // Sub-Containers
+    // public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC); // HINT: looking for DriveBase Controls look in here
+    
     public RobotContainer() {
-        driveBaseContainer = new DriveBaseContainer(DC);
         // configureBindings();
         configurTestBindings();
 
@@ -86,10 +87,10 @@ public class RobotContainer {
         DC.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
         DC.b().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
         DC.a().onTrue(new InstantCommand(() -> {
-            shooter.AdjustHood(-10);
+            shooter.AdjustHoodIncremental(0.5);
         }));
         DC.x().onTrue(new InstantCommand(() -> {
-            shooter.AdjustHood(0);
+            shooter.AdjustHoodIncremental(-0.5);
         }));
     }
 
@@ -103,7 +104,7 @@ public class RobotContainer {
             // @TODO: add auto update to shooter velocity targets
             new InstantCommand(() -> {shooter.SpinWheel(shooter.targetVelocity);})
         );
-        DC.a().onTrue(new AlignToHub(driveBaseContainer.drivetrain, DC));
+        // DC.a().onTrue(new AlignToHub(driveBaseContainer.drivetrain, DC));
         DC.b().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
 
         OC.AgitateButton.whileTrue(IntakeCommands.hopperAgitation(intake));

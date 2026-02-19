@@ -13,7 +13,7 @@ public class Regulator extends SubsystemBase {
     public final int REGULATOR_LOCATION = 8;
     private static PIDSettings regulatorPID = Constants.REGULATOR_PID_SETTINGS;
     private double regulatorSpeed = -.99;
-    private double regulatorVelocity = 1500;
+    private double regulatorVelocity = -1500;
 
     public Regulator() {
         regulatorMotor = new SparkMAXContainer(REGULATOR_LOCATION);
