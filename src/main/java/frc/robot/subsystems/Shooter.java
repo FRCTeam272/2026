@@ -61,11 +61,11 @@ public class Shooter extends SubsystemBase {
     hood.assignPIDValues(.1, 0, 0);
     hood.setCurrentLimit(40);
 
-    lastP = shooterLowPID.kP;
-    lastI = shooterLowPID.kI;
-    lastD = shooterLowPID.kD;
-    lastV = shooterLowPID.kV;
-    lastA = shooterLowPID.kA;
+    lastP = Constants.SHOOTER_LOW_PID_SETTINGS.kP;
+    lastI = Constants.SHOOTER_LOW_PID_SETTINGS.kI;
+    lastD = Constants.SHOOTER_LOW_PID_SETTINGS.kD;
+    lastV = Constants.SHOOTER_LOW_PID_SETTINGS.kV;
+    lastA = Constants.SHOOTER_LOW_PID_SETTINGS.kA;
     
     this.setupSmartDashboard();
   }
@@ -73,12 +73,19 @@ public class Shooter extends SubsystemBase {
   private void setupSmartDashboard(){
     
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
-
-    SmartDashboard.putNumber("Shooter/P", shooterLowPID.kP);
-    SmartDashboard.putNumber("Shooter/I", shooterLowPID.kI);
-    SmartDashboard.putNumber("Shooter/D", shooterLowPID.kD);
-    SmartDashboard.putNumber("Shooter/kV", shooterLowPID.kV);
-    SmartDashboard.putNumber("Shooter/kA", shooterLowPID.kA);
+    PIDSettings settings;
+    switch (flywheel.currentSlot) {
+      case 0:
+        settings = Constants.SHOOTER_LOW_PID_SETTINGS;
+        break;
+      case 1:
+        settings = Constants.SHOOTER_MID_PID_SETTINGS;
+        break;
+      default:
+        settings = Constants.SHOOTER_HIGH_PID_SETTINGS;
+        break;
+    }
+    setupSmartDashboard(settings);
   }
 
   private void setupSmartDashboard(PIDSettings pidConstants){
@@ -135,10 +142,10 @@ public class Shooter extends SubsystemBase {
       flywheel.currentSlot = 2;
     }
 
-    if(lastTargetVelocity != targetVelocity){
-      this.SpinWheel(targetVelocity);
-      lastTargetVelocity = targetVelocity;
-    }
+    // if(lastTargetVelocity != targetVelocity){
+    //   this.SpinWheel(targetVelocity);
+    //   lastTargetVelocity = targetVelocity;
+    // }
 
     // This method will be called once per scheduler run
     targetVelocity = SmartDashboard.getNumber("FlyWheel/TargetVelocity", targetVelocity);

@@ -27,6 +27,6 @@ public class Constants {
     );
 
     public static final PIDSettings CLIMBER_PID_SETTINGS = new PIDSettings(
-        0.01, 0.0, 0.0
+        0.15, 0.0, 0.0
     );
 }

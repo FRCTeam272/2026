@@ -27,7 +27,7 @@ public class Intake extends SubsystemBase {
     rollerMotor= new TalonFxContainer(intake_id, true);
     rollerMotor.motor.getVelocity().setUpdateFrequency(20);
     deployMotor = new SparkMAXContainer(deploy_id);
-    deployMotor.assignPIDValues(0.01, 0, 0);
+    deployMotor.assignPIDValues(0.1, 0, 0);
     deployMotor.setCurrentLimit(40);
     
     this.setupSmartDashboard();
@@ -79,7 +79,7 @@ public class Intake extends SubsystemBase {
       final double deployP = SmartDashboard.getNumber("ConfigIntake/DeployMotorP", 0.01);
       final double deployI = SmartDashboard.getNumber("ConfigIntake/DeployMotorI", 0);
       final double deployD = SmartDashboard.getNumber("ConfigIntake/DeployMotorD", 0);
-      deployMotor.assignPIDValues(deployP, deployI, deployD);
+      // deployMotor.assignPIDValues(deployP, deployI, deployD);
       deploy_position = SmartDashboard.getNumber("ConfigIntake/DeployPosition", deploy_position);
       retract_position = SmartDashboard.getNumber("ConfigIntake/RetractPosition", retract_position);
       defult_speed = SmartDashboard.getNumber("ConfigIntake/DefaultSpeed", defult_speed);
