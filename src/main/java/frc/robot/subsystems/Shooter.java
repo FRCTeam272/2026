@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.pathplanner.lib.config.PIDConstants;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -31,6 +33,9 @@ public class Shooter extends SubsystemBase {
   int speedThreshold = 50;
   int angleThreshold = 2;
 
+  
+  public boolean useAutoFlywheel = true;
+
   public TrimPot hoodTrim = new TrimPot("HoodTrim");
   public TrimPot flywheelTrim = new TrimPot("FlywheelTrim");
 
@@ -42,6 +47,7 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
     flywheelFollower = new TalonFxContainer(FLYWHEEL_FOLLOWER_LOCATION, true);
+
 
     for (var  motor : new TalonFxContainer[]{flywheel, flywheelFollower}) {
       
@@ -120,6 +126,14 @@ public class Shooter extends SubsystemBase {
     return hood.goToPostion(target, 0);
   }
 
+  final TalonFxContainer[] flywheels = new TalonFxContainer[] {flywheel, flywheelFollower}; 
+  public void UpdatePID(PIDSettings settings){
+    for (TalonFxContainer motor : flywheels) {
+      dynamicPID(settings.kP, settings.kI, settings.kD, motor);
+      dynamicFeedForward(settings.kV, settings.kA, motor);
+    }
+  }
+
   private void dynamicPID(double kP, double kI, double kD, TalonFxContainer motor){
     motor.assignPIDValues(kP, kI, kD, motor.currentSlot);
   }
@@ -131,16 +145,19 @@ public class Shooter extends SubsystemBase {
   double lastTargetVelocity = targetVelocity;
   @Override
   public void periodic() {
-    if(targetVelocity == 0) {
+    if(this.useAutoFlywheel){
+      if(targetVelocity == 0) {
 
+      }
+      else if(targetVelocity < 5000){
+        flywheel.currentSlot = 0;
+      } else if(targetVelocity < 5500){
+        flywheel.currentSlot = 1;
+      } else {
+        flywheel.currentSlot = 2;
+      }
     }
-    else if(targetVelocity < 5000){
-      flywheel.currentSlot = 0;
-    } else if(targetVelocity < 5500){
-      flywheel.currentSlot = 1;
-    } else {
-      flywheel.currentSlot = 2;
-    }
+    
 
     // if(lastTargetVelocity != targetVelocity){
     //   this.SpinWheel(targetVelocity);

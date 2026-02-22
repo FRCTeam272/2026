@@ -21,49 +21,60 @@ public class PIDSettings {
     public double kG;
     public double kCos;
     public double kCosRatio;
-
-    /**
-     * Constructor for PID Settings
-     * @param p
-     * @param i
-     * @param d
-     */
-    public PIDSettings(double p, double i, double d){
-        kP = p;
-        kI = i;
-        kD = d;
-    }
-
-    /**
-     * Constructor for PID Settings with Feed Forward
-     * @param p
-     * @param i
-     * @param d
-     * @param s
-     * @param v
-     * @param a
-     * @param g
-     * @param cos
-     * @param cosRatio
-     */
-    public PIDSettings(double p, double i, double d, double s, double v, double a, double g, double cos, double cosRatio){
-        kP = p;
-        kI = i;
-        kD = d;
-        kS = s;
-        kV = v;
-        kA = a;
-        kG = g;
-        kCos = cos;
-        kCosRatio = cosRatio;
-    }
-
-    // For Flywheels
-    public PIDSettings(double p, double i, double d, double v, double a){
-        kP = p;
-        kI = i;
-        kD = d;
-        kV = v;
-        kA = a;
+    public double target_velocity;
+    
+        /**
+         * Constructor for PID Settings
+         * @param p
+         * @param i
+         * @param d
+         */
+        public PIDSettings(double p, double i, double d){
+            kP = p;
+            kI = i;
+            kD = d;
+        }
+    
+        /**
+         * Constructor for PID Settings with Feed Forward
+         * @param p
+         * @param i
+         * @param d
+         * @param s
+         * @param v
+         * @param a
+         * @param g
+         * @param cos
+         * @param cosRatio
+         */
+        public PIDSettings(double p, double i, double d, double s, double v, double a, double g, double cos, double cosRatio){
+            kP = p;
+            kI = i;
+            kD = d;
+            kS = s;
+            kV = v;
+            kA = a;
+            kG = g;
+            kCos = cos;
+            kCosRatio = cosRatio;
+        }
+    
+        // For Flywheels
+        public PIDSettings(double p, double i, double d, double v, double a){
+            kP = p;
+            kI = i;
+            kD = d;
+            kV = v;
+            kA = a;
+        }
+    
+        // For Flywheels
+        public PIDSettings(double p, double i, double d, double v, double a, double target_velocity){
+            kP = p;
+            kI = i;
+            kD = d;
+            kV = v;
+            kA = a;
+            this.target_velocity = target_velocity;
     }
 }

@@ -30,16 +30,17 @@ import frc.robot.subsystems.Shooter;
 
 
 import frc.lib.controllers.LC_2026Custom;
+import frc.lib.utils.PIDSettings;
 import frc.robot.commands.TrimPotCommands;
 
 public class RobotContainer {
     // // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     
-    // public final Intake intake = new Intake();
-    // public final Shooter shooter = new Shooter();
-    // public final Regulator regulator = new Regulator();
-    // public final Conveyor conveyor = new Conveyor();
+    public final Intake intake = new Intake();
+    public final Shooter shooter = new Shooter();
+    public final Regulator regulator = new Regulator();
+    public final Conveyor conveyor = new Conveyor();
     
     public final Climber climber = new Climber();
 
@@ -54,7 +55,7 @@ public class RobotContainer {
     public RobotContainer() {
         // configureBindings();
         // configurTestBindings();
-        configureClimberTest();
+        configureOperatorPanel();
         /* 
         RobotModeTriggers.disabled().whileTrue(new InstantCommand(() -> {
             TrimPotCommands.SaveTrimPotValues(shooter, intake);
@@ -67,13 +68,24 @@ public class RobotContainer {
         */
     }
 
-    public void configureClimberTest(){
-        DC.a().whileTrue(ClimberCommands.Stage1(climber));
-        DC.b().whileTrue(ClimberCommands.Stage2(climber));
-        DC.x().whileTrue(ClimberCommands.Stage3(climber));
-        DC.y().onTrue(ClimberCommands.Dismount(climber));
+    public void configureOperatorPanel(){
+        OC.ClimberStage1.onTrue(ClimberCommands.Stage1(climber));
+        OC.ClimberStage2.onTrue(ClimberCommands.Stage2(climber));
+        OC.ClimberStage3.onTrue(ClimberCommands.Stage3(climber));
+        OC.ClimberRelease.onTrue(ClimberCommands.Dismount(climber));
         
-    }   
+        OC.Stir.whileTrue(IntakeCommands.hopperAgitation(intake));
+        OC.CloseUpFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_LOW_PID_SETTINGS));
+        OC.MeduimFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_MID_PID_SETTINGS));
+        OC.FarFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_HIGH_PID_SETTINGS));
+        OC.UseAutoFlywheel.onTrue(new InstantCommand(() -> shooter.useAutoFlywheel = true, shooter));
+        OC.HoodTrimPotUp.onTrue(TrimPotCommands.AdjustShooterHoodTrim(shooter, .5));
+        OC.HoodTrimPotDown.onTrue(TrimPotCommands.AdjustShooterHoodTrim(shooter, -.50));
+        OC.ShooterTrimPotUp.onTrue(TrimPotCommands.AdjustShooterVelocityTrim(shooter, 50));
+        OC.ShooterTrimPotUp.onTrue(TrimPotCommands.AdjustShooterVelocityTrim(shooter, -50));
+    
+    }
+
 
     /*
     private void configurTestBindings() {
@@ -155,6 +167,14 @@ public class RobotContainer {
     }
     */
     
+    private InstantCommand CreateShooterOverride(PIDSettings settings) {
+        return new InstantCommand(() -> {
+            shooter.useAutoFlywheel = false;
+            shooter.UpdatePID(settings);
+            shooter.targetVelocity = settings.target_velocity;
+        }, shooter);
+    }
+
     public Command getAutonomousCommand() {
         return Commands.none();
         // return this.driveBaseContainer.GetAutonCommand();

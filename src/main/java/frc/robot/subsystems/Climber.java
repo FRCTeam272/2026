@@ -9,7 +9,7 @@ import frc.lib.utils.TrimPot;
 import frc.robot.Constants;
 
 public class Climber extends SubsystemBase {
-    public final int climberMotorID = 6;
+    public final int climberMotorID = 9;
     SparkMAXContainer climberMotor = new SparkMAXContainer(climberMotorID);
 
     public double raisedTarget = 0.0;
@@ -23,12 +23,12 @@ public class Climber extends SubsystemBase {
 
     public Climber() {
         climberMotor.assignPIDValues(pid.kP, pid.kI, pid.kD);
-        SmartDashboard.putNumber("Climber/Stage1", 27.6);
-        SmartDashboard.putNumber("Climber/Stage2", 70);
-        SmartDashboard.putNumber("Climber/Stage3", -30);
-        SmartDashboard.putNumber("Climber/Stage4", -30);
-        SmartDashboard.putNumber("Climber/Dismount", 70);
-        SmartDashboard.putNumber("Climber/Executing", 0);
+        SmartDashboard.putNumber("Climber/Stage1", 10.7 * 2.78);
+        SmartDashboard.putNumber("Climber/Stage2", 26* 2.78);
+        SmartDashboard.putNumber("Climber/Stage3", -7* 2.78);
+        SmartDashboard.putNumber("Climber/Stage4", -7* 2.78);
+        SmartDashboard.putNumber("Climber/Dismount", 26* 2.78);
+        SmartDashboard.putNumber("Climber/Executing", 0* 2.78);
         SmartDashboard.putNumber("Climber/PID/P", pid.kP);
         SmartDashboard.putNumber("Climber/PID/I", pid.kI);
         SmartDashboard.putNumber("Climber/PID/D", pid.kD);

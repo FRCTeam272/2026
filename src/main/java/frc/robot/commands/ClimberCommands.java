@@ -24,19 +24,23 @@ public class ClimberCommands {
             climber.SetHeight(height);
         }).andThen(new WaitCommand(2));
     }
-    //* Bring the Robot up */ 
-    public static Command Dismount(Climber climber){
-        return new DriveToHeight(climber, 70)
-        // .andThen(new WaitCommand(2))
-        .andThen(new DriveToHeight(climber, 1));
-    }
-
+    
     public static Command Stage3(Climber climber){
         return new InstantCommand(() -> {
             var height = SmartDashboard.getNumber("Climber/Stage3", 1);
             SmartDashboard.putNumber("Climber/Executing", 3);
             climber.SetHeight(height);
         });
+    }
+
+    //* Bring the Robot up */ 
+    public static Command Dismount(Climber climber){
+        return new InstantCommand(() -> climber.setValue(0))
+        .andThen(new WaitCommand(1))
+        .andThen(new DriveToHeight(climber, 26 * 2.78))
+        .andThen(new WaitCommand(1))
+        .andThen(new DriveToHeight(climber, 0))
+        ;
     }
 
     //* Lower the Robot */ 
