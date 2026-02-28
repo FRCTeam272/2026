@@ -58,12 +58,19 @@ public class Intake extends SubsystemBase {
     rollerMotor.motor.set(0);
   }
 
+  public boolean jostle(){
+    return true;
+    // return deployMotor.goToPostion(deploy_position - 3);
+  }
+
   public boolean deploy() {
-    return deployMotor.goToPostion(deploy_position, 0);
+    return true;
+    // return deployMotor.goToPostion(deploy_position, 0);
   }
 
   public boolean retract() {
-    return deployMotor.goToPostion(retract_position, 0);
+    return true;
+    // return deployMotor.goToPostion(retract_position, 0);
   }
 
   public void setCurrentLimitOfDeployMotor(int limit){

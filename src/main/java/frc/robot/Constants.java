@@ -4,7 +4,7 @@ import frc.lib.utils.PIDSettings;
 
 public class Constants {
     public static final PIDSettings SHOOTER_LOW_PID_SETTINGS = new PIDSettings(
-        0.0009, 0.0, 0.0,
+        0.00001, 0.0, 0.0,
         0.00195, 0.00001, 3500
     );
 

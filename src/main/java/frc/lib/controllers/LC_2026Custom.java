@@ -18,6 +18,7 @@ public class LC_2026Custom extends SubsystemBase{
     public JoystickButton ClimberStage2;
     public Trigger ClimberStage3;
     public Trigger ClimberRelease;
+    public Trigger ForceCloseIntake;
     public JoystickButton Stir;
     public JoystickButton CloseUpFlywheel;
     public JoystickButton MeduimFlywheel;
@@ -44,7 +45,7 @@ public class LC_2026Custom extends SubsystemBase{
         this.ShooterTrimPotDown = new JoystickButton(controller, 2);
         this.HoodTrimPotUp = new JoystickButton(controller, 10);
         this.HoodTrimPotDown = new JoystickButton(controller, 9);
-
+        this.ForceCloseIntake = new Trigger(() -> controller.getRawAxis(1) > .5);
     }
 
     @Override
