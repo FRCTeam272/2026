@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.drivetrain.AlignToHub;
 import frc.robot.commands.intake.IntakeCommands;
 import frc.robot.commands.intake.IntakeIntake;
@@ -55,7 +56,7 @@ public class RobotContainer {
         configureBindings();
         // configurTestBindings();
         configureOperatorPanel();
-         
+        configureAutonmousBindings(); 
         RobotModeTriggers.disabled().whileTrue(new InstantCommand(() -> {
             TrimPotCommands.SaveTrimPotValues(shooter, intake);
             intake.stop();
@@ -65,6 +66,16 @@ public class RobotContainer {
             // climber.Stop();
         }, intake, shooter, regulator, conveyor));
         
+    }
+
+    public void configureAutonmousBindings(){
+        new Trigger(intake::isImpactDetected)
+           .onTrue(
+                new InstantCommand(() -> intake.setCurrentLimitOfDeployMotor(20))
+                .andThen(IntakeCommands.retractIntake(intake))
+                .andThen(new InstantCommand(() -> intake.setCurrentLimitOfDeployMotor(40)))
+            )
+           .onTrue(edu.wpi.first.wpilibj2.command.Commands.print("Intake Impact Detected! Retracting..."));
     }
 
     public void configureOperatorPanel(){
