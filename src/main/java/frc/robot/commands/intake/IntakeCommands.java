@@ -8,12 +8,13 @@ import frc.robot.subsystems.Intake;
 public class IntakeCommands {
     public static Command deployIntake(Intake intake) {
         return new InstantCommand(() -> intake.setCurrentLimitOfDeployMotor(40)) // set current limit to 40
-        .andThen(new IntakeDeploy(intake)).withTimeout(2) // deploy intake, max 2 seconds
+        //.andThen(new IntakeDeploy(intake)).withTimeout(2) // deploy intake, max 2 seconds
         .andThen(new InstantCommand(() -> intake.setCurrentLimitOfDeployMotor(10))); // set current limit to 10
     }
 
     public static Command retractIntake(Intake intake) {
-        return new InstantCommand(() -> intake.setCurrentLimitOfDeployMotor(40)) // set current limit to 40
+        return new InstantCommand(() -> intake.intake(.6))
+        .andThen(new InstantCommand(() -> intake.setCurrentLimitOfDeployMotor(40))) // set current limit to 40
         .andThen(new InstantCommand(() -> intake.retract())); // retract intake
     }
 

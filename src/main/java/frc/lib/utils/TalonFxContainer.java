@@ -85,6 +85,11 @@ public class TalonFxContainer implements MotorContainer{
         currentSlot = slot;   
     }
 
+    public void assignPIDSettings(PIDSettings settings, int slot){
+        assignPIDValues(settings.kP, settings.kI, settings.kD, slot);
+        assignFF(settings.kS, settings.kV, settings.kA, settings.kG, slot);
+    }
+
     public void assignPIDValues(double P, double I, double D, int slot){
         switch (slot) {
             case 0:
@@ -291,13 +296,13 @@ public class TalonFxContainer implements MotorContainer{
     private final VelocityVoltage velocityRequest = new VelocityVoltage(0);
     public boolean setVelocity(double target_velocity){
         // this.motor.setControl(null)
-        motor.setControl(velocityRequest.withVelocity(target_velocity));
+        motor.setControl(velocityRequest.withVelocity(target_velocity).withSlot(currentSlot));
         return getVelocity() == target_velocity;
     }
 
     public boolean setVelocity(double target_velocity, double velocityThreshold){
         // this.motor.setControl(null)
-        motor.setControl(velocityRequest.withVelocity(target_velocity));
+        motor.setControl(velocityRequest.withVelocity(target_velocity).withSlot(currentSlot));
         return Math.abs(getVelocity()) - Math.abs(target_velocity) < velocityThreshold;
     }
 

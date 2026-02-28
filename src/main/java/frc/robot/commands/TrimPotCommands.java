@@ -37,7 +37,7 @@ public class TrimPotCommands {
      * @param value
      * @return
      */
-    public static Command SetShooterHoodTrim(Shooter shooter, double value) {
+    public static Command AdjustShooterHoodTrim(Shooter shooter, double value) {
         return new InstantCommand(() -> shooter.hoodTrim.adjusterValue += value);
     }
     /**
@@ -46,7 +46,7 @@ public class TrimPotCommands {
      * @param value
      * @return
      */
-    public static Command SetShooterVelocityTrim(Shooter shooter, double value) {
+    public static Command AdjustShooterVelocityTrim(Shooter shooter, double value) {
         return new InstantCommand(() -> shooter.flywheelTrim.adjusterValue += value);
     }
 }

@@ -33,6 +33,10 @@ public class Conveyor extends SubsystemBase {
         }
     }
 
+    public void Load(double amount) {
+        conveyorMotor.motor.set(amount);
+    }
+
     public void Unload() {
         if (ConveryorUsePID) {
             conveyorMotor.setVelocity(-converyorVelocity);

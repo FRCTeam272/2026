@@ -163,7 +163,18 @@ public class SparkMAXContainer implements MotorContainer {
     try {
       var encoderPos = encoder.getPosition();
       motor.getClosedLoopController().setSetpoint(pos, ControlType.kPosition);
-      return encoderPos > pos - deadband || encoderPos < encoderPos + deadband;
+      return encoderPos > pos - deadband && encoderPos < pos + deadband;
+    } catch (Exception e) {
+      DriverStation.reportError(e.getMessage(), false);
+      return true;
+    }
+  }
+
+  public boolean goToPostion(double pos, double deadband) {
+    try {
+      var encoderPos = encoder.getPosition();
+      motor.getClosedLoopController().setSetpoint(pos, ControlType.kPosition);
+      return encoderPos >= pos - deadband && encoderPos <= pos + deadband;
     } catch (Exception e) {
       DriverStation.reportError(e.getMessage(), false);
       return true;

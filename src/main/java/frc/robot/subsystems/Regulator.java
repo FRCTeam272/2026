@@ -36,6 +36,10 @@ public class Regulator extends SubsystemBase {
         }
     }
 
+    public void Load(double amount) {
+        regulatorMotor.motor.set(amount);
+    }
+
     public void Unload() {
         if (RegulatorUsePID) {
             regulatorMotor.setVelocity(-regulatorVelocity);
