@@ -5,17 +5,17 @@ import frc.lib.utils.PIDSettings;
 public class Constants {
     public static final PIDSettings SHOOTER_LOW_PID_SETTINGS = new PIDSettings(
         0.00001, 0.0, 0.0,
-        0.00195, 0.00001, 3500
+        0.00195, 0.00001, 3500, 0
     );
 
     public static final PIDSettings SHOOTER_MID_PID_SETTINGS = new PIDSettings(
-        0.0013, 0.0, 0.0,
-        0.0001, 0.00001, 4800
+        0.0003, 0.0, 0.0,
+        0.00195, 0.00001,  4700, 3
     );
 
     public static final PIDSettings SHOOTER_HIGH_PID_SETTINGS = new PIDSettings(
-        0.01, 0, 0,
-        0.00195, 0.00001, 6000  
+        0.00057, 0, 0,
+        0.00195, 0.00001, 5500, 3
     );
 
     public static final PIDSettings CONVEYOR_PID_SETTINGS = new PIDSettings(

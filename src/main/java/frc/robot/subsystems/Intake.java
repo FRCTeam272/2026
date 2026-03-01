@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,22 +20,23 @@ public class Intake extends SubsystemBase {
   SparkMAXContainer deployMotor;
   public final int intake_id = 2;
   public final int deploy_id = 3;
-  public double defult_speed = .75;
+  public double defult_speed = .85;
 
   public double deploy_position = 19;
   public double retract_position = 0;
 
   // Force Detection Constants
   private final double kImpactCurrentThreshold = 8.0; // Amps (slightly below the 10A hold limit)
-  private final double kPositionTolerance = 1.0;      // Ticks/Degrees
+  private final double kPositionTolerance = .2;      // Ticks/Degrees
   private final double kDebounceTime = 0.1;           // Seconds (100ms)
-
-  private final Debouncer m_impactDebouncer = new Debouncer(kDebounceTime, Debouncer.Type.kRising);
+  private final Debouncer m_impactDebouncer = new Debouncer(kDebounceTime, DebounceType.kRising);
+  // private final Debouncer m_impactDebouncer = new Debouncer(kDebounceTime, Debouncer.Type.kRising);
   private boolean m_impactDetected = false;
 
   public Intake() {
     rollerMotor= new TalonFxContainer(intake_id, true);
     rollerMotor.motor.getVelocity().setUpdateFrequency(20);
+    rollerMotor.setBreakMode(false);
     deployMotor = new SparkMAXContainer(deploy_id);
     deployMotor.assignPIDValues(0.1, 0, 0);
     deployMotor.setCurrentLimit(40);
@@ -106,14 +108,14 @@ public class Intake extends SubsystemBase {
     rollerMotor.reportMotor("Intake");
     deployMotor.reportMotor("IntakeDeploy");
 
-    if(!DriverStation.isDSAttached()){
-      final double deployP = SmartDashboard.getNumber("ConfigIntake/DeployMotorP", 0.01);
-      final double deployI = SmartDashboard.getNumber("ConfigIntake/DeployMotorI", 0);
-      final double deployD = SmartDashboard.getNumber("ConfigIntake/DeployMotorD", 0);
-      // deployMotor.assignPIDValues(deployP, deployI, deployD);
-      deploy_position = SmartDashboard.getNumber("ConfigIntake/DeployPosition", deploy_position);
-      retract_position = SmartDashboard.getNumber("ConfigIntake/RetractPosition", retract_position);
-      defult_speed = SmartDashboard.getNumber("ConfigIntake/DefaultSpeed", defult_speed);
+    if(!DriverStation.isFMSAttached()){
+      // final double deployP = SmartDashboard.getNumber("ConfigIntake/DeployMotorP", 0.01);
+      // final double deployI = SmartDashboard.getNumber("ConfigIntake/DeployMotorI", 0);
+      // final double deployD = SmartDashboard.getNumber("ConfigIntake/DeployMotorD", 0);
+      // // deployMotor.assignPIDValues(deployP, deployI, deployD);
+      // deploy_position = SmartDashboard.getNumber("ConfigIntake/DeployPosition", deploy_position);
+      // retract_position = SmartDashboard.getNumber("ConfigIntake/RetractPosition", retract_position);
+      // defult_speed = SmartDashboard.getNumber("ConfigIntake/DefaultSpeed", defult_speed);
     }
   }
 }

@@ -18,6 +18,7 @@ public class Conveyor extends SubsystemBase {
     public Conveyor() {
         conveyorMotor = new SparkMAXContainer(CONVEYOR_LOCATION);
         conveyorMotor.assignPIDValues(conveyorPID.kP, conveyorPID.kI, conveyorPID.kD);
+        conveyorMotor.setBreakMode(false);
         SmartDashboard.putNumber("Conveyor/Velocity", converyorVelocity);
         SmartDashboard.putNumber("Conveyor/P", conveyorPID.kP);
         SmartDashboard.putNumber("Conveyor/I", conveyorPID.kI);
@@ -58,18 +59,18 @@ public class Conveyor extends SubsystemBase {
         // This method will be called once per scheduler run
         // if we don't see FMS, allow for dynamic PID tuning
         if (!DriverStation.isFMSAttached()) {
-            final double p = SmartDashboard.getNumber("Conveyor/P", conveyorPID.kP);
-            final double i = SmartDashboard.getNumber("Conveyor/I", conveyorPID.kI);
-            final double d = SmartDashboard.getNumber("Conveyor/D", conveyorPID.kD);
-            if(p != conveyorPID.kP || i != conveyorPID.kI || d != conveyorPID.kD){
-                dynamicPID(p, i, d);
-            }
+            // final double p = SmartDashboard.getNumber("Conveyor/P", conveyorPID.kP);
+            // final double i = SmartDashboard.getNumber("Conveyor/I", conveyorPID.kI);
+            // final double d = SmartDashboard.getNumber("Conveyor/D", conveyorPID.kD);
+            // if(p != conveyorPID.kP || i != conveyorPID.kI || d != conveyorPID.kD){
+            //     dynamicPID(p, i, d);
+            // }
             
-            this.converyorVelocity = SmartDashboard.getNumber("Conveyor/Velocity", converyorVelocity);
-            this.converyorVoltage = SmartDashboard.getNumber("Conveyor/Voltage", converyorVoltage);
-            this.ConveryorUsePID = SmartDashboard.getBoolean("Conveyor/UsePID", ConveryorUsePID);
-            this.conveyorMotor.getPID("Converyor/PID_Actual/");
-            conveyorMotor.reportMotor("Converyor");
+            // this.converyorVelocity = SmartDashboard.getNumber("Conveyor/Velocity", converyorVelocity);
+            // this.converyorVoltage = SmartDashboard.getNumber("Conveyor/Voltage", converyorVoltage);
+            // this.ConveryorUsePID = SmartDashboard.getBoolean("Conveyor/UsePID", ConveryorUsePID);
+            // this.conveyorMotor.getPID("Converyor/PID_Actual/");
+            // conveyorMotor.reportMotor("Converyor");
         }
 
     }

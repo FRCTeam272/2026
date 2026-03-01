@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -50,7 +51,7 @@ public class RobotContainer {
     private final LC_2026Custom OC = new LC_2026Custom(1);
 
     // Sub-Containers
-    public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC); // HINT: looking for DriveBase Controls look in here
+    public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC, this); // HINT: looking for DriveBase Controls look in here
 
     public RobotContainer() {
         configureBindings();
@@ -88,7 +89,7 @@ public class RobotContainer {
         OC.CloseUpFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_LOW_PID_SETTINGS));
         OC.MeduimFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_MID_PID_SETTINGS));
         OC.FarFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_HIGH_PID_SETTINGS));
-        OC.UseAutoFlywheel.onTrue(new InstantCommand(() -> shooter.useAutoFlywheel = true, shooter));
+        OC.UseAutoFlywheel.onTrue(new InstantCommand(() -> shooter.useAutoFlywheel = true));
         OC.HoodTrimPotUp.onTrue(TrimPotCommands.AdjustShooterHoodTrim(shooter, .5));
         OC.HoodTrimPotDown.onTrue(TrimPotCommands.AdjustShooterHoodTrim(shooter, -.50));
         OC.ShooterTrimPotUp.onTrue(TrimPotCommands.AdjustShooterVelocityTrim(shooter, 50));
@@ -172,18 +173,44 @@ public class RobotContainer {
                 }));
         DC.a().onTrue(new AlignToHub(driveBaseContainer.drivetrain, DC));
         DC.b().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
+        DC.rightTrigger().onTrue(
+            new InstantCommand(() -> {
+                conveyor.Load();
+                regulator.Load();
+                intake.setCurrentLimitOfDeployMotor(20);
+                intake.retract();
+                intake.intake(.85);
+            })
+        ).onFalse(
+            new InstantCommand(() -> {
+                conveyor.Stop();
+                regulator.Stop();
+                intake.stop();
+                intake.setCurrentLimitOfDeployMotor(40);
+            })
+        );
     }
     
     private InstantCommand CreateShooterOverride(PIDSettings settings) {
         return new InstantCommand(() -> {
             shooter.useAutoFlywheel = false;
-            shooter.UpdatePID(settings);
+            // shooter.UpdatePID(settings);
             shooter.targetVelocity = settings.target_velocity;
-        }, shooter);
+            shooter.targetHood = settings.target_hood;
+
+            SmartDashboard.putNumber("Shooter/P", settings.kP);
+            SmartDashboard.putNumber("Shooter/I", settings.kI);
+            SmartDashboard.putNumber("Shooter/D", settings.kD);
+            SmartDashboard.putNumber("Shooter/kV", settings.kV);
+            SmartDashboard.putNumber("Shooter/kA", settings.kA);
+
+            SmartDashboard.putNumber("FlyWheel/TargetVelocity", settings.target_velocity);
+            SmartDashboard.putNumber("Hood/Target", settings.target_hood);
+            
+        });
     }
 
     public Command getAutonomousCommand() {
-        return Commands.none();
-        // return this.driveBaseContainer.GetAutonCommand();
+        return this.driveBaseContainer.GetAutonCommand();
     }
 }

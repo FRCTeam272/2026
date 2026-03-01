@@ -81,19 +81,19 @@ public class DashboardWriter extends SubsystemBase {
   @Override
   public void periodic() {
     // only allow for these to be managed when not connected to FMS
-    if(!DriverStation.isFMSAttached()){
-      double newSpeed = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Speed Factor", DriveBaseContainer.speedFactor);
-      DriveBaseContainer.speedFactor = Math.max(-1.0, Math.min(1.0, newSpeed));
+    // if(!DriverStation.isFMSAttached()){
+    //   double newSpeed = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Speed Factor", DriveBaseContainer.speedFactor);
+    //   DriveBaseContainer.speedFactor = Math.max(-1.0, Math.min(1.0, newSpeed));
       
-      double newRotation = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Rotation Factor", DriveBaseContainer.rotationFactor);
-      DriveBaseContainer.rotationFactor = Math.max(-1.0, Math.min(1.0, newRotation));
-    }
+    //   double newRotation = edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.getNumber("Rotation Factor", DriveBaseContainer.rotationFactor);
+    //   DriveBaseContainer.rotationFactor = Math.max(-1.0, Math.min(1.0, newRotation));
+    // }
 
     // only run these checks if we are in teleop and connected to FMS
     if(DriverStation.isFMSAttached() && DriverStation.isTeleop()){
-      if (autoWinner == null) updateAutoWinner();
+      // if (autoWinner == null) updateAutoWinner();
 
-      isOurTurnShooting = updateOurTurnShooting();
+      // isOurTurnShooting = updateOurTurnShooting();
     }
 
     SmartDashboard.putBoolean("Is Our Turn Shooting", isOurTurnShooting);

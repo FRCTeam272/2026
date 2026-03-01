@@ -50,10 +50,10 @@ public class LC_2026Custom extends SubsystemBase{
 
     @Override
     public void periodic(){
-        if(DriverStation.isFMSAttached()) return;
-        for(var i = 0; i < 12; i++){
-            SmartDashboard.putBoolean("Operator/Is " + i + "Pressed", controller.getRawButton(i));
-        }
+        // if(DriverStation.isFMSAttached()) return;
+        // for(var i = 0; i < 12; i++){
+        //     SmartDashboard.putBoolean("Operator/Is " + i + "Pressed", controller.getRawButton(i));
+        // }
         
     }
 }

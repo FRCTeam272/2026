@@ -22,6 +22,7 @@ public class PIDSettings {
     public double kCos;
     public double kCosRatio;
     public double target_velocity;
+    public double target_hood;
     
         /**
          * Constructor for PID Settings
@@ -76,5 +77,15 @@ public class PIDSettings {
             kV = v;
             kA = a;
             this.target_velocity = target_velocity;
+    }
+
+    public PIDSettings(double p, double i, double d, double v, double a, double target_velocity, double hood){
+            kP = p;
+            kI = i;
+            kD = d;
+            kV = v;
+            kA = a;
+            this.target_velocity = target_velocity;
+            this.target_hood = hood;
     }
 }
