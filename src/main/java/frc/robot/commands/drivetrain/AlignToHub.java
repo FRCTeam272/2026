@@ -51,11 +51,14 @@ public class AlignToHub extends Command {
 
         // Tolerance for when we consider ourselves "aligned"
         m_rotationController.setTolerance(Math.toRadians(.1));
-
-        kHubCenter = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
+        try{
+            kHubCenter = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
                 ? new Translation2d(12.22, 4.027)
                 : new Translation2d(4.69, 4.02);
-
+        } catch (Exception e){
+            System.out.println("oopsy");
+        }
+        
         addRequirements(drivetrain);
     }
 
@@ -80,8 +83,8 @@ public class AlignToHub extends Command {
         Rotation2d targetAngle = new Rotation2d(Math.atan2(dy, dx));
         double targetRotationRadians = targetAngle.getRadians();
         
-        SmartDashboard.putString("Align/TargetAngle", targetAngle.toString());
-        SmartDashboard.putString("Align/Current", currentPose.getRotation().toString());
+        // SmartDashboard.putString("Align/TargetAngle", targetAngle.toString());
+        // SmartDashboard.putString("Align/Current", currentPose.getRotation().toString());
         
         double rotationSpeed = m_rotationController.calculate(
             currentRotationRadians, 

@@ -48,28 +48,28 @@ public class FlyWheelAutoTuner extends SubsystemBase {
       return;
     }
 
-    SmartDashboard.putNumber("Test/CurrentRPM", flywheel.getVelocity());
-    SmartDashboard.putNumber("Test/TargetRPM", tartgetRPM);
-    // get Real PID and kV values
-    flywheel.getPID("Test/");
+    // SmartDashboard.putNumber("Test/CurrentRPM", flywheel.getVelocity());
+    // SmartDashboard.putNumber("Test/TargetRPM", tartgetRPM);
+    // // get Real PID and kV values
+    // flywheel.getPID("Test/");
     
-    if (DriverStation.isDisabled()) {
-      flywheel.setVelocity(0);
-      timer = System.currentTimeMillis();
-    }
+    // if (DriverStation.isDisabled()) {
+    //   flywheel.setVelocity(0);
+    //   timer = System.currentTimeMillis();
+    // }
 
-    if(flywheel.getVelocity() < tartgetRPM - 50){
-      kV += 0.00001;
-      flywheel.assignFF(kP, kV, kD, KI);
-      flywheel.setVelocity(tartgetRPM);
-      timer = System.currentTimeMillis();
-    }
+    // if(flywheel.getVelocity() < tartgetRPM - 50){
+    //   kV += 0.00001;
+    //   flywheel.assignFF(kP, kV, kD, KI);
+    //   flywheel.setVelocity(tartgetRPM);
+    //   timer = System.currentTimeMillis();
+    // }
     
-    if(flywheel.getVelocity() < tartgetRPM - 50){
-      kV -= 0.00001;
-      flywheel.assignFF(kP, kV, kD, KI);
-      flywheel.setVelocity(tartgetRPM);
-      timer = System.currentTimeMillis();
-    }
+    // if(flywheel.getVelocity() < tartgetRPM - 50){
+    //   kV -= 0.00001;
+    //   flywheel.assignFF(kP, kV, kD, KI);
+    //   flywheel.setVelocity(tartgetRPM);
+    //   timer = System.currentTimeMillis();
+    // }
   }
 }

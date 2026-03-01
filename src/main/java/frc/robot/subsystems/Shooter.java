@@ -4,21 +4,14 @@
 
 package frc.robot.subsystems;
 
-import java.util.HashMap;
-
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.pathplanner.lib.config.PIDConstants;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.utils.PIDSettings;
 import frc.lib.utils.SparkMAXContainer;
 import frc.lib.utils.TalonFxContainer;
 import frc.lib.utils.TrimPot;
 import frc.robot.Constants;
-import frc.lib.utils.MotorContainer;
-import frc.lib.utils.PIDSettings;
 
 
 public class Shooter extends SubsystemBase {
@@ -40,6 +33,7 @@ public class Shooter extends SubsystemBase {
   public TrimPot flywheelTrim = new TrimPot("FlywheelTrim");
 
   public double targetVelocity = 3500;
+  public double targetHood = 0;
 
   // Cache last PID values to prevent constant re-configuration
   private double lastP, lastI, lastD, lastV, lastA;
@@ -79,6 +73,7 @@ public class Shooter extends SubsystemBase {
   private void setupSmartDashboard(){
     
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
+    SmartDashboard.putNumber("Hood/Target", 0);
     PIDSettings settings;
     switch (flywheel.currentSlot) {
       case 0:
@@ -143,20 +138,20 @@ public class Shooter extends SubsystemBase {
   }
 
   double lastTargetVelocity = targetVelocity;
+  double hoodTarget = 0;
   @Override
   public void periodic() {
-    if(this.useAutoFlywheel){
-      if(targetVelocity == 0) {
+    // if(targetVelocity == 0) {
 
-      }
-      else if(targetVelocity < 5000){
-        flywheel.currentSlot = 0;
-      } else if(targetVelocity < 5500){
-        flywheel.currentSlot = 1;
-      } else {
-        flywheel.currentSlot = 2;
-      }
-    }
+    // }
+    // else if(targetVelocity <= 5000){
+    //   flywheel.currentSlot = 0;
+    // } else if(targetVelocity <= 5500){
+    //   flywheel.currentSlot = 1;
+    // } else {
+    //   flywheel.currentSlot = 2;
+    // }
+  
     
 
     // if(lastTargetVelocity != targetVelocity){
@@ -169,6 +164,9 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
     SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Follower", flywheelFollower.getVelocity());
     hood.reportMotor("ShooterHood");
+    hoodTarget = SmartDashboard.getNumber("Hood/Target", hoodTarget);
+    if(hoodTarget > 0) hoodTarget *= -1;
+    hood.goToPostion(hoodTarget);
     // If we aren't connected to FMS, allow for dynamic PID tuning
     if(!DriverStation.isFMSAttached()){
       final double p = SmartDashboard.getNumber("Shooter/P", lastP);
@@ -196,5 +194,8 @@ public class Shooter extends SubsystemBase {
       flywheel.getPID("Shooter/PID_Actual/");
       flywheel.reportMotor("ShooterVals");
     }
+
+    flywheel.getPID("Shooter/PID_Actual/");
+      flywheel.reportMotor("ShooterVals");
   }
 }
