@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "DeployIntake"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 3.0
@@ -60,9 +66,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "HumanPlayerClimb-PT4"
+            "name": "Kill"
           }
         },
         {

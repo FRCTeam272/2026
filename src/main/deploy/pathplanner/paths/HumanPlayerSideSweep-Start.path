@@ -48,7 +48,7 @@
   "folder": "HumanPlayerSideSweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -0.47767586238370685
   },
   "useDefaultConstraints": true
 }

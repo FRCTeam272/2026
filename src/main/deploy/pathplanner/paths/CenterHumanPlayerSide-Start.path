@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 0.4162045454545453,
+        "x": 0.36,
         "y": 0.5512954545454545
       },
       "prevControl": {
-        "x": 0.1662058162572486,
+        "x": 0.11000127080270325,
         "y": 0.5520925741956291
       },
       "nextControl": null,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 91.8142698556313
   },
   "reversed": false,
   "folder": "CenterHumanPlayerSide",

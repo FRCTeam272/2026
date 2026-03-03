@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.086462398336717,
-        "y": 0.3729115571384878
+        "x": 4.351511109691668,
+        "y": 0.385190992636388
       },
       "isLocked": false,
       "linkedName": "HPStart"
     },
     {
       "anchor": {
-        "x": 0.4162045454545453,
+        "x": 0.36,
         "y": 0.5512954545454545
       },
       "prevControl": {
-        "x": -0.2086803482564834,
-        "y": 0.5825473487530115
+        "x": 1.2368723776223771,
+        "y": 1.5444007155635062
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 91.8142698556313
   },
   "reversed": false,
   "folder": "HumanPlayerClimb",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -0.47767586238370685
   },
   "useDefaultConstraints": true
 }

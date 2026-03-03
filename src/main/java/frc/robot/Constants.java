@@ -15,7 +15,7 @@ public class Constants {
 
     public static final PIDSettings SHOOTER_HIGH_PID_SETTINGS = new PIDSettings(
         0.00057, 0, 0,
-        0.00195, 0.00001, 5500, 3
+        0.00195, 0.00001, 5500, 6
     );
 
     public static final PIDSettings CONVEYOR_PID_SETTINGS = new PIDSettings(
