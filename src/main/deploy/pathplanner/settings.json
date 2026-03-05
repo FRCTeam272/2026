@@ -8,10 +8,11 @@
     "FieldSideClimb",
     "FieldSideSweep",
     "HumanPlayerClimb",
-    "HumanPlayerSideSweep"
+    "HumanPlayerSideSweep",
+    "HH Human Player"
   ],
   "autoFolders": [
-    "New Folder"
+    "HH"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

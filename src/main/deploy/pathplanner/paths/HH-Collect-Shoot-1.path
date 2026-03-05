@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.617749999656058,
-        "y": 0.9531973067755785
+        "x": 3.652534090909091,
+        "y": 2.0549772727272733
       },
       "isLocked": false,
       "linkedName": "HPStart"
     },
     {
       "anchor": {
-        "x": 6.301397727272726,
-        "y": 0.63375
+        "x": 0.5811136363636362,
+        "y": 0.5925227272727271
       },
       "prevControl": {
-        "x": 5.283249935914227,
-        "y": 0.5644872426794961
+        "x": 0.3281612952296178,
+        "y": 0.5171036013197838
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HPSweepPT1"
+      "linkedName": "HPCollectPT2"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.53,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "HumanPlayerSideSweep",
+  "folder": "HH Human Player",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -0.47767586238370685
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

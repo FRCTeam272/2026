@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
   final int FLYWHEEL_LOCATION = 4;
   final int FLYWHEEL_FOLLOWER_LOCATION = 6;
   final int HOOD_LOCATION = 5;
-  int speedThreshold = 50;
+  int speedThreshold = 200;
   int angleThreshold = 2;
 
   public boolean useAutoFlywheel = true;
@@ -138,41 +138,44 @@ public class Shooter extends SubsystemBase {
     motor.assignFF(0, kV, kA, 0, motor.currentSlot);
   }
 
+  
+  public static boolean isBetween(double value, double min, double max, double threshold) {
+    // Ensure min is actually the smaller number
+    double realMin = Math.min(min, max) - threshold;
+    double realMax = Math.max(min, max) + threshold;
+    
+    return value >= realMin && value <= realMax;
+  }
+
+  private boolean isShooterUpToSpeed(){
+    return isBetween(this.flywheel.getVelocity(), targetVelocity, targetVelocity, speedThreshold);
+  }
+
+  private boolean isHoodCorrect(){
+    return Math.abs(this.hood.getPosition()) < 1;
+  }
+
   double lastTargetVelocity = targetVelocity;
   double hoodTarget = 0;
-  int deboundTime = 50;
+  int deboundTime = 150;
   int debounceCount = 0;
+
 
   @Override
   public void periodic() {
-    // if(targetVelocity == 0) {
-
-    // }
-    // else if(targetVelocity <= 5000){
-    // flywheel.currentSlot = 0;
-    // } else if(targetVelocity <= 5500){
-    // flywheel.currentSlot = 1;
-    // } else {
-    // flywheel.currentSlot = 2;
-    // }
-
-    // if(lastTargetVelocity != targetVelocity){
-    // this.SpinWheel(targetVelocity);
-    // lastTargetVelocity = targetVelocity;
-    // }
-
-    // This method will be called once per scheduler run
-    targetVelocity = SmartDashboard.getNumber("FlyWheel/TargetVelocity", targetVelocity);
-    SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
-    SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Follower", flywheelFollower.getVelocity());
-    hood.reportMotor("ShooterHood");
-    hoodTarget = SmartDashboard.getNumber("Hood/Target", hoodTarget);
-    if (hoodTarget > 0)
-      hoodTarget *= -1;
-    hood.goToPostion(hoodTarget);
-    // If we aren't connected to FMS, allow for dynamic PID tuning
     if (debounceCount == deboundTime) {
       debounceCount = 0;
+
+      targetVelocity = SmartDashboard.getNumber("FlyWheel/TargetVelocity", targetVelocity);
+      SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
+      SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Follower", flywheelFollower.getVelocity());
+      hood.reportMotor("ShooterHood");
+      hoodTarget = SmartDashboard.getNumber("Hood/Target", hoodTarget);
+      if (hoodTarget > 0)
+        hoodTarget *= -1;
+      hood.goToPostion(hoodTarget);
+      
+
       final double p = SmartDashboard.getNumber("Shooter/P", lastP);
       final double i = SmartDashboard.getNumber("Shooter/I", lastI);
       final double d = SmartDashboard.getNumber("Shooter/D", lastD);
@@ -200,6 +203,9 @@ public class Shooter extends SubsystemBase {
 
       flywheel.getPID("Shooter/PID_Actual/");
       flywheel.reportMotor("ShooterVals");
+
+      SmartDashboard.putBoolean("Ready/Flywheel Up To Speed", this.isShooterUpToSpeed());
+      SmartDashboard.putBoolean("Ready/Can Trech", this.isHoodCorrect());
     }
     debounceCount++;
 

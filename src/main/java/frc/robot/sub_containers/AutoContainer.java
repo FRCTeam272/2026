@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.ClimberCommands;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Conveyor;
 import frc.robot.subsystems.Intake;
@@ -22,6 +25,7 @@ public class AutoContainer {
     Shooter shooter;
     Regulator regulator;
     Conveyor conveyor;
+    Climber climber;
     
     public AutoContainer(RobotContainer rc) {
         // this.drivetrain.configureAutoBuilder();
@@ -30,7 +34,9 @@ public class AutoContainer {
         this.shooter = rc.shooter;
         this.regulator = rc.regulator;
         this.conveyor = rc.conveyor;
-        
+        this.climber = rc.climber;
+
+        SmartDashboard.putNumber("Auto Delay (Seconds)", 0);
     }
 
     private void configureAutoBindings() {
@@ -40,7 +46,7 @@ public class AutoContainer {
             intake.deploy();
         }));
         NamedCommands.registerCommand("StartIntake", new InstantCommand(() -> {
-            intake.intake();
+            // intake.intake();
         }));
         NamedCommands.registerCommand("SpinFlywheel", new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
@@ -48,7 +54,7 @@ public class AutoContainer {
             regulator.Load();
             intake.setCurrentLimitOfDeployMotor(20);
             intake.retract();
-            intake.intake(.85);
+            // intake.intake(.85);
         }));
         NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
             intake.stop();
@@ -57,7 +63,7 @@ public class AutoContainer {
             intake.setCurrentLimitOfDeployMotor(40);
             intake.jostle();
             intake.deploy();
-            intake.intake();
+            // intake.intake();
         }));
         NamedCommands.registerCommand("Kill", new InstantCommand(() -> {
             intake.stop();
@@ -65,12 +71,22 @@ public class AutoContainer {
             regulator.Stop();
             conveyor.Stop();
         }));
+        NamedCommands.registerCommand("Climb", new InstantCommand(() -> {this.intake.deploy();})
+        .andThen(ClimberCommands.Stage1(climber))
+        .andThen(ClimberCommands.Stage2(climber))
+        .andThen(new WaitCommand(3))
+        .andThen(ClimberCommands.Stage3(climber))
+        );
+
+        NamedCommands.registerCommand("ClimbPrep", ClimberCommands.Stage1(climber).andThen(ClimberCommands.Stage2(climber)));
+        NamedCommands.registerCommand("ClimberExecute", ClimberCommands.Stage3(climber));
 
         autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
         SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        var delay = SmartDashboard.getNumber("Auto Delay (Seconds)", 0);
+        return new WaitCommand(delay).andThen(autoChooser.getSelected());
     }
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.601,
-        "y": 0.88
+        "x": 0.5811136363636362,
+        "y": 0.5925227272727271
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.617749999656058,
-        "y": 0.9531973067755785
+        "x": 1.5811136363636362,
+        "y": 0.5925227272727274
       },
       "isLocked": false,
-      "linkedName": "HPStart"
+      "linkedName": "HPCollectPT2"
     },
     {
       "anchor": {
-        "x": 6.301397727272726,
-        "y": 0.63375
+        "x": 3.59,
+        "y": 3.9937727272727273
       },
       "prevControl": {
-        "x": 5.283249935914227,
-        "y": 0.5644872426794961
+        "x": 2.5900000000000003,
+        "y": 3.9937727272727277
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HPSweepPT1"
+      "linkedName": "HHPt1"
     }
   ],
   "rotationTargets": [],
@@ -45,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "HumanPlayerSideSweep",
+  "folder": "HH Human Player",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.47767586238370685
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

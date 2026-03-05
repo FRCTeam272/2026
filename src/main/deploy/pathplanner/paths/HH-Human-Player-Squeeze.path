@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.601,
-        "y": 0.88
+        "x": 1.1170681818181816,
+        "y": 2.2725340909090916
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.617749999656058,
-        "y": 0.9531973067755785
+        "x": 1.195737759108146,
+        "y": 2.5630772153345767
       },
       "isLocked": false,
-      "linkedName": "HPStart"
+      "linkedName": "FieldSideHang"
     },
     {
       "anchor": {
-        "x": 6.301397727272726,
-        "y": 0.63375
+        "x": 1.1,
+        "y": 2.93
       },
       "prevControl": {
-        "x": 5.283249935914227,
-        "y": 0.5644872426794961
+        "x": 1.023854098522032,
+        "y": 2.537377605948404
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HPSweepPT1"
+      "linkedName": "HH-Squeeze"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 0.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -45,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "HumanPlayerSideSweep",
+  "folder": "HH Human Player",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.47767586238370685
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
