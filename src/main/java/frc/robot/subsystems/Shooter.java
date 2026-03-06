@@ -205,7 +205,7 @@ public class Shooter extends SubsystemBase {
       flywheel.reportMotor("ShooterVals");
 
       SmartDashboard.putBoolean("Ready/Flywheel Up To Speed", this.isShooterUpToSpeed());
-      SmartDashboard.putBoolean("Ready/Can Trech", this.isHoodCorrect());
+      SmartDashboard.putBoolean("Ready/Can Trech (Hood)", this.isHoodCorrect());
     }
     debounceCount++;
 

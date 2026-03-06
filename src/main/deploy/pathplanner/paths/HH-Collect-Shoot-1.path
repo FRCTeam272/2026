@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.601,
-        "y": 0.88
+        "x": 3.59,
+        "y": 1.674738636363637
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.652534090909091,
-        "y": 2.0549772727272733
+        "x": 3.641534090909091,
+        "y": 2.8497159090909103
       },
       "isLocked": false,
       "linkedName": "HPStart"

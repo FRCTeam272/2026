@@ -36,9 +36,7 @@ public class ClimberCommands {
     //* Bring the Robot up */ 
     public static Command Dismount(Climber climber){
         return new InstantCommand(() -> climber.setValue(0))
-        .andThen(new WaitCommand(1))
         .andThen(new DriveToHeight(climber, 26 * 2.78))
-        .andThen(new WaitCommand(1))
         .andThen(new DriveToHeight(climber, 0))
         ;
     }

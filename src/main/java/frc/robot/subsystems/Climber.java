@@ -71,6 +71,9 @@ public class Climber extends SubsystemBase {
     
     @Override
     public void periodic() {
+        
+
+        SmartDashboard.putBoolean("Ready/Can Trench(Climber)", this.climberMotor.getPosition() < 2);
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Climber/Current", climberMotor.encoder.getPosition());
         climberMotor.reportMotor("ClimberMotor");

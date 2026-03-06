@@ -29,13 +29,13 @@ public class AutoContainer {
     
     public AutoContainer(RobotContainer rc) {
         // this.drivetrain.configureAutoBuilder();
-        this.configureAutoBindings();
         this.intake = rc.intake;
         this.shooter = rc.shooter;
         this.regulator = rc.regulator;
         this.conveyor = rc.conveyor;
         this.climber = rc.climber;
 
+        this.configureAutoBindings();
         SmartDashboard.putNumber("Auto Delay (Seconds)", 0);
     }
 
@@ -46,7 +46,7 @@ public class AutoContainer {
             intake.deploy();
         }));
         NamedCommands.registerCommand("StartIntake", new InstantCommand(() -> {
-            // intake.intake();
+            intake.intake();
         }));
         NamedCommands.registerCommand("SpinFlywheel", new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
@@ -54,7 +54,7 @@ public class AutoContainer {
             regulator.Load();
             intake.setCurrentLimitOfDeployMotor(20);
             intake.retract();
-            // intake.intake(.85);
+            intake.intake(.85);
         }));
         NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
             intake.stop();
@@ -63,7 +63,7 @@ public class AutoContainer {
             intake.setCurrentLimitOfDeployMotor(40);
             intake.jostle();
             intake.deploy();
-            // intake.intake();
+            intake.intake();
         }));
         NamedCommands.registerCommand("Kill", new InstantCommand(() -> {
             intake.stop();
