@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 0.36,
-        "y": 0.5512954545454545
+        "x": 2.4746385349737148,
+        "y": 1.9989518837616824
       },
       "prevControl": {
-        "x": 1.2368723776223771,
-        "y": 1.5444007155635062
+        "x": 3.3515109125960922,
+        "y": 2.992057144779734
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 91.8142698556313
+    "rotation": -170.22385911385328
   },
   "reversed": false,
   "folder": "HumanPlayerClimb",

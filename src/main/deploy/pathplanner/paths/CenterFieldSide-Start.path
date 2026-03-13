@@ -8,24 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.7949309242247393,
-        "y": 3.966925801412977
+        "x": 3.7951288495146334,
+        "y": 4.0608116026974965
       },
       "isLocked": false,
       "linkedName": "CenterStart"
     },
     {
       "anchor": {
-        "x": 1.6633295454545451,
-        "y": 6.07575
+        "x": 3.2111704147196263,
+        "y": 6.089176858206775
       },
       "prevControl": {
-        "x": 1.424811194032902,
-        "y": 6.290002845860915
+        "x": 3.1177285075220875,
+        "y": 6.321057452434249
+      },
+      "nextControl": {
+        "x": 3.355897365203593,
+        "y": 5.730029958432919
+      },
+      "isLocked": false,
+      "linkedName": "FeildSideClimbPT1"
+    },
+    {
+      "anchor": {
+        "x": 0.7673911634783879,
+        "y": 5.942242990654206
+      },
+      "prevControl": {
+        "x": 2.6031826164405816,
+        "y": 6.19129920275087
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FeildSideClimbPT1"
+      "linkedName": "Center-Shoot-Collect-End"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.87669728592448
+    "rotation": 179.10813963816543
   },
   "reversed": false,
   "folder": "CenterFieldSide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -179.40934278535332
+    "rotation": -0.3005690664217857
   },
   "useDefaultConstraints": true
 }

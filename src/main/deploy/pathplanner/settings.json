@@ -7,9 +7,10 @@
     "CenterHumanPlayerSide",
     "FieldSideClimb",
     "FieldSideSweep",
+    "HH Human Player",
     "HumanPlayerClimb",
     "HumanPlayerSideSweep",
-    "HH Human Player"
+    "New Folder"
   ],
   "autoFolders": [
     "HH"

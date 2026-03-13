@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.36,
-        "y": 0.5512954545454545
+        "x": 2.4746385349737148,
+        "y": 1.9989518837616824
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.7198746362909232,
-        "y": 1.555921863672412
+        "x": 2.8345131712646383,
+        "y": 3.0035782928886396
       },
       "isLocked": false,
       "linkedName": "HPPT1"
@@ -48,7 +48,7 @@
   "folder": "HumanPlayerClimb",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 91.8142698556313
+    "rotation": -170.22385911385328
   },
   "useDefaultConstraints": true
 }
