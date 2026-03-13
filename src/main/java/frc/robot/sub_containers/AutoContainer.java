@@ -40,11 +40,13 @@ public class AutoContainer {
     }
 
     private void configureAutoBindings() {
-        NamedCommands.registerCommand("DeployIntake", new InstantCommand(() -> {
+        NamedCommands.registerCommand("DeployIntake", 
+        new WaitCommand(.2).andThen(
+        new InstantCommand(() -> {
             intake.setCurrentLimitOfDeployMotor(40);
             intake.jostle();
             intake.deploy();
-        }));
+        })));
         NamedCommands.registerCommand("StartIntake", new InstantCommand(() -> {
             intake.intake();
         }));
@@ -59,12 +61,14 @@ public class AutoContainer {
         NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
             intake.stop();
         }));
-        NamedCommands.registerCommand("DeployAndStartIntake", new InstantCommand(() -> {
+        NamedCommands.registerCommand("DeployAndStartIntake", 
+        new WaitCommand(.2).andThen(
+        new InstantCommand(() -> {
             intake.setCurrentLimitOfDeployMotor(40);
             intake.jostle();
             intake.deploy();
             intake.intake();
-        }));
+        })));
         NamedCommands.registerCommand("Kill", new InstantCommand(() -> {
             intake.stop();
             shooter.TrueStop();

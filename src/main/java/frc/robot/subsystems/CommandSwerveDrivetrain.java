@@ -290,6 +290,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // });
     }
 
+    public Pose2d getPose() {
+        return this.getState().Pose;
+    }   
+
     private final Field2d m_field = new Field2d();
 
     private void startSimThread() {

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3232045454545454,
-        "y": 3.0249318181818183
+        "x": 1.1170681818181816,
+        "y": 3.086
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.572557604195349,
-        "y": 3.006958168118313
+        "x": 1.3640152781113004,
+        "y": 3.0470496260300735
       },
       "isLocked": false,
       "linkedName": "HH-Squeeze"
@@ -20,12 +20,12 @@
         "y": 3.0
       },
       "prevControl": {
-        "x": 1.0937380487062327,
-        "y": 3.043070306998977
+        "x": 1.0088974909949284,
+        "y": 3.184853754462519
       },
       "nextControl": {
-        "x": 1.5862619512937675,
-        "y": 2.956929693001023
+        "x": 1.593746813188313,
+        "y": 2.858333749140993
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 3.05
       },
       "prevControl": {
-        "x": 1.2392331529925598,
-        "y": 3.122577534466517
+        "x": 1.0573097275666095,
+        "y": 3.2933425468886215
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,7 +49,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.2,
+    "maxVelocity": 0.1,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,

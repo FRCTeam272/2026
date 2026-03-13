@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5811136363636362,
-        "y": 0.5925227272727274
+        "x": 1.0436410960267295,
+        "y": 1.699048322674024
       },
       "isLocked": false,
       "linkedName": "HPCollectPT2"
     },
     {
       "anchor": {
-        "x": 3.59,
-        "y": 3.9937727272727273
+        "x": 4.652306818181818,
+        "y": 4.035
       },
       "prevControl": {
-        "x": 2.5900000000000003,
-        "y": 3.9937727272727277
+        "x": 3.7138196806504973,
+        "y": 3.26588550838301
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
