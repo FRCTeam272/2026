@@ -207,32 +207,36 @@ public class Shooter extends SubsystemBase {
     var stage = 0;
     PIDSettings settings;
     // reference that to the table
-    if(distance <= 19){
-      this.targetVelocity = 3900;
-      this.hoodTarget = 0;
+    if(distance <= 36){
+      this.targetVelocity = 3600;
+      this.hoodTarget = (distance * .167) + .834; // multiple by negitive one cause its in the negitive space
       settings = Constants.SHOOTER_LOW_PID_SETTINGS;
     }
-    else if(distance <= 88){
+    else if(distance <= 71){
       this.targetVelocity = 4150;
-      this.hoodTarget = (distance * .0968) - 1.947; // multiple by negitive one cause its in the negitive space
+      this.hoodTarget = (distance * .130) - 2.221; // multiple by negitive one cause its in the negitive space
       settings = Constants.SHOOTER_4150_PID_SETTINGS;
       stage = 1;
     }
-    else if(distance <= 167){
-      this.targetVelocity = 5200;
-      this.hoodTarget = (distance * .0838) - 7.678;
-      settings = Constants.SHOOTER_5200_PID_SETTINGS;
+    else if(distance <= 116){
+      this.targetVelocity = 4700;
+      this.hoodTarget = (distance * .088) - 3.125;
+      settings = Constants.SHOOTER_4700_PID_SETTINGS;
       stage = 2;
     }
     else {
-      this.targetVelocity = 5800;
-      this.hoodTarget = (distance * .0840) - 8.840;
-      settings = Constants.SHOOTER_5800_PID_SETTINGS;
+      this.targetVelocity = 5500;
+      this.hoodTarget = (distance * .121) - 11.826;
+      settings = Constants.SHOOTER_5500_PID_SETTINGS;
       stage = 3;
     }
 
     if(hoodTarget > 0){
       hoodTarget *= -1;
+    }
+
+    if (hoodTarget < -7.3){
+      hoodTarget = -7.3;
     }
     
     //force PID to update on smartdashboard
@@ -259,7 +263,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter/Distance", getDistanceFromTarget());
     // TODO: REMOVE
     SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
-      
+    // debounceCount = debounceTime;
     // if (DriverStation.isTestEnabled()) debounceCount = debounceTime;
     if (debounceCount == debounceTime) {
       debounceCount = 0;
