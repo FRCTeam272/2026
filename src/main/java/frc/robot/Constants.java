@@ -18,6 +18,21 @@ public class Constants {
         0.00195, 0.00001, 5500, 6
     );
 
+    public static final PIDSettings SHOOTER_4150_PID_SETTINGS = new PIDSettings( // note this is the same as LOW
+        0.00001, 0.0, 0.0,
+        0.00195, 0.00001, 4150, 0
+    );
+
+    public static final PIDSettings SHOOTER_5200_PID_SETTINGS = new PIDSettings( // note this is the same as LOW
+        0.0005, 0.0, 0.0,
+        0.00195, 0.00001, 5200, 0
+    );
+
+    public static final PIDSettings SHOOTER_5800_PID_SETTINGS = new PIDSettings( // note this is the same as LOW
+        0.00085, 0.0, 0.0,
+        0.00195, 0.00001, 5800, 0
+    );
+
     public static final PIDSettings CONVEYOR_PID_SETTINGS = new PIDSettings(
         0.001, 0.0, 0.0
     );

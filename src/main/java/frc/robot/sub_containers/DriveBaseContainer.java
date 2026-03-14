@@ -52,41 +52,15 @@ public class DriveBaseContainer {
         }
     }
 
-    public Command driveHider(){
-        return drivetrain.applyRequest(() ->
-                drive
-                    .withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-                    .withVelocityY(joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
-                    .withDeadband(MaxSpeed.getAsDouble() * 0.1).withRotationalDeadband(MaxAngularRate.getAsDouble() * 0.1) // Add a 10% deadband
-                    .withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
-            );
-        
-        // if(TunerConstants.isTestBot){
-        //     return drivetrain.applyRequest(() ->
-        //         drive
-        //             .withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-        //             .withVelocityY(joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
-        //             .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
-        //             .withDeadband(MaxSpeed.getAsDouble() * 0.1).withRotationalDeadband(MaxAngularRate.getAsDouble() * 0.1) // Add a 10% deadband
-        //             .withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
-        //     );
-        // } else {
-            
- 
-        // }
-        
-    }
-
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
             drivetrain.applyRequest(() ->
                 drive
-                    .withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
+                    .withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+                    .withVelocityY(joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
+                    .withRotationalRate(joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
                     .withDeadband(MaxSpeed.getAsDouble() * 0.1).withRotationalDeadband(MaxAngularRate.getAsDouble() * 0.1) // Add a 10% deadband
                     .withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
             )

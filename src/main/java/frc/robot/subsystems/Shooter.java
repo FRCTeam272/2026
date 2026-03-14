@@ -16,7 +16,7 @@ import frc.robot.Constants;
 import frc.robot.sub_containers.DriveBaseContainer;
 
 public class Shooter extends SubsystemBase {
-  Translation2d targetPose = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
+  public Translation2d targetPose = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
               ? new Translation2d(12.5, 4) // if red allaince
               : new Translation2d(3.5, 4); // if blue alliance
 
@@ -134,7 +134,8 @@ public class Shooter extends SubsystemBase {
   final TalonFxContainer[] flywheels = new TalonFxContainer[] { flywheel, flywheelFollower };
 
   public void UpdatePID(PIDSettings settings) {
-    for (TalonFxContainer motor : flywheels) {
+    for (var motor : flywheels) {
+      if(motor == null) continue;
       dynamicPID(settings.kP, settings.kI, settings.kD, motor);
       dynamicFeedForward(settings.kV, settings.kA, motor);
     }
@@ -201,7 +202,7 @@ public class Shooter extends SubsystemBase {
     }
 
     // get the distance
-    double distance = getDistanceFromTarget();
+    double distance = Math.abs(getDistanceFromTarget());
     SmartDashboard.putNumber("Shooter/Distance", distance);
     var stage = 0;
     PIDSettings settings;
@@ -214,19 +215,19 @@ public class Shooter extends SubsystemBase {
     else if(distance <= 88){
       this.targetVelocity = 4150;
       this.hoodTarget = (distance * .0968) - 1.947; // multiple by negitive one cause its in the negitive space
-      settings = Constants.SHOOTER_LOW_PID_SETTINGS;
+      settings = Constants.SHOOTER_4150_PID_SETTINGS;
       stage = 1;
     }
     else if(distance <= 167){
       this.targetVelocity = 5200;
       this.hoodTarget = (distance * .0838) - 7.678;
-      settings = Constants.SHOOTER_MID_PID_SETTINGS;
+      settings = Constants.SHOOTER_5200_PID_SETTINGS;
       stage = 2;
     }
     else {
       this.targetVelocity = 5800;
       this.hoodTarget = (distance * .0840) - 8.840;
-      settings = Constants.SHOOTER_HIGH_PID_SETTINGS;
+      settings = Constants.SHOOTER_5800_PID_SETTINGS;
       stage = 3;
     }
 
@@ -235,29 +236,30 @@ public class Shooter extends SubsystemBase {
     }
     
     //force PID to update on smartdashboard
-    lastP = settings.kP;
-    lastI = settings.kI;
-    lastD = settings.kD;
-    lastV = settings.kV;
-    lastA = settings.kA;
-    SmartDashboard.putNumber("Shooter/P", lastP);
-    SmartDashboard.putNumber("Shooter/I", lastI);
-    SmartDashboard.putNumber("Shooter/D", lastD);
-    SmartDashboard.putNumber("Shooter/kV", lastV);
-    SmartDashboard.putNumber("Shooter/kA", lastA);
+    for (var motor : flywheels) {
+      if(motor == null) continue;
+      dynamicPID(settings.kP, settings.kI, settings.kD, motor);
+      dynamicFeedForward(settings.kV, settings.kA, motor);
+    }
+    SmartDashboard.putNumber("Shooter/P", settings.kP);
+    SmartDashboard.putNumber("Shooter/I", settings.kI);
+    SmartDashboard.putNumber("Shooter/D", settings.kD);
+    SmartDashboard.putNumber("Shooter/kV", settings.kV);
+    SmartDashboard.putNumber("Shooter/kA", settings.kA);
     // force targets to update on smartdashboard
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
     SmartDashboard.putNumber("Hood/Target", hoodTarget);
     SmartDashboard.putNumber("Shooter/AutoFlywheelStage", stage);
     // update PID
-    UpdatePID(settings);
     forceSync();
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Shooter/Distance", getDistanceFromTarget());
-
+    // TODO: REMOVE
+    SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
+      
     // if (DriverStation.isTestEnabled()) debounceCount = debounceTime;
     if (debounceCount == debounceTime) {
       debounceCount = 0;
@@ -305,6 +307,8 @@ public class Shooter extends SubsystemBase {
       flywheel.getPID("Shooter/PID_Actual/");
       flywheel.reportMotor("ShooterVals");
 
+      
+      SmartDashboard.putBoolean("Shooter/UseAutoFlywheel", useAutoFlywheel);
       SmartDashboard.putBoolean("Ready/Flywheel Up To Speed", this.isShooterUpToSpeed());
       SmartDashboard.putBoolean("Ready/Can Trech (Hood)", this.isHoodCorrect());
     }

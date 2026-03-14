@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.drivetrain.AlignToHub;
+import frc.robot.commands.drivetrain.AlignToHubPP;
 import frc.robot.commands.intake.IntakeCommands;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeStop;
@@ -168,7 +169,7 @@ public class RobotContainer {
                     shooter.forceSync();
                     shooter.SpinWheel(shooter.targetVelocity);
                 }));
-        DC.a().onTrue(new AlignToHub(driveBaseContainer.drivetrain, DC));
+        DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain));
         DC.b().onTrue(new InstantCommand(() -> {
             shooter.SpinWheel(0);
             shooter.AdjustHood(0);
