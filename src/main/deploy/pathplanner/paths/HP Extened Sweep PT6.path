@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.909738636363636,
+        "y": 5.488261363636363
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.51476761624778,
+        "y": 5.062632580958325
+      },
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT5"
+    },
+    {
+      "anchor": {
+        "x": 6.023113636363636,
+        "y": 2.406522727272727
+      },
+      "prevControl": {
+        "x": 5.507772727272727,
+        "y": 3.2207613636363637
+      },
+      "nextControl": {
+        "x": 6.156813034700583,
+        "y": 2.19527767790035
+      },
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT2-Waypoint"
+    },
+    {
+      "anchor": {
+        "x": 2.900147727272727,
+        "y": 2.4168295454545454
+      },
+      "prevControl": {
+        "x": 3.2638807733556723,
+        "y": 2.359069372554483
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT6"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 45.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 43.090847567003664
+  },
+  "reversed": false,
+  "folder": "HP-Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

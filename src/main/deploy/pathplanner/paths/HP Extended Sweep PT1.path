@@ -1,0 +1,99 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.5494772727272723,
+        "y": 1.654125
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.6271246952877703,
+        "y": 1.8917610195124288
+      },
+      "isLocked": false,
+      "linkedName": "HPStart"
+    },
+    {
+      "anchor": {
+        "x": 3.2918068181818176,
+        "y": 2.5405113636363637
+      },
+      "prevControl": {
+        "x": 3.13992729166473,
+        "y": 2.23559469112085
+      },
+      "nextControl": {
+        "x": 3.519686693604513,
+        "y": 2.9980080054850626
+      },
+      "isLocked": false,
+      "linkedName": "HP-UnderPass1"
+    },
+    {
+      "anchor": {
+        "x": 6.064340909090909,
+        "y": 2.0767045454545463
+      },
+      "prevControl": {
+        "x": 5.682110269724566,
+        "y": 2.2975128539950225
+      },
+      "nextControl": {
+        "x": 6.7014376923402565,
+        "y": 1.7086642875644982
+      },
+      "isLocked": false,
+      "linkedName": "HP-UnderPass2"
+    },
+    {
+      "anchor": {
+        "x": 7.79749379380841,
+        "y": 0.9811761645735977
+      },
+      "prevControl": {
+        "x": 6.924702331791864,
+        "y": 1.4698841129475142
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.11795543905635616,
+      "rotationDegrees": 0.14296890559071362
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 52.125016348901866
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 42.89915383382206
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.05816828408969
+  },
+  "reversed": false,
+  "folder": "HP-Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -0.47767586238370685
+  },
+  "useDefaultConstraints": true
+}

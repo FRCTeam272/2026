@@ -35,12 +35,13 @@ public class ClimberCommands {
 
     //* Bring the Robot up */ 
     public static Command Dismount(Climber climber){
+        var lower = SmartDashboard.getNumber("Climber/Dismount", 26* 2.22);
+
         return new InstantCommand(() -> climber.setValue(0))
-        .andThen(new WaitCommand(1))
-        .andThen(new DriveToHeight(climber, 26 * 2.78))
-        .andThen(new WaitCommand(1))
+        .andThen(new DriveToHeight(climber, lower))
         .andThen(new DriveToHeight(climber, 0))
-        ;
+        .andThen(new WaitCommand(1))
+        .andThen(new InstantCommand(()->climber.setValue(0)));
     }
 
     //* Lower the Robot */ 

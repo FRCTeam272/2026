@@ -70,18 +70,18 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean jostle(){
-    // return true;
-    return deployMotor.goToPostion(deploy_position - 3);
+    return true;
+    // return deployMotor.goToPostion(deploy_position - 3);
   }
 
   public boolean deploy() {
-    // return true;
-    return deployMotor.goToPostion(deploy_position, 0);
+    return true;
+    // return deployMotor.goToPostion(deploy_position, 0);
   }
 
   public boolean retract() {
-    // return true;
-    return deployMotor.goToPostion(retract_position, 0);
+    return true;
+    // return deployMotor.goToPostion(retract_position, 0);
   }
 
   public void setCurrentLimitOfDeployMotor(int limit){

@@ -5,38 +5,13 @@
     "data": {
       "commands": [
         {
-          "type": "path",
-          "data": {
-            "pathName": "FieldSideSweep-Start"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "FieldSideSweep-Part2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "DeployAndStartIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "FieldSideSweep-Part3"
+                  "pathName": "HH-Shoot-Part1"
                 }
               },
               {
@@ -49,27 +24,57 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "FieldSideSweep-Part4"
+            "name": "Shoot"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "FieldSideSweep-Part5"
+            "waitTime": 4.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HH-Center-Climb-Part2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HH-Human-Player-Squeeze"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbPrep"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HH-Jiggle"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbExecute"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "HH",
   "choreoAuto": false
 }

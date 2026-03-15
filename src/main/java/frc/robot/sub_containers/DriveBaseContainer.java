@@ -7,6 +7,7 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -20,9 +21,8 @@ import frc.robot.subsystems.Regulator;
 
 public class DriveBaseContainer {
     public AutoContainer autoContainer;
-    public static double speedFactor = .350;
-    public static double rotationFactor = .750
-    ;
+    public static double speedFactor = .32;
+    public static double rotationFactor = .32;
     
     static {
         // edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber("Speed Factor", speedFactor);
@@ -50,32 +50,6 @@ public class DriveBaseContainer {
             SmartDashboard.putString("MESSAGE", "we are at autoSetup");
             autoContainer = new AutoContainer(rc); 
         }
-    }
-
-    public Command driveHider(){
-        return drivetrain.applyRequest(() ->
-                drive
-                    .withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
-                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
-                    .withDeadband(MaxSpeed.getAsDouble() * 0.1).withRotationalDeadband(MaxAngularRate.getAsDouble() * 0.1) // Add a 10% deadband
-                    .withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
-            );
-        
-        // if(TunerConstants.isTestBot){
-        //     return drivetrain.applyRequest(() ->
-        //         drive
-        //             .withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-        //             .withVelocityY(joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
-        //             .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
-        //             .withDeadband(MaxSpeed.getAsDouble() * 0.1).withRotationalDeadband(MaxAngularRate.getAsDouble() * 0.1) // Add a 10% deadband
-        //             .withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
-        //     );
-        // } else {
-            
- 
-        // }
-        
     }
 
     private void configureBindings() {
@@ -124,5 +98,13 @@ public class DriveBaseContainer {
             return Commands.none();
         }
         return this.autoContainer.getAutonomousCommand();
+    }
+
+    public Pose2d getPose() {
+        return drivetrain.getPose();
+    }
+
+    public void resetPose(Pose2d newPose) {
+        drivetrain.resetPose(newPose);
     }
 }

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.8685113636363635,
+        "y": 5.343965909090909
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.8685113636363635,
+        "y": 5.343965909090909
+      },
+      "isLocked": false,
+      "linkedName": "FSweepPT6"
+    },
+    {
+      "anchor": {
+        "x": 3.188738636363636,
+        "y": 5.333659090909091
+      },
+      "prevControl": {
+        "x": 2.188738636363636,
+        "y": 5.333659090909091
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -47.72631099390631
+  },
+  "reversed": false,
+  "folder": "F Extended Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -56.0035408517495
+  },
+  "useDefaultConstraints": true
+}

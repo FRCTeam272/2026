@@ -7,14 +7,17 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.drivetrain.AlignToHub;
+import frc.robot.commands.drivetrain.AlignToHubPP;
 import frc.robot.commands.intake.IntakeCommands;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeStop;
@@ -36,16 +39,6 @@ import frc.lib.utils.PIDSettings;
 import frc.robot.commands.TrimPotCommands;
 
 public class RobotContainer {
-    // // Subsystems
-    public final DashboardWriter dashboardWriter = new DashboardWriter();
-    
-    public final Intake intake = new Intake();
-    public final Shooter shooter = new Shooter();
-    public final Regulator regulator = new Regulator();
-    public final Conveyor conveyor = new Conveyor();
-    
-    // public final Climber climber = new Climber();
-
     // Controllers
     private final CommandXboxController DC = new CommandXboxController(0);
     private final LC_2026Custom OC = new LC_2026Custom(1);
@@ -53,19 +46,23 @@ public class RobotContainer {
     // Sub-Containers
     public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC, this); // HINT: looking for DriveBase Controls look in here
 
+    // // Subsystems
+    public final DashboardWriter dashboardWriter = new DashboardWriter();
+    
+    public final Intake intake = new Intake();
+    public final Shooter shooter = new Shooter(driveBaseContainer);
+    public final Regulator regulator = new Regulator();
+    public final Conveyor conveyor = new Conveyor();
+    
+    public final Climber climber = new Climber();
+
+
+    
     public RobotContainer() {
         configureBindings();
         // configurTestBindings();
         configureOperatorPanel();
         configureAutonmousBindings(); 
-        RobotModeTriggers.disabled().whileTrue(new InstantCommand(() -> {
-            TrimPotCommands.SaveTrimPotValues(shooter, intake);
-            intake.stop();
-            shooter.SpinWheel(0);
-            regulator.Stop();
-            conveyor.Stop();
-            // climber.Stop();
-        }, intake, shooter, regulator, conveyor));
         
     }
 
@@ -80,10 +77,10 @@ public class RobotContainer {
     }
 
     public void configureOperatorPanel(){
-        // OC.ClimberStage1.onTrue(ClimberCommands.Stage1(climber));
-        // OC.ClimberStage2.onTrue(ClimberCommands.Stage2(climber));
-        // OC.ClimberStage3.onTrue(ClimberCommands.Stage3(climber));
-        // OC.ClimberRelease.onTrue(ClimberCommands.Dismount(climber));
+        OC.ClimberStage1.onTrue(ClimberCommands.Stage1(climber));
+        OC.ClimberStage2.onTrue(ClimberCommands.Stage2(climber));
+        OC.ClimberStage3.onTrue(ClimberCommands.Stage3(climber));
+        OC.ClimberRelease.onTrue(ClimberCommands.Dismount(climber));
         
         OC.Stir.whileTrue(IntakeCommands.hopperAgitation(intake));
         OC.CloseUpFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_LOW_PID_SETTINGS));
@@ -99,59 +96,68 @@ public class RobotContainer {
             intake.retract();
             intake.intake();
         }));
+        OC.BonusButton2.onTrue(new InstantCommand(() -> { 
+            var pose = DriverStation.isDSAttached() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? new Translation2d(13, 4.018) : new Translation2d(3.566, 4.018);    
+            driveBaseContainer.drivetrain.resetPose(
+                new Pose2d(
+                    pose, 
+                    driveBaseContainer.drivetrain.getPose().getRotation()
+                )
+            );
+        }));
     }
 
 
     
-    private void configurTestBindings() {
-        DC.rightTrigger()
-                .whileTrue(new InstantCommand(() -> {
-                    conveyor.Load();
-                    regulator.Load();
-                    intake.setCurrentLimitOfDeployMotor(10);
-                    intake.retract();
-                    intake.intake(.5);
-                }, conveyor))
-                .onFalse(new InstantCommand(() -> {
-                    conveyor.Stop();
-                    regulator.Stop();
-                    intake.stop();
-                    // []\intake.deploy();
-                    intake.setCurrentLimitOfDeployMotor(40);
-                }));
-        DC.leftTrigger()
-                .whileTrue(new InstantCommand(() -> {
-                    intake.setCurrentLimitOfDeployMotor(40);
-                    intake.jostle();
-                    intake.deploy();
-                    intake.intake();
-                    // conveyor.Load(-.2);
-                })).onFalse(new InstantCommand(() -> {
-                    intake.stop();
-                    // intake.retract();
-                }));
-        DC.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
-        DC.b().onTrue(new InstantCommand(() -> {
-            shooter.SpinWheel(0);
-            intake.retract();
-        }));
-        DC.a().onTrue(new InstantCommand(() -> {
-            shooter.AdjustHoodIncremental(0.5);
-        }));
-        DC.x().onTrue(new InstantCommand(() -> {
-            shooter.AdjustHoodIncremental(-0.5);
-        }));
-        DC.rightBumper().whileTrue(new InstantCommand(() -> {
-            intake.deploy();
-            intake.release();
-            conveyor.Load(.3);
-            regulator.Load(0.3);
-        })).onFalse(new InstantCommand(() -> {
-            intake.stop();
-            conveyor.Stop();
-            regulator.Stop();
-        }));
-    }
+    // private void configurTestBindings() {
+    //     DC.rightTrigger()
+    //             .whileTrue(new InstantCommand(() -> {
+    //                 conveyor.Load();
+    //                 regulator.Load();
+    //                 intake.setCurrentLimitOfDeployMotor(10);
+    //                 intake.retract();
+    //                 intake.intake(.5);
+    //             }, conveyor))
+    //             .onFalse(new InstantCommand(() -> {
+    //                 conveyor.Stop();
+    //                 regulator.Stop();
+    //                 intake.stop();
+    //                 // []\intake.deploy();
+    //                 intake.setCurrentLimitOfDeployMotor(40);
+    //             }));
+    //     DC.leftTrigger()
+    //             .whileTrue(new InstantCommand(() -> {
+    //                 intake.setCurrentLimitOfDeployMotor(40);
+    //                 intake.jostle();
+    //                 intake.deploy();
+    //                 intake.intake();
+    //                 // conveyor.Load(-.2);
+    //             })).onFalse(new InstantCommand(() -> {
+    //                 intake.stop();
+    //                 // intake.retract();
+    //             }));
+    //     DC.y().onTrue(new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
+    //     DC.b().onTrue(new InstantCommand(() -> {
+    //         shooter.SpinWheel(0);
+    //         intake.retract();
+    //     }));
+    //     DC.a().onTrue(new InstantCommand(() -> {
+    //         shooter.AdjustHoodIncremental(0.5);
+    //     }));
+    //     DC.x().onTrue(new InstantCommand(() -> {
+    //         shooter.AdjustHoodIncremental(-0.5);
+    //     }));
+    //     DC.rightBumper().whileTrue(new InstantCommand(() -> {
+    //         intake.deploy();
+    //         intake.release();
+    //         conveyor.Load(.3);
+    //         regulator.Load(0.3);
+    //     })).onFalse(new InstantCommand(() -> {
+    //         intake.stop();
+    //         conveyor.Stop();
+    //         regulator.Stop();
+    //     }));
+    // }
     
     private void configureBindings() {
         DC.leftTrigger()
@@ -169,10 +175,17 @@ public class RobotContainer {
         DC.y().onTrue(IntakeCommands.retractIntake(intake)).onFalse(new InstantCommand(() -> intake.stop()));
         DC.rightBumper().onTrue(
                 new InstantCommand(() -> {
+                    shooter.autoFlywheel();
+                    shooter.forceSync();
                     shooter.SpinWheel(shooter.targetVelocity);
                 }));
-        DC.a().onTrue(new AlignToHub(driveBaseContainer.drivetrain, DC));
-        DC.b().onTrue(new InstantCommand(() -> shooter.SpinWheel(0)));
+        DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain));
+        DC.b().onTrue(new InstantCommand(() -> {
+            shooter.SpinWheel(0);
+            shooter.AdjustHood(0);
+            SmartDashboard.putNumber("Hood/Target", 0);
+              
+        }));
         DC.rightTrigger().onTrue(
             new InstantCommand(() -> {
                 conveyor.Load();
@@ -191,7 +204,7 @@ public class RobotContainer {
         );
     }
     
-    private InstantCommand CreateShooterOverride(PIDSettings settings) {
+    public InstantCommand CreateShooterOverride(PIDSettings settings) {
         return new InstantCommand(() -> {
             shooter.useAutoFlywheel = false;
             // shooter.UpdatePID(settings);
@@ -206,11 +219,27 @@ public class RobotContainer {
 
             SmartDashboard.putNumber("FlyWheel/TargetVelocity", settings.target_velocity);
             SmartDashboard.putNumber("Hood/Target", settings.target_hood);
+            shooter.forceSync();
             
         });
     }
 
     public Command getAutonomousCommand() {
         return this.driveBaseContainer.GetAutonCommand();
+    }
+
+    public Command getKillAll() {
+        return new InstantCommand(() -> {
+            TrimPotCommands.SaveTrimPotValues(shooter, intake);
+            intake.stop();
+            shooter.SpinWheel(0);
+            regulator.Stop();
+            conveyor.Stop();
+            climber.Stop();
+        }, intake, shooter, regulator, conveyor, climber);
+    }
+
+    public Subsystem[] getAllSubsystems(){
+        return new Subsystem[]{intake, shooter, regulator, conveyor, climber};
     }
 }

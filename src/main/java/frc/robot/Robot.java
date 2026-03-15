@@ -6,9 +6,13 @@ package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
@@ -31,7 +35,9 @@ public class Robot extends TimedRobot {
     }
 
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        CommandScheduler.getInstance().schedule(m_robotContainer.getKillAll());
+    }
 
     @Override
     public void disabledPeriodic() {}
@@ -52,13 +58,16 @@ public class Robot extends TimedRobot {
     public void autonomousPeriodic() {}
 
     @Override
-    public void autonomousExit() {}
+    public void autonomousExit() {
+        CommandScheduler.getInstance().schedule(m_robotContainer.getKillAll());
+    }
 
     @Override
     public void teleopInit() {
         if (m_autonomousCommand != null) {
             CommandScheduler.getInstance().cancel(m_autonomousCommand);
         }
+        CommandScheduler.getInstance().schedule(m_robotContainer.getKillAll());
     }
 
     @Override
@@ -70,6 +79,10 @@ public class Robot extends TimedRobot {
     @Override
     public void testInit() {
         CommandScheduler.getInstance().cancelAll();
+        m_robotContainer.driveBaseContainer.resetPose(new Pose2d(
+            new Translation2d(3.5, 4),
+            new Rotation2d(0)
+        ));
     }
 
     @Override

@@ -1,0 +1,91 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.023113636363636,
+        "y": 2.406522727272727
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.709926731416398,
+        "y": 2.117015308202048
+      },
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT2-Waypoint"
+    },
+    {
+      "anchor": {
+        "x": 6.05403409090909,
+        "y": 1.7056590909090916
+      },
+      "prevControl": {
+        "x": 5.737679840183884,
+        "y": 1.5991114558869224
+      },
+      "nextControl": {
+        "x": 6.290957471239315,
+        "y": 1.785454528453475
+      },
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT5-Waypoint1"
+    },
+    {
+      "anchor": {
+        "x": 5.631454545454545,
+        "y": 4.014386363636364
+      },
+      "prevControl": {
+        "x": 5.57389183948234,
+        "y": 3.4065456067758833
+      },
+      "nextControl": {
+        "x": 5.655024170035521,
+        "y": 4.26327282931321
+      },
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT5-Waypoint2"
+    },
+    {
+      "anchor": {
+        "x": 5.909738636363636,
+        "y": 5.488261363636363
+      },
+      "prevControl": {
+        "x": 5.815447225394052,
+        "y": 5.719797818254993
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HPExtenedSweepPT5"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 90.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.0
+  },
+  "reversed": false,
+  "folder": "HP-Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

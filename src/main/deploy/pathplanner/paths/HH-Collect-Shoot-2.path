@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.5811136363636362,
+        "y": 0.5925227272727271
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.1796925174705124,
+        "y": 1.3049143133828056
+      },
+      "isLocked": false,
+      "linkedName": "HPCollectPT2"
+    },
+    {
+      "anchor": {
+        "x": 3.566,
+        "y": 4.018
+      },
+      "prevControl": {
+        "x": 2.824287896859765,
+        "y": 3.15014526043727
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HHPt1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "HH Human Player",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": false
+}

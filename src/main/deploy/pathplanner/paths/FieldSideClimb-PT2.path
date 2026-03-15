@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6633295454545451,
-        "y": 6.07575
+        "x": 3.2111704147196263,
+        "y": 6.089176858206775
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.078886802844853,
-        "y": 6.079962051880624
+        "x": 3.626727672109934,
+        "y": 6.093388910087399
       },
       "isLocked": false,
       "linkedName": "FeildSideClimbPT1"
@@ -48,7 +48,7 @@
   "folder": "FieldSideClimb",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -178.87669728592448
+    "rotation": 179.39865694220808
   },
   "useDefaultConstraints": true
 }

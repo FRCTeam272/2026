@@ -5,34 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "HumanPlayerClimb-Start"
+            "name": "SpinFlywheel"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SpinFlywheel"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "HumanPlayerClimb-PT2"
-                }
-              }
-            ]
+            "waitTime": 2.0
           }
         },
         {
@@ -44,37 +25,55 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 4.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "DeployClimber"
+            "name": "Kill"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HumanPlayerClimb-PT3"
+            "pathName": "HH-Center-Start"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "HumanPlayerClimb-PT4"
+            "pathName": "HH-Center-Climb-Part2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HH-Human-Player-Squeeze"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Climb"
+            "name": "ClimbPrep"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HH-Jiggle"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbExecute"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "HH",
   "choreoAuto": false
 }

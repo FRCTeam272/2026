@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6010113636363634,
-        "y": 0.39669318181818203
+        "x": 3.5494772727272723,
+        "y": 1.654125
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.617761363292422,
-        "y": 0.4698904885937605
+        "x": 4.56622727238333,
+        "y": 1.7273223067755783
       },
       "isLocked": false,
       "linkedName": "HPStart"
@@ -48,7 +48,7 @@
   "folder": "HumanPlayerSideSweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -0.47767586238370685
   },
   "useDefaultConstraints": true
 }

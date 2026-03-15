@@ -8,24 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.062167635704782,
-        "y": 4.457143183519443
+        "x": 3.449161890332944,
+        "y": 3.762820531542056
       },
       "isLocked": false,
       "linkedName": "CenterStart"
     },
     {
       "anchor": {
-        "x": 0.4162045454545453,
-        "y": 0.5512954545454545
+        "x": 1.7251704545454545,
+        "y": 2.0767045454545463
       },
       "prevControl": {
-        "x": 0.1662058162572486,
-        "y": 0.5520925741956291
+        "x": 1.3398368569719397,
+        "y": 2.072691022161475
+      },
+      "nextControl": {
+        "x": 2.627220231852698,
+        "y": 2.086100035013542
+      },
+      "isLocked": false,
+      "linkedName": "HPPT1"
+    },
+    {
+      "anchor": {
+        "x": 0.609737332067757,
+        "y": 0.6378475923627331
+      },
+      "prevControl": {
+        "x": 3.276566333235982,
+        "y": 0.729526047751168
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HPPT1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 178.91046039059154
   },
   "reversed": false,
   "folder": "CenterHumanPlayerSide",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -179.40934278535332
+    "rotation": -0.3005690664217857
   },
   "useDefaultConstraints": true
 }
