@@ -58,9 +58,9 @@ public class DriveBaseContainer {
         drivetrain.setDefaultCommand(
             drivetrain.applyRequest(() ->
                 drive
-                    .withVelocityX(joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
-                    .withVelocityY(joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
-                    .withRotationalRate(joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
+                    .withVelocityX(-joystick.getLeftY() * MaxSpeed.getAsDouble()) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed.getAsDouble()) // Drive left with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate.getAsDouble()) // Drive counterclockwise with negative X (left)
                     .withDeadband(MaxSpeed.getAsDouble() * 0.1).withRotationalDeadband(MaxAngularRate.getAsDouble() * 0.1) // Add a 10% deadband
                     .withDriveRequestType(DriveRequestType.OpenLoopVoltage) // Use open-loop control for drive motors
             )

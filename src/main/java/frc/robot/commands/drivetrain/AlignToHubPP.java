@@ -46,9 +46,9 @@ public class AlignToHubPP extends Command {
     }
 
     private static Translation2d getTargetLocation() {
-        return DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
-              ? new Translation2d(12, 4) // if red allaince
-              : new Translation2d(4.5, 4); // if blue alliance
+        return DriverStation.isDSAttached() && DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
+              ? new Translation2d(11.914, 4.032) // if red allaince
+              : new Translation2d(4.620, 4.032); // if blue alliance
     }
 
     @Override
@@ -72,6 +72,10 @@ public class AlignToHubPP extends Command {
             targetRotation.getRadians()
         );
 
+        if(m_rotationController.atGoal()){
+            rotationSpeed = 0;
+        }
+
         // Drive with 0 velocity X and Y, only rotation
         m_drivetrain.drive(0, 0, rotationSpeed, true);
     }
@@ -79,7 +83,7 @@ public class AlignToHubPP extends Command {
     @Override
     public boolean isFinished() {
         // Ends when the robot is facing the target within tolerance
-        return m_rotationController.atGoal();
+        return false;
     }
 
     @Override

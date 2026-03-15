@@ -16,7 +16,7 @@ import frc.robot.Constants;
 import frc.robot.sub_containers.DriveBaseContainer;
 
 public class Shooter extends SubsystemBase {
-  public Translation2d targetPose = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
+  public Translation2d targetPose = DriverStation.isDSAttached() && DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
               ? new Translation2d(12.5, 4) // if red allaince
               : new Translation2d(3.5, 4); // if blue alliance
 
