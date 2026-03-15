@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.566,
-        "y": 4.018
+        "x": 7.775272727272727,
+        "y": 7.199193181818182
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.8236704545454536,
-        "y": 3.2037613636363633
+        "x": 8.022878606425365,
+        "y": 7.233708810293545
       },
       "isLocked": false,
-      "linkedName": "HHPt1"
+      "linkedName": "FSweepPt1"
     },
     {
       "anchor": {
-        "x": 1.11,
-        "y": 2.273
+        "x": 7.826806818181819,
+        "y": 5.0450681818181815
       },
       "prevControl": {
-        "x": 1.6039431818181817,
-        "y": 1.4273295454545454
+        "x": 7.70417498607636,
+        "y": 5.313300899889727
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "FieldSideHang"
+      "linkedName": "FSweepPt2"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -91.24536426676846
   },
   "reversed": false,
-  "folder": "HH Human Player",
+  "folder": "F Extended Sweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

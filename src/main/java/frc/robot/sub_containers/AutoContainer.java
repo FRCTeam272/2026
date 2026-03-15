@@ -84,6 +84,13 @@ public class AutoContainer {
 
         NamedCommands.registerCommand("ClimbPrep", ClimberCommands.Stage1(climber).andThen(ClimberCommands.Stage2(climber)));
         NamedCommands.registerCommand("ClimberExecute", ClimberCommands.Stage3(climber));
+        NamedCommands.registerCommand("ClimbExecute", ClimberCommands.Stage3(climber));
+
+        NamedCommands.registerCommand("AutoFlywheel", new InstantCommand(() -> {
+            shooter.useAutoFlywheel = true;
+            shooter.autoFlywheel();
+        }));
+
 
         autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
         SmartDashboard.putData("Auto Chooser", autoChooser);

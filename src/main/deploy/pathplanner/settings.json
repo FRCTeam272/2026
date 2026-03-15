@@ -8,9 +8,10 @@
     "FieldSideClimb",
     "FieldSideSweep",
     "HH Human Player",
+    "HP-Sweep",
     "HumanPlayerClimb",
     "HumanPlayerSideSweep",
-    "HP-Sweep"
+    "F Extended Sweep"
   ],
   "autoFolders": [
     "HH"

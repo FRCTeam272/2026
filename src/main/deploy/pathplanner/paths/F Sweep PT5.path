@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5494772727272723,
-        "y": 1.654125
+        "x": 5.7757499999999995,
+        "y": 5.4573409090909095
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.299977018782576,
-        "y": 1.6426228108182062
+        "x": 6.7757499999999995,
+        "y": 5.4573409090909095
       },
       "isLocked": false,
-      "linkedName": "HPStart"
+      "linkedName": "FSweepPt4"
     },
     {
       "anchor": {
-        "x": 1.7251704545454545,
-        "y": 2.0767045454545463
+        "x": 5.827284090909091,
+        "y": 4.746170454545454
       },
       "prevControl": {
-        "x": 2.602042832167832,
-        "y": 3.069809806472598
+        "x": 6.541794517402582,
+        "y": 5.445795247153663
+      },
+      "nextControl": {
+        "x": 5.332556818181818,
+        "y": 4.26175
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.621147727272727,
+        "y": 2.664193181818182
+      },
+      "prevControl": {
+        "x": 6.121147727272727,
+        "y": 2.664193181818182
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HPPT1"
+      "linkedName": "FSweepPt5"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -170.22385911385328
+    "rotation": -90.0
   },
   "reversed": false,
-  "folder": "HumanPlayerClimb",
+  "folder": "F Extended Sweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.47767586238370685
+    "rotation": -55.43747535111828
   },
   "useDefaultConstraints": true
 }

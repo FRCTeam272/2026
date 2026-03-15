@@ -1,0 +1,121 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Extended Sweep PT1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DeployAndStartIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Extened Sweep PT2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Extened Sweep PT3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Extened Sweep PT4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DeployAndStartIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Extened Sweep PT5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP Extened Sweep PT6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

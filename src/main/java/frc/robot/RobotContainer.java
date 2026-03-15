@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -94,6 +95,15 @@ public class RobotContainer {
             intake.setCurrentLimitOfDeployMotor(20);
             intake.retract();
             intake.intake();
+        }));
+        OC.BonusButton2.onTrue(new InstantCommand(() -> { 
+            var pose = DriverStation.isDSAttached() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? new Translation2d(13, 4.018) : new Translation2d(3.566, 4.018);    
+            driveBaseContainer.drivetrain.resetPose(
+                new Pose2d(
+                    pose, 
+                    driveBaseContainer.drivetrain.getPose().getRotation()
+                )
+            );
         }));
     }
 
