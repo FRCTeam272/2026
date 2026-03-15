@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,10 @@ public class Climber extends SubsystemBase {
     public TrimPot trim = new TrimPot("Climber");
 
     double lastP, lastI, lastD, lastG;
+
+    double upperSensorThreshold = 3;
+    double lowerSensorThreshold = 3;
+    AnalogInput sensor = new AnalogInput(0);
 
     public Climber() {
         climberMotor.assignPIDValues(pid.kP, pid.kI, pid.kD);
@@ -67,6 +72,16 @@ public class Climber extends SubsystemBase {
 
     public void assignFF(double kG){
         climberMotor.assignFF(0, 0, 0, kG);
+    }
+
+    public int isSensorTripped(){
+        if(sensor.getVoltage() > upperSensorThreshold){
+            return 1;
+        } else if (sensor.getVoltage() < lowerSensorThreshold){
+            return -1;
+        } else {
+            return 0;
+        }
     }
     
     @Override

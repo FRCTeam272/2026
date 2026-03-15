@@ -48,7 +48,7 @@ public class DriveBaseContainer {
     
         if(!TunerConstants.isTestBot){
             SmartDashboard.putString("MESSAGE", "we are at autoSetup");
-            autoContainer = new AutoContainer(rc); 
+            autoContainer = new AutoContainer(rc, this.drivetrain); 
         }
     }
 
