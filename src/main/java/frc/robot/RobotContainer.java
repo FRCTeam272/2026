@@ -23,6 +23,7 @@ import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeStop;
 import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterStop;
+import frc.robot.commands.ClimberAlign;
 import frc.robot.commands.ClimberCommands;
 import frc.robot.sub_containers.AutoContainer;
 import frc.robot.sub_containers.DriveBaseContainer;
@@ -43,27 +44,29 @@ public class RobotContainer {
     private final CommandXboxController DC = new CommandXboxController(0);
     private final LC_2026Custom OC = new LC_2026Custom(1);
 
-    // Sub-Containers
-    public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC, this); // HINT: looking for DriveBase Controls look in here
-
+    
+   
     // // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     
     public final Intake intake = new Intake();
-    public final Shooter shooter = new Shooter(driveBaseContainer);
+    public final Shooter shooter = new Shooter(); 
     public final Regulator regulator = new Regulator();
     public final Conveyor conveyor = new Conveyor();
     
     public final Climber climber = new Climber();
 
+    // Sub-Containers
+    public DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC, this); // HINT: looking for DriveBase Controls look in here
 
     
     public RobotContainer() {
         configureBindings();
         // configurTestBindings();
         configureOperatorPanel();
-        configureAutonmousBindings(); 
+        configureAutonmousBindings();
         
+        shooter.setDriveBase(driveBaseContainer); 
     }
 
     public void configureAutonmousBindings(){
@@ -82,7 +85,10 @@ public class RobotContainer {
         OC.ClimberStage3.onTrue(ClimberCommands.Stage3(climber));
         OC.ClimberRelease.onTrue(ClimberCommands.Dismount(climber));
         
-        OC.Stir.whileTrue(IntakeCommands.hopperAgitation(intake));
+        OC.Stir.whileTrue(IntakeCommands.hopperAgitation(intake)).onFalse(new InstantCommand(() -> {
+            this.intake.retract();
+            this.intake.stop();
+        }));
         OC.CloseUpFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_LOW_PID_SETTINGS));
         OC.MeduimFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_MID_PID_SETTINGS));
         OC.FarFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_HIGH_PID_SETTINGS));
@@ -105,6 +111,9 @@ public class RobotContainer {
                 )
             );
         }));
+        OC.BonusButton3.whileTrue(new InstantCommand(() -> {
+            SmartDashboard.putString("Climb Align", "Starting");
+        }).andThen(new ClimberAlign(driveBaseContainer.drivetrain, climber)));
     }
 
 
@@ -161,17 +170,22 @@ public class RobotContainer {
     
     private void configureBindings() {
         DC.leftTrigger()
-                .whileTrue(new InstantCommand(() -> {
+                .onTrue(new InstantCommand(() -> {
+                    DriveBaseContainer.speedFactor = DriveBaseContainer.intakeSpeedFactor;
                     intake.setCurrentLimitOfDeployMotor(40);
                     intake.jostle();
                     intake.deploy();
                     intake.intake();
                     conveyor.Load(-.2);
                 })).onFalse(new InstantCommand(() -> {
+                    DriveBaseContainer.speedFactor = DriveBaseContainer.maxSpeedFactor;
                     intake.stop();
                     conveyor.Stop();
                     // intake.retract();
                 }));
+        DC.leftBumper().onTrue(new InstantCommand(() -> {
+            DriveBaseContainer.speedFactor = DriveBaseContainer.maxSpeedFactor;
+        }));
         DC.y().onTrue(IntakeCommands.retractIntake(intake)).onFalse(new InstantCommand(() -> intake.stop()));
         DC.rightBumper().onTrue(
                 new InstantCommand(() -> {

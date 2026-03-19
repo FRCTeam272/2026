@@ -13,6 +13,7 @@ import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ClimberAlign;
 import frc.robot.commands.ClimberCommands;
+import frc.robot.commands.intake.IntakeCommands;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Conveyor;
@@ -54,19 +55,28 @@ public class AutoContainer {
             intake.intake();
         }));
         NamedCommands.registerCommand("SpinFlywheel",
-                new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
+                new InstantCommand(() -> {
+                    shooter.SpinWheel(shooter.targetVelocity);
+                    intake.stop();
+                }));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
             conveyor.Load();
             regulator.Load();
             intake.setCurrentLimitOfDeployMotor(20);
-            intake.retract();
-            intake.intake(.85);
-        }));
+        }).alongWith(IntakeCommands.hopperAgitation(intake).withTimeout(3.5)));
         NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
             intake.stop();
         }));
         NamedCommands.registerCommand("DeployAndStartIntake",
                 new WaitCommand(.2).andThen(
+                        new InstantCommand(() -> {
+                            intake.setCurrentLimitOfDeployMotor(40);
+                            intake.jostle();
+                            intake.deploy();
+                            intake.intake();
+                        })));
+        NamedCommands.registerCommand("DeployAndStartIntakeDelayed",
+                new WaitCommand(1.5).andThen(
                         new InstantCommand(() -> {
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
@@ -97,7 +107,7 @@ public class AutoContainer {
             shooter.autoFlywheel();
         }));
 
-        NamedCommands.registerCommand("ClimberAlign", new ClimberAlign(drivetrain, climber));
+        // NamedCommands.registerCommand("ClimberAlign", new ClimberAlign(drivetrain, climber));
 
         autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
         SmartDashboard.putData("Auto Chooser", autoChooser);

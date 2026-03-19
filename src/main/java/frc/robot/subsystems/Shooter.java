@@ -44,7 +44,11 @@ public class Shooter extends SubsystemBase {
 
   private DriveBaseContainer driveBase;
 
-  public Shooter(DriveBaseContainer driveBase) {
+  public void setDriveBase(DriveBaseContainer driveBaseContainer){
+    this.driveBase = driveBaseContainer;
+  }
+
+  public Shooter() {
     flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
     flywheelFollower = new TalonFxContainer(FLYWHEEL_FOLLOWER_LOCATION, true);
 
@@ -94,6 +98,8 @@ public class Shooter extends SubsystemBase {
         break;
     }
     setupSmartDashboard(settings);
+    
+    SmartDashboard.putNumber("Shooter/AutoFlywheelStage", 0);
   }
 
   private void setupSmartDashboard(PIDSettings pidConstants) {
@@ -189,10 +195,11 @@ public class Shooter extends SubsystemBase {
    *
    * @return The distance from the target in inches.
    */
+  // TODO: do we subtract 8 inches for the intake comp
   private double getDistanceFromTarget(){
     var ourDistance = driveBase.getPose();
     var distance = ourDistance.getTranslation().getDistance(targetPose);
-    return (distance * 39.37) - 2; // convert to inches
+    return (distance * 39.37); // convert to inches
   }
 
   public void autoFlywheel(){
@@ -202,6 +209,7 @@ public class Shooter extends SubsystemBase {
     }
 
     // get the distance
+
     double distance = Math.abs(getDistanceFromTarget());
     SmartDashboard.putNumber("Shooter/Distance", distance);
     var stage = 0;
@@ -263,6 +271,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter/Distance", getDistanceFromTarget());
     // TODO: REMOVE
     SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
+    SmartDashboard.putBoolean("Ready/Flywheel Up To Speed", this.isShooterUpToSpeed());  
     // debounceCount = debounceTime;
     // if (DriverStation.isTestEnabled()) debounceCount = debounceTime;
     if (debounceCount == debounceTime) {
@@ -313,7 +322,6 @@ public class Shooter extends SubsystemBase {
 
       
       SmartDashboard.putBoolean("Shooter/UseAutoFlywheel", useAutoFlywheel);
-      SmartDashboard.putBoolean("Ready/Flywheel Up To Speed", this.isShooterUpToSpeed());
       SmartDashboard.putBoolean("Ready/Can Trech (Hood)", this.isHoodCorrect());
     }
     debounceCount++;

@@ -22,9 +22,9 @@ public class Climber extends SubsystemBase {
 
     double lastP, lastI, lastD, lastG;
 
-    double upperSensorThreshold = 3;
-    double lowerSensorThreshold = 3;
-    AnalogInput sensor = new AnalogInput(0);
+    double upperSensorThreshold = 4;
+    double lowerSensorThreshold = 0;
+    AnalogInput sensor = new AnalogInput(3);
 
     public Climber() {
         climberMotor.assignPIDValues(pid.kP, pid.kI, pid.kD);
@@ -86,7 +86,9 @@ public class Climber extends SubsystemBase {
     
     @Override
     public void periodic() {
-        
+        if(!DriverStation.isFMSAttached()){
+            SmartDashboard.putNumber("Climber/SensorVoltage", sensor.getVoltage());
+        }
 
         SmartDashboard.putBoolean("Ready/Can Trench(Climber)", this.climberMotor.getPosition() < .5);
         // This method will be called once per scheduler run

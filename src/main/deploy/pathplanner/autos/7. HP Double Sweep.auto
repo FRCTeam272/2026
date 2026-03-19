@@ -5,27 +5,28 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "HP Extended Sweep PT1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DeployAndStartIntake"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "HP Extended Sweep PT1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployAndStartIntakeDelayed"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "HP Extened Sweep PT2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Kill"
           }
         },
         {
@@ -104,6 +105,12 @@
           "type": "named",
           "data": {
             "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
           }
         },
         {

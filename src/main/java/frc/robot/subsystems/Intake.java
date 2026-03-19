@@ -22,8 +22,8 @@ public class Intake extends SubsystemBase {
   public final int deploy_id = 3;
   public double defult_speed = .85;
 
-  public double deploy_position = 19;
-  public double retract_position = 0;
+  public double deploy_position = 16.97616195678711;
+  public double retract_position = 0.6;
 
   // Force Detection Constants
   private final double kImpactCurrentThreshold = 8.0; // Amps (slightly below the 10A hold limit)
@@ -70,22 +70,23 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean jostle(){
-    return true;
-    // return deployMotor.goToPostion(deploy_position - 3);
+    // return true;
+    return deployMotor.goToPostion(deploy_position - 3);
   }
 
   public boolean deploy() {
-    return true;
-    // return deployMotor.goToPostion(deploy_position, 0);
+    // deployMotor.motor.set(.1);
+    // return true;
+    return deployMotor.goToPostion(deploy_position, 0);
   }
 
   public boolean retract() {
-    return true;
-    // return deployMotor.goToPostion(retract_position, 0);
+    // return true;
+    return deployMotor.goToPostion(retract_position, 0);
   }
 
   public void setCurrentLimitOfDeployMotor(int limit){
-    deployMotor.setCurrentLimit(limit);
+    // deployMotor.setCurrentLimit(limit);
   }
 
   /**
@@ -107,6 +108,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     rollerMotor.reportMotor("Intake");
     deployMotor.reportMotor("IntakeDeploy");
+    SmartDashboard.putNumber("Intake/Deploy Postion", this.deployMotor.getPosition());
 
     if(!DriverStation.isFMSAttached()){
       // final double deployP = SmartDashboard.getNumber("ConfigIntake/DeployMotorP", 0.01);
