@@ -1,0 +1,116 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Part1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployAndStartIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Part2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Part3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "RetrackIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Part4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DeployAndStartIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Part5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Part6"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Cent",
+  "choreoAuto": false
+}

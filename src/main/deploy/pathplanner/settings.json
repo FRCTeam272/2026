@@ -9,10 +9,11 @@
     "FieldSideClimb",
     "FieldSideSweep",
     "HH Human Player",
+    "HP Trench Sweep",
     "HP-Sweep",
     "HumanPlayerClimb",
     "HumanPlayerSideSweep",
-    "HP Trench Sweep"
+    "Depot Trench Sweep"
   ],
   "autoFolders": [
     "HH",

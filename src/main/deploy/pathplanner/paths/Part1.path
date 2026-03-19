@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.454644832432827,
+        "y": 7.209599335572429
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.663244701813483,
+        "y": 7.240608542308054
+      },
+      "isLocked": false,
+      "linkedName": "Depot-Trench-Start"
+    },
+    {
+      "anchor": {
+        "x": 6.1079198762412386,
+        "y": 7.209599335572429
+      },
+      "prevControl": {
+        "x": 5.8625480512622055,
+        "y": 7.161717527894995
+      },
+      "nextControl": {
+        "x": 6.402812924988377,
+        "y": 7.267144704714666
+      },
+      "isLocked": false,
+      "linkedName": "Depot-Trench-Waypoint1"
+    },
+    {
+      "anchor": {
+        "x": 7.799314945969625,
+        "y": 7.209599335572429
+      },
+      "prevControl": {
+        "x": 8.24836839802737,
+        "y": 7.194622713412677
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Depot-Trench-PT1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -89.93102650487373
+  },
+  "reversed": false,
+  "folder": "Depot Trench Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.735287310163551,
+        "y": 5.754498758761682
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.983918677798097,
+        "y": 5.728375148211538
+      },
+      "isLocked": false,
+      "linkedName": "Depot-Trench-PT4"
+    },
+    {
+      "anchor": {
+        "x": 5.735287310163551,
+        "y": 2.9218207414573603
+      },
+      "prevControl": {
+        "x": 5.565465378355123,
+        "y": 3.105288753592592
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Depot-Trench-PT5"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -89.67104964709412
+  },
+  "reversed": false,
+  "folder": "Depot Trench Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.2885487804925
+  },
+  "useDefaultConstraints": true
+}
