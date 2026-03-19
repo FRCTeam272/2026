@@ -5,16 +5,18 @@
   "pathFolders": [
     "CenterFieldSide",
     "CenterHumanPlayerSide",
+    "F Extended Sweep",
     "FieldSideClimb",
     "FieldSideSweep",
     "HH Human Player",
     "HP-Sweep",
     "HumanPlayerClimb",
     "HumanPlayerSideSweep",
-    "F Extended Sweep"
+    "HP Trench Sweep"
   ],
   "autoFolders": [
-    "HH"
+    "HH",
+    "Cent"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

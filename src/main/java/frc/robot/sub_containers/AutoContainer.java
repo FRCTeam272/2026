@@ -83,6 +83,10 @@ public class AutoContainer {
                             intake.deploy();
                             intake.intake();
                         })));
+        NamedCommands.registerCommand("RetractIntake", new InstantCommand(() -> {
+            intake.stop();
+            intake.retract();
+        }));
         NamedCommands.registerCommand("Kill", new InstantCommand(() -> {
             intake.stop();
             shooter.TrueStop();

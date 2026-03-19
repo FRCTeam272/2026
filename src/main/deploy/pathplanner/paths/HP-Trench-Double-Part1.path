@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.452575341340538,
+        "y": 0.8459556166033873
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.524235104836321,
+        "y": 0.8419689103061004
+      },
+      "isLocked": false,
+      "linkedName": "HP-Trench-Start"
+    },
+    {
+      "anchor": {
+        "x": 6.136603022780374,
+        "y": 0.8459556166033873
+      },
+      "prevControl": {
+        "x": 5.454756275220004,
+        "y": 0.823344248627364
+      },
+      "nextControl": {
+        "x": 6.515452288182479,
+        "y": 0.8585189971256277
+      },
+      "isLocked": false,
+      "linkedName": "HP-Trench-Waypoint1"
+    },
+    {
+      "anchor": {
+        "x": 7.773239358206775,
+        "y": 0.8459556166033873
+      },
+      "prevControl": {
+        "x": 6.878088164804033,
+        "y": 0.5848901810263749
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HP-Trench-PT1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 89.53017030185869
+  },
+  "reversed": false,
+  "folder": "HP Trench Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

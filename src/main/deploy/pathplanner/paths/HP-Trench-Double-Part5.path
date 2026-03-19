@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.833257018472547,
+        "y": 2.347330014237733
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.077647862153398,
+        "y": 2.3999903933188014
+      },
+      "isLocked": false,
+      "linkedName": "HP-Trench-PT4"
+    },
+    {
+      "anchor": {
+        "x": 5.833257018472547,
+        "y": 4.8478961010514015
+      },
+      "prevControl": {
+        "x": 5.7206483237404,
+        "y": 4.363408537853705
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HP-Trench-PT5"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 91.30505707037776
+  },
+  "reversed": false,
+  "folder": "HP Trench Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.44356056806902
+  },
+  "useDefaultConstraints": true
+}
