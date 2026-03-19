@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Part1"
+                  "pathName": "Depot-Trench-Part1"
                 }
               },
               {
@@ -26,7 +26,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Part2"
+            "pathName": "Depot-Trench-Part2"
           }
         },
         {
@@ -44,7 +44,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Part3"
+            "pathName": "Depot-Trench-Part3"
           }
         },
         {
@@ -86,7 +86,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Part4"
+            "pathName": "Depot-Trench-Part4"
           }
         },
         {
@@ -98,13 +98,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Part5"
+            "pathName": "Depot-Trench-Part5"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Part6"
+            "pathName": "Depot-Trench-Part6"
           }
         }
       ]
