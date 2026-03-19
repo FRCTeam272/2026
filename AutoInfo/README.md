@@ -2,6 +2,10 @@
 Drive path: ~16.5 seconds
 ![](Gifs/HP%20-%20Collect%20-%20Shoot%20-%20Climb.gif)
 
+## 10. Depot-Trench-Double
+Drive path: ~20.4 seconds
+![](Gifs/Depot-Trench-Double.gif)
+
 ## 2. HP - Shoot - Climb
 Drive path: ~13.1 seconds
 ![](Gifs/HP%20-%20Shoot%20-%20Climb.gif)
@@ -29,6 +33,10 @@ Drive path: ~17.8 seconds
 ## 8. Field Double Sweep
 Drive path: ~17.8 seconds
 ![](Gifs/Field%20Double%20Sweep.gif)
+
+## 9. HP-Trench-Double
+Drive path: ~20.0 seconds
+![](Gifs/HP-Trench-Double.gif)
 
 ## Delaying
 
