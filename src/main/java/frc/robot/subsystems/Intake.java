@@ -36,6 +36,7 @@ public class Intake extends SubsystemBase {
   public Intake() {
     rollerMotor= new TalonFxContainer(intake_id, true);
     rollerMotor.motor.getVelocity().setUpdateFrequency(20);
+    rollerMotor.assignPIDValues(0.01, 0, 0);
     rollerMotor.setBreakMode(false);
     deployMotor = new SparkMAXContainer(deploy_id);
     deployMotor.assignPIDValues(0.1, 0, 0);
@@ -54,7 +55,8 @@ public class Intake extends SubsystemBase {
   }
 
   public void intake() {
-    rollerMotor.motor.set(defult_speed);
+    rollerMotor.setVelocity(5100);
+    // rollerMotor.motor.set(defult_speed);
   }
 
   public void intake(double speed) {
@@ -71,7 +73,7 @@ public class Intake extends SubsystemBase {
 
   public boolean jostle(){
     // return true;
-    return deployMotor.goToPostion(deploy_position - 3);
+    return deployMotor.goToPostion(8.4);
   }
 
   public boolean deploy() {
@@ -102,6 +104,10 @@ public class Intake extends SubsystemBase {
     boolean isStalling = current >= kImpactCurrentThreshold;
 
     return m_impactDebouncer.calculate(isAtTarget && isStalling);
+  }
+
+  public void stopDeploy(){
+    this.deployMotor.motor.set(0);
   }
   
   @Override

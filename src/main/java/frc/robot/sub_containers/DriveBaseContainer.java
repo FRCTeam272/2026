@@ -21,10 +21,10 @@ import frc.robot.subsystems.Regulator;
 
 public class DriveBaseContainer {
     public AutoContainer autoContainer;
-    public static final double maxSpeedFactor = .5;
-    public static final double intakeSpeedFactor = .32;
+    public static final double maxSpeedFactor = .85;
+    public static final double intakeSpeedFactor = .50;
     public static double speedFactor = maxSpeedFactor;
-    public static double rotationFactor = .32;
+    public static double rotationFactor = .85;
     
     static {
         // edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber("Speed Factor", speedFactor);

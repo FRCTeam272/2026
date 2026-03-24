@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -102,7 +103,7 @@ public class RobotContainer {
             intake.retract();
             intake.intake();
         }));
-        OC.BonusButton2.onTrue(new InstantCommand(() -> { 
+        OC.BonusButton3.onTrue(new InstantCommand(() -> { 
             var pose = DriverStation.isDSAttached() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? new Translation2d(13, 4.018) : new Translation2d(3.566, 4.018);    
             driveBaseContainer.drivetrain.resetPose(
                 new Pose2d(
@@ -111,7 +112,7 @@ public class RobotContainer {
                 )
             );
         }));
-        OC.BonusButton3.whileTrue(new InstantCommand(() -> {
+        OC.BonusButton2.whileTrue(new InstantCommand(() -> {
             SmartDashboard.putString("Climb Align", "Starting");
         }).andThen(new ClimberAlign(driveBaseContainer.drivetrain, climber)));
     }
@@ -173,11 +174,13 @@ public class RobotContainer {
                 .onTrue(new InstantCommand(() -> {
                     DriveBaseContainer.speedFactor = DriveBaseContainer.intakeSpeedFactor;
                     intake.setCurrentLimitOfDeployMotor(40);
-                    intake.jostle();
-                    intake.deploy();
                     intake.intake();
                     conveyor.Load(-.2);
-                })).onFalse(new InstantCommand(() -> {
+                }).alongWith(
+                    new InstantCommand(() -> intake.deploy())
+                    .andThen(new WaitCommand(2))
+                    .andThen(new InstantCommand(() -> intake.stopDeploy()))
+                )).onFalse(new InstantCommand(() -> {
                     DriveBaseContainer.speedFactor = DriveBaseContainer.maxSpeedFactor;
                     intake.stop();
                     conveyor.Stop();
@@ -189,7 +192,10 @@ public class RobotContainer {
         DC.y().onTrue(IntakeCommands.retractIntake(intake)).onFalse(new InstantCommand(() -> intake.stop()));
         DC.rightBumper().onTrue(
                 new InstantCommand(() -> {
+
                     shooter.autoFlywheel();
+                    shooter.targetHood = 2;
+                    shooter.AdjustHood(-2);
                     shooter.forceSync();
                     shooter.SpinWheel(shooter.targetVelocity);
                 }));

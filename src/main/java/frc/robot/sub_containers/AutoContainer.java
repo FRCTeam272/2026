@@ -50,13 +50,14 @@ public class AutoContainer {
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
+                            intake.intake();
                         })));
         NamedCommands.registerCommand("StartIntake", new InstantCommand(() -> {
             intake.intake();
         }));
         NamedCommands.registerCommand("SpinFlywheel",
                 new InstantCommand(() -> {
-                    shooter.SpinWheel(shooter.targetVelocity);
+                    shooter.SpinWheel(4700);
                     intake.stop();
                 }));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
@@ -90,6 +91,10 @@ public class AutoContainer {
         NamedCommands.registerCommand("Kill", new InstantCommand(() -> {
             intake.stop();
             shooter.TrueStop();
+            SmartDashboard.putNumber("FlyWheel/TargetVelocity", 0);
+            shooter.targetHood = 0;
+            shooter.forceSync();
+            shooter.AdjustHood(0);
             regulator.Stop();
             conveyor.Stop();
         }));
@@ -109,6 +114,7 @@ public class AutoContainer {
         NamedCommands.registerCommand("AutoFlywheel", new InstantCommand(() -> {
             shooter.useAutoFlywheel = true;
             shooter.autoFlywheel();
+            // shooter.AdjustHood(-2);
         }));
 
         // NamedCommands.registerCommand("ClimberAlign", new ClimberAlign(drivetrain, climber));
@@ -119,6 +125,6 @@ public class AutoContainer {
 
     public Command getAutonomousCommand() {
         var delay = SmartDashboard.getNumber("Auto Delay (Seconds)", 0);
-        return new WaitCommand(delay).andThen(autoChooser.getSelected());
+        return new WaitCommand(delay).andThen(autoChooser.getSelected().withTimeout(20));
     }
 }

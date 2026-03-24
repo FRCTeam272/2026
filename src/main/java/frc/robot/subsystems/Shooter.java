@@ -47,6 +47,12 @@ public class Shooter extends SubsystemBase {
   public void setDriveBase(DriveBaseContainer driveBaseContainer){
     this.driveBase = driveBaseContainer;
   }
+  
+  public void updateTarget(){
+    this.targetPose = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
+              ? new Translation2d(12.5, 4) // if red allaince
+              : new Translation2d(3.5, 4); // if blue alliance
+  }
 
   public Shooter() {
     flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
@@ -197,6 +203,7 @@ public class Shooter extends SubsystemBase {
    */
   // TODO: do we subtract 8 inches for the intake comp
   private double getDistanceFromTarget(){
+    updateTarget();
     var ourDistance = driveBase.getPose();
     var distance = ourDistance.getTranslation().getDistance(targetPose);
     return (distance * 39.37); // convert to inches

@@ -35,6 +35,10 @@ public class ClimberAlign extends Command {
   @Override
   public void execute() {
     var sensorValue = climber.isSensorTripped();
+    if(sensorValue == 404){
+      isFinished = true;
+      return;
+    }
     final double yVelocity = sensorValue == 1 ? 0.1 : (sensorValue == -1 ? -0.1 : 0.0);
 
     drivetrain.applyRequest(() -> drive

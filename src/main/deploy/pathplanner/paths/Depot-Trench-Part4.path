@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.1400213109667057,
-        "y": 5.754498758761682
+        "x": 2.2016994633273703,
+        "y": 5.779230769230769
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.957886609228972,
-        "y": 6.5332896466121495
+        "x": 1.0195647615896366,
+        "y": 6.558021657081237
       },
       "isLocked": false,
       "linkedName": "Depot-Trench-PT3"
@@ -52,7 +52,7 @@
         "y": 5.754498758761682
       },
       "prevControl": {
-        "x": 5.503731664888847,
+        "x": 5.503731664888846,
         "y": 5.848743032547494
       },
       "nextControl": null,
@@ -83,7 +83,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.2885487804925
+    "rotation": -90.28854878049252
   },
   "reversed": false,
   "folder": "Depot Trench Sweep",
