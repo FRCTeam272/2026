@@ -1,0 +1,95 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.808216176255842,
+        "y": 2.6438880877628503
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.416954587643597,
+        "y": 3.0783695369355306
+      },
+      "isLocked": false,
+      "linkedName": "Lehigh-Depot-DoubleSweep-PT3"
+    },
+    {
+      "anchor": {
+        "x": 6.008294575058411,
+        "y": 7.350738628066589
+      },
+      "prevControl": {
+        "x": 7.2940528598680725,
+        "y": 6.804405073089943
+      },
+      "nextControl": {
+        "x": 5.699358877517576,
+        "y": 7.482008976382221
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.192958893107477,
+        "y": 7.350738628066589
+      },
+      "prevControl": {
+        "x": 3.522940690191124,
+        "y": 7.512135963387268
+      },
+      "nextControl": {
+        "x": 2.1385670707671225,
+        "y": 6.835025240195952
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.959437518253505,
+        "y": 5.3367512868720794
+      },
+      "prevControl": {
+        "x": 2.8934128687872622,
+        "y": 5.75068502420976
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -38.501255629994716
+  },
+  "reversed": false,
+  "folder": "Lehigh-Double-Sweep-Depot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.61599497613042
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,135 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Lehigh-Human-Player-Hairpin-Part1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployAndStartIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Lehigh-Human-Player-Hairpin-Part2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Lehigh-Human-Player-Hairpin-Part3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployAndStartIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Lehigh-Human-Player-Hairpin-Part4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Lehigh",
+  "choreoAuto": false
+}

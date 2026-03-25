@@ -1,0 +1,95 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.733590327467875,
+        "y": 5.662075286580023
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.236760568222663,
+        "y": 5.427103530283793
+      },
+      "isLocked": false,
+      "linkedName": "Lehigh-HP-Sweep-3"
+    },
+    {
+      "anchor": {
+        "x": 5.733590327467875,
+        "y": 0.5746039445823601
+      },
+      "prevControl": {
+        "x": 6.90298588743335,
+        "y": 0.5845140764464751
+      },
+      "nextControl": {
+        "x": 5.0889024623977805,
+        "y": 0.5691404880987146
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.4367449437792055,
+        "y": 0.5746039445823601
+      },
+      "prevControl": {
+        "x": 3.818473285472655,
+        "y": 0.3676305133912865
+      },
+      "nextControl": {
+        "x": 2.8148902762539567,
+        "y": 0.9117740736560997
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.7243433301693925,
+        "y": 2.1670359502774534
+      },
+      "prevControl": {
+        "x": 2.4714963310009628,
+        "y": 2.12215086077899
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Lehigh-HP-Sweep-4"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 40.63784121645793
+  },
+  "reversed": false,
+  "folder": "Lehigh-Sweep-HP-Side",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 90.28114415342864
+  },
+  "useDefaultConstraints": true
+}

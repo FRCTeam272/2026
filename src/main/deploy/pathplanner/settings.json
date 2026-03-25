@@ -5,6 +5,7 @@
   "pathFolders": [
     "CenterFieldSide",
     "CenterHumanPlayerSide",
+    "Depot Trench Sweep",
     "F Extended Sweep",
     "FieldSideClimb",
     "FieldSideSweep",
@@ -13,11 +14,15 @@
     "HP-Sweep",
     "HumanPlayerClimb",
     "HumanPlayerSideSweep",
-    "Depot Trench Sweep"
+    "Lehigh-Double-Sweep-Depot",
+    "Lehigh-Sweep+Depot",
+    "Lehigh-Sweep-HP-Side",
+    "Lehigh-Depot"
   ],
   "autoFolders": [
+    "Cent",
     "HH",
-    "Cent"
+    "Lehigh"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,

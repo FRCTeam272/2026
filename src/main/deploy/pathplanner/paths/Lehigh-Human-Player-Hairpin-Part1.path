@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.452575341340538,
+        "y": 0.8459556166033873
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.510022158170197,
+        "y": 0.7949228556328919
+      },
+      "isLocked": false,
+      "linkedName": "HP-Trench-Start"
+    },
+    {
+      "anchor": {
+        "x": 6.025264402015186,
+        "y": 0.8459556166033873
+      },
+      "prevControl": {
+        "x": 5.632488845439664,
+        "y": 0.6483164763719793
+      },
+      "nextControl": {
+        "x": 6.781652452221686,
+        "y": 1.2265594536330975
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.726013571480724,
+        "y": 3.314651540595794
+      },
+      "prevControl": {
+        "x": 7.8141498124516735,
+        "y": 3.5486002593944033
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Lehigh-HP-Sweep-1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 37.85155698184741
+  },
+  "reversed": false,
+  "folder": "Lehigh-Sweep-HP-Side",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

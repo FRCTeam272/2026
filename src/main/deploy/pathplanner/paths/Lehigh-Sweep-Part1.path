@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.454644832432827,
+        "y": 7.209599335572429
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.597772951681478,
+        "y": 7.382843190249322
+      },
+      "isLocked": false,
+      "linkedName": "Depot-Trench-Start"
+    },
+    {
+      "anchor": {
+        "x": 6.167397050233645,
+        "y": 7.209599335572429
+      },
+      "prevControl": {
+        "x": 5.757373334311568,
+        "y": 7.405324094768538
+      },
+      "nextControl": {
+        "x": 6.63815008699952,
+        "y": 6.984885444195111
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.64741429979556,
+        "y": 4.70294894494743
+      },
+      "prevControl": {
+        "x": 7.6184140477817905,
+        "y": 4.951261218875115
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Lehigh-Depot-DoubleSweep-PT1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -41.29332698629311
+  },
+  "reversed": false,
+  "folder": "Lehigh-Double-Sweep-Depot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

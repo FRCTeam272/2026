@@ -1,0 +1,111 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.64741429979556,
+        "y": 4.70294894494743
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.997288854716865,
+        "y": 5.371686529041089
+      },
+      "isLocked": false,
+      "linkedName": "Lehigh-Depot-DoubleSweep-PT1"
+    },
+    {
+      "anchor": {
+        "x": 7.841242835499417,
+        "y": 6.236152115581192
+      },
+      "prevControl": {
+        "x": 8.009802990763804,
+        "y": 6.04487200047582
+      },
+      "nextControl": {
+        "x": 7.121543716283875,
+        "y": 7.052858354068322
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.755940831264603,
+        "y": 7.403345091632593
+      },
+      "prevControl": {
+        "x": 6.003479116120814,
+        "y": 7.368347984174329
+      },
+      "nextControl": {
+        "x": 5.508402546408392,
+        "y": 7.438342199090857
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.128307991384346,
+        "y": 7.403345091632593
+      },
+      "prevControl": {
+        "x": 3.473447788313647,
+        "y": 7.515950386045426
+      },
+      "nextControl": {
+        "x": 2.3988561517364166,
+        "y": 7.1653541676813814
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.806336567245911,
+        "y": 5.632936852000585
+      },
+      "prevControl": {
+        "x": 2.4512352659983225,
+        "y": 6.299474894184178
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Lehigh-Depot-DoubleSweep-PT2"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -44.54958182654398
+  },
+  "reversed": false,
+  "folder": "Lehigh-Double-Sweep-Depot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -41.29332698629311
+  },
+  "useDefaultConstraints": true
+}

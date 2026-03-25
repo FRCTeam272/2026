@@ -1,0 +1,93 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployAndStartIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Depot-Climb-Part1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Depot-Climb-Part2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbPrep"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimberAlign"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ClimbExecute"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Lehigh",
+  "choreoAuto": false
+}
