@@ -17,12 +17,14 @@ import frc.lib.utils.TrimPot;
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   TalonFxContainer rollerMotor;
+  TalonFxContainer rollerFollowerMotor;
   SparkMAXContainer deployMotor;
   public final int intake_id = 2;
+  public final int intake_follower_id = 60;
   public final int deploy_id = 3;
   public double defult_speed = .85;
 
-  public double deploy_position = 16.97616195678711;
+  public double deploy_position = 16.5;
   public double retract_position = 0.6;
 
   // Force Detection Constants
@@ -35,9 +37,19 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     rollerMotor= new TalonFxContainer(intake_id, true);
-    rollerMotor.motor.getVelocity().setUpdateFrequency(20);
-    rollerMotor.assignPIDValues(0.01, 0, 0);
-    rollerMotor.setBreakMode(false);
+    rollerFollowerMotor = new TalonFxContainer(intake_follower_id, true);
+
+    for (var i : new TalonFxContainer[] {
+      rollerMotor, 
+      rollerFollowerMotor
+    }) {
+      i.motor.getVelocity().setUpdateFrequency(20);
+      i.assignPIDValues(0.01, 0, 0);
+      i.setBreakMode(false);
+    }
+
+    rollerFollowerMotor.setupAsFollowerMotor(rollerMotor, true);
+
     deployMotor = new SparkMAXContainer(deploy_id);
     deployMotor.assignPIDValues(0.1, 0, 0);
     deployMotor.setCurrentLimit(40);
@@ -55,6 +67,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void intake() {
+    // rollerMotor.setVelocity(1000);
     rollerMotor.setVelocity(5100);
     // rollerMotor.motor.set(defult_speed);
   }

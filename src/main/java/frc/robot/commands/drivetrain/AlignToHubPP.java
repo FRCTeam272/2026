@@ -1,5 +1,7 @@
 package frc.robot.commands.drivetrain;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,6 +18,9 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 public class AlignToHubPP extends Command {
     private final CommandSwerveDrivetrain m_drivetrain;
     private final Translation2d m_targetLocation;
+
+    private DoubleSupplier leftXSupplier = () -> 0.0;
+    private DoubleSupplier leftYSupplier = () -> 0.0;
 
     // Profiled PID Controller for smooth rotation
     private final ProfiledPIDController m_rotationController = new ProfiledPIDController(
@@ -34,6 +39,30 @@ public class AlignToHubPP extends Command {
     public AlignToHubPP(CommandSwerveDrivetrain drivetrain, Translation2d targetLocation) {
         m_drivetrain = drivetrain;
         m_targetLocation = targetLocation;
+
+        m_rotationController.enableContinuousInput(-Math.PI, Math.PI);
+        m_rotationController.setTolerance(Math.toRadians(1.0));
+
+        addRequirements(m_drivetrain);
+    }
+
+    public AlignToHubPP(CommandSwerveDrivetrain drivetrain, Translation2d targetLocation, DoubleSupplier leftXSupplier, DoubleSupplier leftYSupplier) {
+        m_drivetrain = drivetrain;
+        m_targetLocation = targetLocation;
+        this.leftXSupplier = leftXSupplier;
+        this.leftYSupplier = leftYSupplier;
+
+        m_rotationController.enableContinuousInput(-Math.PI, Math.PI);
+        m_rotationController.setTolerance(Math.toRadians(1.0));
+
+        addRequirements(m_drivetrain);
+    }
+
+    public AlignToHubPP(CommandSwerveDrivetrain drivetrain, DoubleSupplier leftXSupplier, DoubleSupplier leftYSupplier) {
+        m_drivetrain = drivetrain;
+        m_targetLocation = getTargetLocation();
+        this.leftXSupplier = leftXSupplier;
+        this.leftYSupplier = leftYSupplier;
 
         m_rotationController.enableContinuousInput(-Math.PI, Math.PI);
         m_rotationController.setTolerance(Math.toRadians(1.0));
@@ -76,8 +105,11 @@ public class AlignToHubPP extends Command {
             rotationSpeed = 0;
         }
 
-        // Drive with 0 velocity X and Y, only rotation
-        m_drivetrain.drive(0, 0, rotationSpeed, true);
+        double leftX = leftXSupplier.getAsDouble();
+        double leftY = leftYSupplier.getAsDouble();
+
+        // Drive with supplied X and Y velocities, and calculated rotation
+        m_drivetrain.drive(leftX, leftY, rotationSpeed, true);
     }
 
     @Override

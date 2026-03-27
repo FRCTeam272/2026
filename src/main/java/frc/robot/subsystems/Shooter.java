@@ -48,8 +48,11 @@ public class Shooter extends SubsystemBase {
     this.driveBase = driveBaseContainer;
   }
   
-  public void updateTarget(){
-    this.targetPose = DriverStation.getAlliance().get().equals(DriverStation.Alliance.Red)
+  public void updateTarget()
+  {
+    var allaince = DriverStation.getAlliance();
+    if(allaince.isEmpty()) return;
+    this.targetPose = allaince.get().equals(DriverStation.Alliance.Red)
               ? new Translation2d(12.5, 4) // if red allaince
               : new Translation2d(3.5, 4); // if blue alliance
   }

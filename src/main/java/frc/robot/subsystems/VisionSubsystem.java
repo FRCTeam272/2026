@@ -35,19 +35,19 @@ public class VisionSubsystem extends SubsystemBase {
     private static final String kLeftCameraName = "Left_Camera"; 
     private static final String kRightCameraName = "Right_Camera"; 
 
-    // TODO: Update these transforms! 
+    // TODO: Update these transforms! 0, 0, 0 is center of robot
     // X = Forward, Y = Left, Z = Up. Rotation is in Radians.
     
-    // Example: Left camera is 0.2m forward, 0.2m LEFT (positive Y), facing 45 deg to left
+    // Example: Left camera is 0.2m forward, 0.2m LEFT (positive Y), facing 90 deg to left
     private static final Transform3d kRobotToLeftCamera = new Transform3d(
-        new Translation3d(0.2, 0.2, 0.2), 
-        new Rotation3d(0, 0, Math.toRadians(45))
+        new Translation3d(inchToMeter(11), inchToMeter(-11), inchToMeter(19)), 
+        new Rotation3d(0, 0, Math.toRadians(90))
     );
 
-    // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 45 deg to right
+    // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 90 deg to right
     private static final Transform3d kRobotToRightCamera = new Transform3d(
-        new Translation3d(0.2, -0.2, 0.2), 
-        new Rotation3d(0, 0, Math.toRadians(-45))
+        new Translation3d(inchToMeter(11), inchToMeter(11), inchToMeter(19)), 
+        new Rotation3d(0, 0, Math.toRadians(-90))
     );
     // =========================================================================
 
@@ -56,20 +56,24 @@ public class VisionSubsystem extends SubsystemBase {
     private PhotonPoseEstimator m_leftEstimator;
     private PhotonPoseEstimator m_rightEstimator;
 
+    private static double inchToMeter(double inches) {
+        return inches * 0.0254;
+    }
+
     public VisionSubsystem() {
         try {
             // Attempt to load the AprilTagFieldLayout (automatically loads current season)
             // Use the specific game field (e.g., k2025Reefscape or k2026...).
             AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(
-                AprilTagFields.kDefaultField
+                AprilTagFields.k2026RebuiltWelded
             );
             
             // --- Left Camera Setup ---
-            m_leftCamera = new PhotonCamera(kLeftCameraName);
-            m_leftEstimator = new PhotonPoseEstimator(
-                fieldLayout, 
-                kRobotToLeftCamera
-            );
+            // m_leftCamera = new PhotonCamera(kLeftCameraName);
+            // m_leftEstimator = new PhotonPoseEstimator(
+            //     fieldLayout, 
+            //     kRobotToLeftCamera
+            // );
 
             // --- Right Camera Setup ---
             m_rightCamera = new PhotonCamera(kRightCameraName);
@@ -128,7 +132,7 @@ public class VisionSubsystem extends SubsystemBase {
     public List<VisionMeasurement> getEstimatedGlobalPoses() {
         List<VisionMeasurement> measurements = new ArrayList<>();
 
-        processCamera(m_leftEstimator, m_leftCamera).ifPresent(measurements::add);
+        // processCamera(m_leftEstimator, m_leftCamera).ifPresent(measurements::add);
         processCamera(m_rightEstimator, m_rightCamera).ifPresent(measurements::add);
 
         return measurements;

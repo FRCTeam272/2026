@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.drivetrain.AlignToHub;
 import frc.robot.commands.drivetrain.AlignToHubPP;
+import frc.robot.commands.drivetrain.SwerveX;
 import frc.robot.commands.intake.IntakeCommands;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeStop;
@@ -56,6 +57,7 @@ public class RobotContainer {
     public final Conveyor conveyor = new Conveyor();
     
     public final Climber climber = new Climber();
+    public PIDSettings lastPidSettings = Constants.SHOOTER_LOW_PID_SETTINGS;
 
     // Sub-Containers
     public DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC, this); // HINT: looking for DriveBase Controls look in here
@@ -171,7 +173,7 @@ public class RobotContainer {
     
     private void configureBindings() {
         DC.leftTrigger()
-                .onTrue(new InstantCommand(() -> {
+                .whileTrue(new InstantCommand(() -> {
                     DriveBaseContainer.speedFactor = DriveBaseContainer.intakeSpeedFactor;
                     intake.setCurrentLimitOfDeployMotor(40);
                     intake.intake();
@@ -191,14 +193,14 @@ public class RobotContainer {
         }));
         DC.y().onTrue(IntakeCommands.retractIntake(intake)).onFalse(new InstantCommand(() -> intake.stop()));
         DC.rightBumper().onTrue(
+                // CreateShooterOverride(lastPidSettings).andThen(
                 new InstantCommand(() -> {
-
+                    
                     shooter.autoFlywheel();
-                    shooter.targetHood = 2;
-                    shooter.AdjustHood(-2);
                     shooter.forceSync();
                     shooter.SpinWheel(shooter.targetVelocity);
                 }));
+        // DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain, () -> DC.getLeftX(), () -> DC.getLeftY()));
         DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain));
         DC.b().onTrue(new InstantCommand(() -> {
             shooter.SpinWheel(0);
@@ -222,6 +224,7 @@ public class RobotContainer {
                 intake.setCurrentLimitOfDeployMotor(40);
             })
         );
+        DC.x().whileTrue(new SwerveX(driveBaseContainer.drivetrain));
     }
     
     public InstantCommand CreateShooterOverride(PIDSettings settings) {
