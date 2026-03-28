@@ -53,7 +53,7 @@ public class Intake extends SubsystemBase {
     deployMotor = new SparkMAXContainer(deploy_id);
     deployMotor.assignPIDValues(0.1, 0, 0);
     deployMotor.setCurrentLimit(40);
-
+    deployMotor.setBreakMode(false);
     this.setupSmartDashboard();
   }
   
@@ -82,6 +82,10 @@ public class Intake extends SubsystemBase {
   
   public void stop() {
     rollerMotor.motor.set(0);
+  }
+
+  public boolean deployToPos(double pos){
+    return deployMotor.goToPostion(pos);
   }
 
   public boolean jostle(){

@@ -22,7 +22,7 @@ public class IntakeCommands {
     public static Command hopperAgitation(Intake intake) {
         return // Cycle between retract and deploy every 0.5 seconds
         new InstantCommand(() -> intake.intake()).andThen(
-                new InstantCommand(() -> intake.jostle()) // retract intake
+                new InstantCommand(() -> intake.deployToPos(3)) // retract intake
                         .andThen(new WaitCommand(0.25)) // wait 0.5 seconds
                         .andThen(new InstantCommand(() -> intake.deploy())) // deploy intake
                         .andThen(new WaitCommand(0.25)) // wait 0.5 seconds

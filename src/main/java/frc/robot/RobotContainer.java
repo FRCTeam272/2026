@@ -200,8 +200,8 @@ public class RobotContainer {
                     shooter.forceSync();
                     shooter.SpinWheel(shooter.targetVelocity);
                 }));
-        // DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain, () -> DC.getLeftX(), () -> DC.getLeftY()));
-        DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain));
+        DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain, () -> DC.getLeftX(), () -> DC.getLeftY()));
+        // DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain));
         DC.b().onTrue(new InstantCommand(() -> {
             shooter.SpinWheel(0);
             shooter.AdjustHood(0);

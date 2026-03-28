@@ -254,8 +254,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public Pose2d getPose() {
         return this.getState().Pose;
-    }   
-
+    }
 
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
@@ -356,7 +355,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.ApplyRobotSpeeds autoRequest = new SwerveRequest.ApplyRobotSpeeds();
 
     private void configurePathPlanner() {
-        if(TunerConstants.isTestBot){
+        if (TunerConstants.isTestBot) {
             return;
         }
         RobotConfig config;
@@ -419,21 +418,24 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putData("Field", m_field);
         m_field.setRobotPose(this.getState().Pose);
 
-        if(!DriverStation.isFMSAttached()){
+        if (!DriverStation.isFMSAttached()) {
             // Log the position of every angle motor in rotations
-            SmartDashboard.putNumber("Module 0 Angle Position", getModule(0).getSteerMotor().getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Module 1 Angle Position", getModule(1).getSteerMotor().getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Module 2 Angle Position", getModule(2).getSteerMotor().getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Module 3 Angle Position", getModule(3).getSteerMotor().getPosition().getValueAsDouble());    
+            SmartDashboard.putNumber("Module 0 Angle Position",
+                    getModule(0).getSteerMotor().getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Module 1 Angle Position",
+                    getModule(1).getSteerMotor().getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Module 2 Angle Position",
+                    getModule(2).getSteerMotor().getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Module 3 Angle Position",
+                    getModule(3).getSteerMotor().getPosition().getValueAsDouble());
         }
-        
-        // TODO: uncomment for vision
-        // m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
-        // this.addVisionMeasurement(
-        // measurement.pose(),
-        // measurement.timestamp(),
-        // measurement.stdDevs()
-        // );
-        // });
+
+        // TODO: toggle comment for vision
+        m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
+            this.addVisionMeasurement(
+                    measurement.pose(),
+                    measurement.timestamp(),
+                    measurement.stdDevs());
+        });
     }
 }

@@ -21,8 +21,8 @@ import frc.robot.subsystems.Regulator;
 
 public class DriveBaseContainer {
     public AutoContainer autoContainer;
-    public static final double maxSpeedFactor = .20; // .40;
-    public static final double intakeSpeedFactor = .10;// .32;
+    public static final double maxSpeedFactor = .40;
+    public static final double intakeSpeedFactor = .32;
     public static double speedFactor = maxSpeedFactor;
     public static double rotationFactor = .20;
     
