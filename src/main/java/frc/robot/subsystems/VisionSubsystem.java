@@ -40,14 +40,14 @@ public class VisionSubsystem extends SubsystemBase {
     
     // Example: Left camera is 0.2m forward, 0.2m LEFT (positive Y), facing 90 deg to left
     private static final Transform3d kRobotToLeftCamera = new Transform3d(
-        new Translation3d(inchToMeter(11), inchToMeter(-11), inchToMeter(19)), 
-        new Rotation3d(0, 0, Math.toRadians(90))
+        new Translation3d(inchToMeter(11), inchToMeter(-11), inchToMeter(18)), 
+        new Rotation3d(0, Math.toRadians(15), Math.toRadians(90))
     );
 
     // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 90 deg to right
     private static final Transform3d kRobotToRightCamera = new Transform3d(
-        new Translation3d(inchToMeter(11), inchToMeter(11), inchToMeter(19)), 
-        new Rotation3d(0, 0, Math.toRadians(-90))
+        new Translation3d(inchToMeter(11), inchToMeter(11), inchToMeter(18)), 
+        new Rotation3d(0, Math.toRadians(15), Math.toRadians(-90))
     );
     // =========================================================================
 

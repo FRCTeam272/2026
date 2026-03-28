@@ -427,6 +427,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             SmartDashboard.putNumber("Module 3 Angle Position", getModule(3).getSteerMotor().getPosition().getValueAsDouble());    
         }
         
+        // TODO: uncomment for vision
         // m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
         // this.addVisionMeasurement(
         // measurement.pose(),
