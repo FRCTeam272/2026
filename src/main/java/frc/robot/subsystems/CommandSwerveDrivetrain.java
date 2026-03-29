@@ -54,6 +54,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     private VisionSubsystem m_visionSubsystem = new VisionSubsystem();
     private final Field2d m_field = new Field2d();
+    public boolean usePhotonVision = true;
 
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
@@ -414,16 +415,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             visionMeasurements.forEach(measurement -> {
                 // IMPORTANT: We do NOT use Utils.fpgaToCurrentTime here because 
                 // PhotonVision already provides timestamps in the FPGA timebase.
-
-                SmartDashboard.putNumber("Vision/Stamps/PoseX", measurement.pose().getX());
-                SmartDashboard.putNumber("Vision/Stamps/PoseY", measurement.pose().getY());
-                SmartDashboard.putNumber("Vision/Stamps/Timestamp", measurement.timestamp());
-
-                super.addVisionMeasurement(
-                    measurement.pose(),
-                    Utils.fpgaToCurrentTime(measurement.timestamp()),
-                    measurement.stdDevs()
-                );
+                if(!DriverStation.isFMSAttached() && DriverStation.isTestEnabled()){
+                    SmartDashboard.putNumber("Vision/Stamps/PoseX", measurement.pose().getX());
+                    SmartDashboard.putNumber("Vision/Stamps/PoseY", measurement.pose().getY());
+                    SmartDashboard.putNumber("Vision/Stamps/Timestamp", measurement.timestamp());
+                }
+                if(usePhotonVision){
+                    super.addVisionMeasurement(
+                        measurement.pose(),
+                        Utils.fpgaToCurrentTime(measurement.timestamp()),
+                        measurement.stdDevs()
+                    );
+                }                
+                
             });
         } else {
             SmartDashboard.putBoolean("Vision/HasTargets", false);

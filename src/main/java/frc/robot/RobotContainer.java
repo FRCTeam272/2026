@@ -56,7 +56,7 @@ public class RobotContainer {
     public final Regulator regulator = new Regulator();
     public final Conveyor conveyor = new Conveyor();
     
-    public final Climber climber = new Climber();
+    // public final Climber climber = new Climber();
     public PIDSettings lastPidSettings = Constants.SHOOTER_LOW_PID_SETTINGS;
 
     // Sub-Containers
@@ -83,10 +83,14 @@ public class RobotContainer {
     }
 
     public void configureOperatorPanel(){
-        OC.ClimberStage1.onTrue(ClimberCommands.Stage1(climber));
-        OC.ClimberStage2.onTrue(ClimberCommands.Stage2(climber));
-        OC.ClimberStage3.onTrue(ClimberCommands.Stage3(climber));
-        OC.ClimberRelease.onTrue(ClimberCommands.Dismount(climber));
+        // OC.ClimberStage1.onTrue(ClimberCommands.Stage1(climber));
+        // OC.ClimberStage2.onTrue(ClimberCommands.Stage2(climber));
+        // OC.ClimberStage3.onTrue(ClimberCommands.Stage3(climber));
+        // OC.ClimberRelease.onTrue(ClimberCommands.Dismount(climber));
+        // toggels photon vision on and off
+        OC.ClimberRelease.onTrue(new InstantCommand(() -> {
+            this.driveBaseContainer.drivetrain.usePhotonVision = ! this.driveBaseContainer.drivetrain.usePhotonVision;
+        }));
         
         OC.Stir.whileTrue(IntakeCommands.hopperAgitation(intake)).onFalse(new InstantCommand(() -> {
             this.intake.retract();
@@ -114,9 +118,9 @@ public class RobotContainer {
                 )
             );
         }));
-        OC.BonusButton2.whileTrue(new InstantCommand(() -> {
-            SmartDashboard.putString("Climb Align", "Starting");
-        }).andThen(new ClimberAlign(driveBaseContainer.drivetrain, climber)));
+        // OC.BonusButton2.whileTrue(new InstantCommand(() -> {
+        //     SmartDashboard.putString("Climb Align", "Starting");
+        // }).andThen(new ClimberAlign(driveBaseContainer.drivetrain, climber)));
     }
 
 
@@ -258,11 +262,11 @@ public class RobotContainer {
             shooter.SpinWheel(0);
             regulator.Stop();
             conveyor.Stop();
-            climber.Stop();
-        }, intake, shooter, regulator, conveyor, climber);
+            // climber.Stop();
+        }, intake, shooter, regulator, conveyor);
     }
 
     public Subsystem[] getAllSubsystems(){
-        return new Subsystem[]{intake, shooter, regulator, conveyor, climber};
+        return new Subsystem[]{intake, shooter, regulator, conveyor};
     }
 }
