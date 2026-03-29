@@ -17,13 +17,15 @@ import frc.lib.utils.TrimPot;
 public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   TalonFxContainer rollerMotor;
+  TalonFxContainer rollerFollowerMotor;
   SparkMAXContainer deployMotor;
   public final int intake_id = 2;
+  public final int intake_follower_id = 60;
   public final int deploy_id = 3;
   public double defult_speed = .85;
 
-  public double deploy_position = 19;
-  public double retract_position = 0;
+  public double deploy_position = 16.5;
+  public double retract_position = 0.6;
 
   // Force Detection Constants
   private final double kImpactCurrentThreshold = 8.0; // Amps (slightly below the 10A hold limit)
@@ -35,12 +37,23 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     rollerMotor= new TalonFxContainer(intake_id, true);
-    rollerMotor.motor.getVelocity().setUpdateFrequency(20);
-    rollerMotor.setBreakMode(false);
+    rollerFollowerMotor = new TalonFxContainer(intake_follower_id, true);
+
+    for (var i : new TalonFxContainer[] {
+      rollerMotor, 
+      rollerFollowerMotor
+    }) {
+      i.motor.getVelocity().setUpdateFrequency(20);
+      i.assignPIDValues(0.01, 0, 0);
+      i.setBreakMode(false);
+    }
+
+    rollerFollowerMotor.setupAsFollowerMotor(rollerMotor, true);
+
     deployMotor = new SparkMAXContainer(deploy_id);
     deployMotor.assignPIDValues(0.1, 0, 0);
     deployMotor.setCurrentLimit(40);
-
+    deployMotor.setBreakMode(false);
     this.setupSmartDashboard();
   }
   
@@ -54,7 +67,9 @@ public class Intake extends SubsystemBase {
   }
 
   public void intake() {
-    rollerMotor.motor.set(defult_speed);
+    // rollerMotor.setVelocity(1000);
+    rollerMotor.setVelocity(5100);
+    // rollerMotor.motor.set(defult_speed);
   }
 
   public void intake(double speed) {
@@ -69,23 +84,28 @@ public class Intake extends SubsystemBase {
     rollerMotor.motor.set(0);
   }
 
+  public boolean deployToPos(double pos){
+    return deployMotor.goToPostion(pos);
+  }
+
   public boolean jostle(){
-    return true;
-    // return deployMotor.goToPostion(deploy_position - 3);
+    // return true;
+    return deployMotor.goToPostion(8.4);
   }
 
   public boolean deploy() {
-    return true;
-    // return deployMotor.goToPostion(deploy_position, 0);
+    // deployMotor.motor.set(.1);
+    // return true;
+    return deployMotor.goToPostion(deploy_position, 0);
   }
 
   public boolean retract() {
-    return true;
-    // return deployMotor.goToPostion(retract_position, 0);
+    // return true;
+    return deployMotor.goToPostion(retract_position, 0);
   }
 
   public void setCurrentLimitOfDeployMotor(int limit){
-    deployMotor.setCurrentLimit(limit);
+    // deployMotor.setCurrentLimit(limit);
   }
 
   /**
@@ -102,11 +122,16 @@ public class Intake extends SubsystemBase {
 
     return m_impactDebouncer.calculate(isAtTarget && isStalling);
   }
+
+  public void stopDeploy(){
+    this.deployMotor.motor.set(0);
+  }
   
   @Override
   public void periodic() {
     rollerMotor.reportMotor("Intake");
     deployMotor.reportMotor("IntakeDeploy");
+    SmartDashboard.putNumber("Intake/Deploy Postion", this.deployMotor.getPosition());
 
     if(!DriverStation.isFMSAttached()){
       // final double deployP = SmartDashboard.getNumber("ConfigIntake/DeployMotorP", 0.01);

@@ -21,8 +21,10 @@ import frc.robot.subsystems.Regulator;
 
 public class DriveBaseContainer {
     public AutoContainer autoContainer;
-    public static double speedFactor = .32;
-    public static double rotationFactor = .32;
+    public static final double maxSpeedFactor = .40;
+    public static final double intakeSpeedFactor = .32;
+    public static double speedFactor = maxSpeedFactor;
+    public static double rotationFactor = .20;
     
     static {
         // edu.wpi.first.wpilibj.smartdashboard.SmartDashboard.putNumber("Speed Factor", speedFactor);
@@ -48,7 +50,7 @@ public class DriveBaseContainer {
     
         if(!TunerConstants.isTestBot){
             SmartDashboard.putString("MESSAGE", "we are at autoSetup");
-            autoContainer = new AutoContainer(rc); 
+            autoContainer = new AutoContainer(rc, this.drivetrain); 
         }
     }
 

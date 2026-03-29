@@ -84,9 +84,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "HH-Jiggle"
+            "name": "ClimberAlign"
           }
         },
         {

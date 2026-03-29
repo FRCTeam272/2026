@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.3301052770882014,
+        "y": 4.804022889894859
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.282989549711344,
+        "y": 4.277749159081344
+      },
+      "isLocked": false,
+      "linkedName": "Lehigh-Depot-PT1"
+    },
+    {
+      "anchor": {
+        "x": 2.3301052770882014,
+        "y": 2.6897066205461444
+      },
+      "prevControl": {
+        "x": 2.438518904223667,
+        "y": 4.46475320692735
+      },
+      "nextControl": {
+        "x": 2.3148645529595413,
+        "y": 2.4401716123247845
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.0366319545852805,
+        "y": 2.873725768472547
+      },
+      "prevControl": {
+        "x": 1.2797203215829833,
+        "y": 2.932104239079356
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Lehigh-Depot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -25.416833108866747
+  },
+  "useDefaultConstraints": false
+}

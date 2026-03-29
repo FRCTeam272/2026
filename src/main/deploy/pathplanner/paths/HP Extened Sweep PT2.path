@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 8.037170182669257,
-        "y": 0.910076033612931
+        "y": 0.9100760336129309
       },
       "isLocked": false,
       "linkedName": "HPExtenedSweepPT1"
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.232,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 90.05816828408969
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

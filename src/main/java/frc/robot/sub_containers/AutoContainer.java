@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.ClimberAlign;
 import frc.robot.commands.ClimberCommands;
+import frc.robot.commands.intake.IntakeCommands;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Conveyor;
@@ -26,71 +28,96 @@ public class AutoContainer {
     Regulator regulator;
     Conveyor conveyor;
     Climber climber;
-    
-    public AutoContainer(RobotContainer rc) {
+    private CommandSwerveDrivetrain drivetrain;
+
+    public AutoContainer(RobotContainer rc, CommandSwerveDrivetrain drivetrain) {
         // this.drivetrain.configureAutoBuilder();
         this.intake = rc.intake;
         this.shooter = rc.shooter;
         this.regulator = rc.regulator;
         this.conveyor = rc.conveyor;
         this.climber = rc.climber;
+        this.drivetrain = drivetrain;
 
         this.configureAutoBindings();
         SmartDashboard.putNumber("Auto Delay (Seconds)", 0);
     }
 
     private void configureAutoBindings() {
-        NamedCommands.registerCommand("DeployIntake", 
-        new WaitCommand(.2).andThen(
-        new InstantCommand(() -> {
-            intake.setCurrentLimitOfDeployMotor(40);
-            intake.jostle();
-            intake.deploy();
-        })));
+        NamedCommands.registerCommand("DeployIntake",
+                new WaitCommand(.2).andThen(
+                        new InstantCommand(() -> {
+                            intake.setCurrentLimitOfDeployMotor(40);
+                            intake.jostle();
+                            intake.deploy();
+                            intake.intake();
+                        })));
         NamedCommands.registerCommand("StartIntake", new InstantCommand(() -> {
             intake.intake();
         }));
-        NamedCommands.registerCommand("SpinFlywheel", new InstantCommand(() -> shooter.SpinWheel(shooter.targetVelocity)));
+        NamedCommands.registerCommand("SpinFlywheel",
+                new InstantCommand(() -> {
+                    shooter.SpinWheel(4700);
+                    intake.stop();
+                }));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
-            conveyor.Load();    
+            conveyor.Load();
             regulator.Load();
             intake.setCurrentLimitOfDeployMotor(20);
-            intake.retract();
-            intake.intake(.85);
-        }));
+        }).alongWith(IntakeCommands.hopperAgitation(intake).withTimeout(3.5)));
         NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
             intake.stop();
         }));
-        NamedCommands.registerCommand("DeployAndStartIntake", 
-        new WaitCommand(.2).andThen(
-        new InstantCommand(() -> {
-            intake.setCurrentLimitOfDeployMotor(40);
-            intake.jostle();
-            intake.deploy();
-            intake.intake();
-        })));
+        NamedCommands.registerCommand("DeployAndStartIntake",
+                new WaitCommand(.2).andThen(
+                        new InstantCommand(() -> {
+                            intake.setCurrentLimitOfDeployMotor(40);
+                            intake.jostle();
+                            intake.deploy();
+                            intake.intake();
+                        })));
+        NamedCommands.registerCommand("DeployAndStartIntakeDelayed",
+                new WaitCommand(1.5).andThen(
+                        new InstantCommand(() -> {
+                            intake.setCurrentLimitOfDeployMotor(40);
+                            intake.jostle();
+                            intake.deploy();
+                            intake.intake();
+                        })));
+        NamedCommands.registerCommand("RetractIntake", new InstantCommand(() -> {
+            intake.stop();
+            intake.retract();
+        }));
         NamedCommands.registerCommand("Kill", new InstantCommand(() -> {
             intake.stop();
             shooter.TrueStop();
+            SmartDashboard.putNumber("FlyWheel/TargetVelocity", 0);
+            shooter.targetHood = 0;
+            shooter.forceSync();
+            shooter.AdjustHood(0);
             regulator.Stop();
             conveyor.Stop();
         }));
-        NamedCommands.registerCommand("Climb", new InstantCommand(() -> {this.intake.deploy();})
-        .andThen(ClimberCommands.Stage1(climber))
-        .andThen(ClimberCommands.Stage2(climber))
-        .andThen(new WaitCommand(3))
-        .andThen(ClimberCommands.Stage3(climber))
-        );
+        NamedCommands.registerCommand("Climb", new InstantCommand(() -> {
+            this.intake.deploy();
+        })
+                .andThen(ClimberCommands.Stage1(climber))
+                .andThen(ClimberCommands.Stage2(climber))
+                .andThen(new WaitCommand(3))
+                .andThen(ClimberCommands.Stage3(climber)));
 
-        NamedCommands.registerCommand("ClimbPrep", ClimberCommands.Stage1(climber).andThen(ClimberCommands.Stage2(climber)));
+        NamedCommands.registerCommand("ClimbPrep",
+                ClimberCommands.Stage1(climber).andThen(ClimberCommands.Stage2(climber)));
         NamedCommands.registerCommand("ClimberExecute", ClimberCommands.Stage3(climber));
         NamedCommands.registerCommand("ClimbExecute", ClimberCommands.Stage3(climber));
 
         NamedCommands.registerCommand("AutoFlywheel", new InstantCommand(() -> {
             shooter.useAutoFlywheel = true;
             shooter.autoFlywheel();
+            // shooter.AdjustHood(-2);
         }));
 
+        // NamedCommands.registerCommand("ClimberAlign", new ClimberAlign(drivetrain, climber));
 
         autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be `Commands.none()`
         SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -98,6 +125,6 @@ public class AutoContainer {
 
     public Command getAutonomousCommand() {
         var delay = SmartDashboard.getNumber("Auto Delay (Seconds)", 0);
-        return new WaitCommand(delay).andThen(autoChooser.getSelected());
+        return new WaitCommand(delay).andThen(autoChooser.getSelected().withTimeout(20));
     }
 }

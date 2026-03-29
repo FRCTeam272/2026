@@ -11,13 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "HP Extended Sweep PT1"
+                  "pathName": "HP-Trench-Double-Part1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "DeployAndStartIntakeDelayed"
+                  "name": "DeployAndStartIntake"
                 }
               }
             ]
@@ -26,7 +26,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HP Extened Sweep PT2"
+            "pathName": "HP-Trench-Double-Part2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
           }
         },
         {
@@ -38,7 +44,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HP Extened Sweep PT3"
+            "pathName": "HP-Trench-Double-Part3"
           }
         },
         {
@@ -51,60 +57,6 @@
           "type": "named",
           "data": {
             "name": "Shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Kill"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Extened Sweep PT4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DeployAndStartIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Extened Sweep PT5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Kill"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SpinFlywheel"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Extened Sweep PT6"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoFlywheel"
           }
         },
         {
@@ -116,13 +68,43 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Kill"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "RetrackIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP-Trench-Double-Part4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DeployAndStartIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP-Trench-Double-Part5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "HP-Trench-Double-Part6"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Cent",
   "choreoAuto": false
 }

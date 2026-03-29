@@ -11,22 +11,22 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "HP Extended Sweep PT1"
+                  "pathName": "Lehigh-Sweep-Part1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "DeployAndStartIntakeDelayed"
+                  "name": "DeployAndStartIntake"
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "HP Extened Sweep PT2"
+            "name": "Kill"
           }
         },
         {
@@ -38,13 +38,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HP Extened Sweep PT3"
+            "pathName": "Leihigh-Sweep-Part2"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {
@@ -56,31 +62,26 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 3.0
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Kill"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Extened Sweep PT4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DeployAndStartIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HP Extened Sweep PT5"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Sweep To Depot To Shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "DeployAndStartIntake"
+                }
+              }
+            ]
           }
         },
         {
@@ -96,21 +97,9 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "HP Extened Sweep PT6"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoFlywheel"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 0.2
           }
         },
         {
@@ -123,6 +112,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Lehigh",
   "choreoAuto": false
 }

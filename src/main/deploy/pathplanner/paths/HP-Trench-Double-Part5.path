@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4066547406082288,
-        "y": 3.9457602862254024
+        "x": 5.833257018472547,
+        "y": 2.347330014237733
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4066547406082295,
-        "y": 3.9457602862254024
+        "x": 6.077647862153398,
+        "y": 2.3999903933188014
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HP-Trench-PT4"
     },
     {
       "anchor": {
-        "x": 3.6619856887298745,
-        "y": 3.9295348837209296
+        "x": 5.833257018472547,
+        "y": 4.8478961010514015
       },
       "prevControl": {
-        "x": 2.6619856887298745,
-        "y": 3.9295348837209296
+        "x": 5.7206483237404,
+        "y": 4.363408537853705
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HP-Trench-PT5"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 91.30505707037776
   },
   "reversed": false,
-  "folder": null,
+  "folder": "HP Trench Sweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -0.47767586238370685
+    "rotation": 90.44356056806902
   },
   "useDefaultConstraints": true
 }

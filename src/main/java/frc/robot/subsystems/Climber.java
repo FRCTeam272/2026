@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,13 +22,17 @@ public class Climber extends SubsystemBase {
 
     double lastP, lastI, lastD, lastG;
 
+    double upperSensorThreshold = 4;
+    double lowerSensorThreshold = 0;
+    AnalogInput frontSensor = new AnalogInput(2);
+    AnalogInput backSensor = new AnalogInput(3);
     public Climber() {
         climberMotor.assignPIDValues(pid.kP, pid.kI, pid.kD);
         SmartDashboard.putNumber("Climber/Stage1", 10.7 * 2.22);
-        SmartDashboard.putNumber("Climber/Stage2", 26* 2.22);
+        SmartDashboard.putNumber("Climber/Stage2", 69);
         SmartDashboard.putNumber("Climber/Stage3", -7* 2.22);
         SmartDashboard.putNumber("Climber/Stage4", -7* 2.22);
-        SmartDashboard.putNumber("Climber/Dismount", 26* 2.22);
+        SmartDashboard.putNumber("Climber/Dismount", 69);
         SmartDashboard.putNumber("Climber/Executing", 0* 2.22);
         SmartDashboard.putNumber("Climber/PID/P", pid.kP);
         SmartDashboard.putNumber("Climber/PID/I", pid.kI);
@@ -68,10 +73,41 @@ public class Climber extends SubsystemBase {
     public void assignFF(double kG){
         climberMotor.assignFF(0, 0, 0, kG);
     }
+
+    public boolean isSensorTripped(AnalogInput sensor){
+        return sensor.getVoltage() < 1;
+    }
+    public int isSensorTripped(){
+        var front = isSensorTripped(frontSensor);
+        var back = isSensorTripped(backSensor);
+
+        if(front && back){
+            return 0;
+        }
+        else if(front){
+            return -1;
+        }
+        else if(back){
+            return 1;
+        } else {
+            return 404;
+        }
+    }
     
     @Override
     public void periodic() {
-        
+        if(!DriverStation.isFMSAttached()){
+            SmartDashboard.putNumber("Climber/Sensors/Front", frontSensor.getVoltage());
+            SmartDashboard.putNumber("Climber/Sensors/Back", backSensor.getVoltage());
+        }
+        String sender = "";
+        switch(this.isSensorTripped()){
+            case 1: sender = "Go Foward"; break;
+            case -1: sender = "Go Back"; break;
+            case 0: sender = "all good in the hood"; break;
+            case 404: sender = "??? I Dunno ???"; break;
+        }
+        SmartDashboard.putString("isClimberAligned", sender);
 
         SmartDashboard.putBoolean("Ready/Can Trench(Climber)", this.climberMotor.getPosition() < .5);
         // This method will be called once per scheduler run

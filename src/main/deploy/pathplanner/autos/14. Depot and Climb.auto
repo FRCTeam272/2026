@@ -9,18 +9,36 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "HH-Shoot-Part1"
+                  "name": "DeployAndStartIntake"
                 }
               },
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "SpinFlywheel"
+                  "pathName": "Depot-Climb-Part1"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoFlywheel"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
           }
         },
         {
@@ -32,31 +50,26 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
+            "waitTime": 3.0
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Kill"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HH-Center-Climb-Part2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "HH-Human-Player-Squeeze"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ClimbPrep"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Depot-Climb-Part2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ClimbPrep"
+                }
+              }
+            ]
           }
         },
         {
@@ -75,6 +88,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "HH",
+  "folder": "Lehigh",
   "choreoAuto": false
 }

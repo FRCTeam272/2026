@@ -1,0 +1,95 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.767012522361359,
+        "y": 3.3291949910554557
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.245996627745846,
+        "y": 3.375424890981719
+      },
+      "isLocked": false,
+      "linkedName": "HP-Trench-PT2"
+    },
+    {
+      "anchor": {
+        "x": 6.136603022780374,
+        "y": 0.8459556166033873
+      },
+      "prevControl": {
+        "x": 4.9799803818451664,
+        "y": 2.0590497198762447
+      },
+      "nextControl": {
+        "x": 6.309118068508966,
+        "y": 0.6650176189432447
+      },
+      "isLocked": false,
+      "linkedName": "HP-Trench-Waypoint1"
+    },
+    {
+      "anchor": {
+        "x": 2.6106040997371496,
+        "y": 0.7879270863755834
+      },
+      "prevControl": {
+        "x": 5.154722719141324,
+        "y": 0.7818067978533088
+      },
+      "nextControl": {
+        "x": 2.0102388945972587,
+        "y": 0.7893713619082435
+      },
+      "isLocked": false,
+      "linkedName": "HP-Trench-Waypoint2"
+    },
+    {
+      "anchor": {
+        "x": 2.5586583184257603,
+        "y": 1.868908765652951
+      },
+      "prevControl": {
+        "x": 1.8004509139702756,
+        "y": 1.6268428354621818
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HP-Trench-PT3"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 49.39870535499552
+  },
+  "reversed": false,
+  "folder": "HP Trench Sweep",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 88.30856707886197
+  },
+  "useDefaultConstraints": true
+}

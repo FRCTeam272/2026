@@ -53,6 +53,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private boolean m_hasAppliedOperatorPerspective = false;
 
     private VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+    private final Field2d m_field = new Field2d();
 
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
@@ -251,50 +252,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return m_sysIdRoutineToApply.dynamic(direction);
     }
 
-    @Override
-    public void periodic() {
-        /*
-         * Periodically try to apply the operator perspective.
-         * If we haven't applied the operator perspective before, then we should apply
-         * it regardless of DS state.
-         * This allows us to correct the perspective in case the robot code restarts
-         * mid-match.
-         * Otherwise, only check and apply the operator perspective if the DS is
-         * disabled.
-         * This ensures driving behavior doesn't change until an explicit disable event
-         * occurs during testing.
-         */
-        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-            DriverStation.getAlliance().ifPresent(allianceColor -> {
-                setOperatorPerspectiveForward(
-                        allianceColor == Alliance.Red
-                                ? kRedAlliancePerspectiveRotation
-                                : kBlueAlliancePerspectiveRotation);
-                m_hasAppliedOperatorPerspective = true;
-            });
-        }
-        SmartDashboard.putData("Field", m_field);
-        m_field.setRobotPose(this.getState().Pose);
-
-        // Log the position of every angle motor in rotations
-        SmartDashboard.putNumber("Module 0 Angle Position", getModule(0).getSteerMotor().getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("Module 1 Angle Position", getModule(1).getSteerMotor().getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("Module 2 Angle Position", getModule(2).getSteerMotor().getPosition().getValueAsDouble());
-        SmartDashboard.putNumber("Module 3 Angle Position", getModule(3).getSteerMotor().getPosition().getValueAsDouble());
-        // m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
-        // this.addVisionMeasurement(
-        // measurement.pose(),
-        // measurement.timestamp(),
-        // measurement.stdDevs()
-        // );
-        // });
-    }
-
     public Pose2d getPose() {
         return this.getState().Pose;
-    }   
-
-    private final Field2d m_field = new Field2d();
+    }
 
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
@@ -395,7 +355,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.ApplyRobotSpeeds autoRequest = new SwerveRequest.ApplyRobotSpeeds();
 
     private void configurePathPlanner() {
-        if(TunerConstants.isTestBot){
+        if (TunerConstants.isTestBot) {
             return;
         }
         RobotConfig config;
@@ -431,5 +391,51 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 },
                 this // Reference to this subsystem to set requirements
         );
+    }
+
+    @Override
+    public void periodic() {
+        /*
+         * Periodically try to apply the operator perspective.
+         * If we haven't applied the operator perspective before, then we should apply
+         * it regardless of DS state.
+         * This allows us to correct the perspective in case the robot code restarts
+         * mid-match.
+         * Otherwise, only check and apply the operator perspective if the DS is
+         * disabled.
+         * This ensures driving behavior doesn't change until an explicit disable event
+         * occurs during testing.
+         */
+        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+            DriverStation.getAlliance().ifPresent(allianceColor -> {
+                setOperatorPerspectiveForward(
+                        allianceColor == Alliance.Red
+                                ? kRedAlliancePerspectiveRotation
+                                : kBlueAlliancePerspectiveRotation);
+                m_hasAppliedOperatorPerspective = true;
+            });
+        }
+        SmartDashboard.putData("Field", m_field);
+        m_field.setRobotPose(this.getState().Pose);
+
+        if (!DriverStation.isFMSAttached()) {
+            // Log the position of every angle motor in rotations
+            SmartDashboard.putNumber("Module 0 Angle Position",
+                    getModule(0).getSteerMotor().getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Module 1 Angle Position",
+                    getModule(1).getSteerMotor().getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Module 2 Angle Position",
+                    getModule(2).getSteerMotor().getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Module 3 Angle Position",
+                    getModule(3).getSteerMotor().getPosition().getValueAsDouble());
+        }
+
+        // TODO: toggle comment for vision
+        m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
+            this.addVisionMeasurement(
+                    measurement.pose(),
+                    measurement.timestamp(),
+                    measurement.stdDevs());
+        });
     }
 }

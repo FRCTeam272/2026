@@ -13,16 +13,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.drivetrain.AlignToHub;
 import frc.robot.commands.drivetrain.AlignToHubPP;
+import frc.robot.commands.drivetrain.SwerveX;
 import frc.robot.commands.intake.IntakeCommands;
 import frc.robot.commands.intake.IntakeIntake;
 import frc.robot.commands.intake.IntakeStop;
 import frc.robot.commands.shooter.ShooterShoot;
 import frc.robot.commands.shooter.ShooterStop;
+import frc.robot.commands.ClimberAlign;
 import frc.robot.commands.ClimberCommands;
 import frc.robot.sub_containers.AutoContainer;
 import frc.robot.sub_containers.DriveBaseContainer;
@@ -43,27 +46,30 @@ public class RobotContainer {
     private final CommandXboxController DC = new CommandXboxController(0);
     private final LC_2026Custom OC = new LC_2026Custom(1);
 
-    // Sub-Containers
-    public final DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC, this); // HINT: looking for DriveBase Controls look in here
-
+    
+   
     // // Subsystems
     public final DashboardWriter dashboardWriter = new DashboardWriter();
     
     public final Intake intake = new Intake();
-    public final Shooter shooter = new Shooter(driveBaseContainer);
+    public final Shooter shooter = new Shooter(); 
     public final Regulator regulator = new Regulator();
     public final Conveyor conveyor = new Conveyor();
     
     public final Climber climber = new Climber();
+    public PIDSettings lastPidSettings = Constants.SHOOTER_LOW_PID_SETTINGS;
 
+    // Sub-Containers
+    public DriveBaseContainer driveBaseContainer = new DriveBaseContainer(DC, this); // HINT: looking for DriveBase Controls look in here
 
     
     public RobotContainer() {
         configureBindings();
         // configurTestBindings();
         configureOperatorPanel();
-        configureAutonmousBindings(); 
+        configureAutonmousBindings();
         
+        shooter.setDriveBase(driveBaseContainer); 
     }
 
     public void configureAutonmousBindings(){
@@ -82,7 +88,10 @@ public class RobotContainer {
         OC.ClimberStage3.onTrue(ClimberCommands.Stage3(climber));
         OC.ClimberRelease.onTrue(ClimberCommands.Dismount(climber));
         
-        OC.Stir.whileTrue(IntakeCommands.hopperAgitation(intake));
+        OC.Stir.whileTrue(IntakeCommands.hopperAgitation(intake)).onFalse(new InstantCommand(() -> {
+            this.intake.retract();
+            this.intake.stop();
+        }));
         OC.CloseUpFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_LOW_PID_SETTINGS));
         OC.MeduimFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_MID_PID_SETTINGS));
         OC.FarFlywheel.onTrue(CreateShooterOverride(Constants.SHOOTER_HIGH_PID_SETTINGS));
@@ -96,7 +105,7 @@ public class RobotContainer {
             intake.retract();
             intake.intake();
         }));
-        OC.BonusButton2.onTrue(new InstantCommand(() -> { 
+        OC.BonusButton3.onTrue(new InstantCommand(() -> { 
             var pose = DriverStation.isDSAttached() && DriverStation.getAlliance().get() == DriverStation.Alliance.Red ? new Translation2d(13, 4.018) : new Translation2d(3.566, 4.018);    
             driveBaseContainer.drivetrain.resetPose(
                 new Pose2d(
@@ -105,6 +114,9 @@ public class RobotContainer {
                 )
             );
         }));
+        OC.BonusButton2.whileTrue(new InstantCommand(() -> {
+            SmartDashboard.putString("Climb Align", "Starting");
+        }).andThen(new ClimberAlign(driveBaseContainer.drivetrain, climber)));
     }
 
 
@@ -162,24 +174,34 @@ public class RobotContainer {
     private void configureBindings() {
         DC.leftTrigger()
                 .whileTrue(new InstantCommand(() -> {
+                    DriveBaseContainer.speedFactor = DriveBaseContainer.intakeSpeedFactor;
                     intake.setCurrentLimitOfDeployMotor(40);
-                    intake.jostle();
-                    intake.deploy();
                     intake.intake();
                     conveyor.Load(-.2);
-                })).onFalse(new InstantCommand(() -> {
+                }).alongWith(
+                    new InstantCommand(() -> intake.deploy())
+                    .andThen(new WaitCommand(2))
+                    .andThen(new InstantCommand(() -> intake.stopDeploy()))
+                )).onFalse(new InstantCommand(() -> {
+                    DriveBaseContainer.speedFactor = DriveBaseContainer.maxSpeedFactor;
                     intake.stop();
                     conveyor.Stop();
                     // intake.retract();
                 }));
+        DC.leftBumper().onTrue(new InstantCommand(() -> {
+            DriveBaseContainer.speedFactor = DriveBaseContainer.maxSpeedFactor;
+        }));
         DC.y().onTrue(IntakeCommands.retractIntake(intake)).onFalse(new InstantCommand(() -> intake.stop()));
         DC.rightBumper().onTrue(
+                // CreateShooterOverride(lastPidSettings).andThen(
                 new InstantCommand(() -> {
+                    
                     shooter.autoFlywheel();
                     shooter.forceSync();
                     shooter.SpinWheel(shooter.targetVelocity);
                 }));
-        DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain));
+        DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain, () -> DC.getLeftX(), () -> DC.getLeftY()));
+        // DC.a().whileTrue(new AlignToHubPP(driveBaseContainer.drivetrain));
         DC.b().onTrue(new InstantCommand(() -> {
             shooter.SpinWheel(0);
             shooter.AdjustHood(0);
@@ -202,6 +224,7 @@ public class RobotContainer {
                 intake.setCurrentLimitOfDeployMotor(40);
             })
         );
+        DC.x().whileTrue(new SwerveX(driveBaseContainer.drivetrain));
     }
     
     public InstantCommand CreateShooterOverride(PIDSettings settings) {

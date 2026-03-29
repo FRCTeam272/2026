@@ -1,0 +1,135 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.567536780811916,
+        "y": 6.166948333455022
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.316909989642838,
+        "y": 6.118358209783422
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.5794399824766356,
+        "y": 6.166948333455022
+      },
+      "prevControl": {
+        "x": -0.22086833213908807,
+        "y": 6.171825627135283
+      },
+      "nextControl": {
+        "x": 1.7537232944146401,
+        "y": 6.15979193576234
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3975098112587616,
+        "y": 5.678175927278037
+      },
+      "prevControl": {
+        "x": 1.6467024699653134,
+        "y": 5.698251256584426
+      },
+      "nextControl": {
+        "x": 0.8160605234553912,
+        "y": 5.631333512303992
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.44960011134637856,
+        "y": 5.678175927278037
+      },
+      "prevControl": {
+        "x": 0.20073940059008274,
+        "y": 5.702015949129354
+      },
+      "nextControl": {
+        "x": 0.7564455500230827,
+        "y": 5.648781162870275
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.573055755842602,
+        "y": 5.214322602946314
+      },
+      "prevControl": {
+        "x": 1.492489988759398,
+        "y": 5.841748254071511
+      },
+      "nextControl": {
+        "x": 1.6973374917538795,
+        "y": 4.246448133426622
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.3301052770882014,
+        "y": 4.804022889894859
+      },
+      "prevControl": {
+        "x": 2.5636028690229056,
+        "y": 4.714698343656468
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Lehigh-Depot-PT1"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 4,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -25.416833108866747
+  },
+  "reversed": false,
+  "folder": "Lehigh-Depot",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.6368968990716
+  },
+  "useDefaultConstraints": true
+}
