@@ -18,7 +18,7 @@ public class Conveyor extends SubsystemBase {
     public Conveyor() {
         conveyorMotor = new SparkMAXContainer(CONVEYOR_LOCATION);
         conveyorMotor.assignPIDValues(conveyorPID.kP, conveyorPID.kI, conveyorPID.kD);
-        conveyorMotor.setBreakMode(false);
+        conveyorMotor.setBreakMode(true);
         SmartDashboard.putNumber("Conveyor/Velocity", converyorVelocity);
         SmartDashboard.putNumber("Conveyor/P", conveyorPID.kP);
         SmartDashboard.putNumber("Conveyor/I", conveyorPID.kI);
@@ -27,23 +27,15 @@ public class Conveyor extends SubsystemBase {
     }
 
     public void Load() {
-        if (ConveryorUsePID) {
-            conveyorMotor.setVelocity(converyorVelocity);
-        } else {
-            conveyorMotor.motor.set(converyorVoltage);
-        }
+        conveyorMotor.goToVoltage(-12);
     }
 
     public void Load(double amount) {
-        conveyorMotor.motor.set(amount);
+        conveyorMotor.goToVoltage(amount);
     }
 
     public void Unload() {
-        if (ConveryorUsePID) {
-            conveyorMotor.setVelocity(-converyorVelocity);
-        } else {
-            conveyorMotor.motor.set(-converyorVoltage);
-        }
+        conveyorMotor.goToVoltage(12);
     }
 
     public void Stop() {
