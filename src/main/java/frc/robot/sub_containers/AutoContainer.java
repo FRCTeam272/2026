@@ -27,7 +27,7 @@ public class AutoContainer {
     Shooter shooter;
     Regulator regulator;
     Conveyor conveyor;
-    Climber climber;
+    // Climber climber;
     private CommandSwerveDrivetrain drivetrain;
 
     public AutoContainer(RobotContainer rc, CommandSwerveDrivetrain drivetrain) {
@@ -36,7 +36,7 @@ public class AutoContainer {
         this.shooter = rc.shooter;
         this.regulator = rc.regulator;
         this.conveyor = rc.conveyor;
-        this.climber = rc.climber;
+        // this.climber = rc.climber;
         this.drivetrain = drivetrain;
 
         this.configureAutoBindings();
@@ -98,24 +98,24 @@ public class AutoContainer {
             regulator.Stop();
             conveyor.Stop();
         }));
-        NamedCommands.registerCommand("Climb", new InstantCommand(() -> {
-            this.intake.deploy();
-        })
-                .andThen(ClimberCommands.Stage1(climber))
-                .andThen(ClimberCommands.Stage2(climber))
-                .andThen(new WaitCommand(3))
-                .andThen(ClimberCommands.Stage3(climber)));
+        // NamedCommands.registerCommand("Climb", new InstantCommand(() -> {
+        //     this.intake.deploy();
+        // })
+        //         .andThen(ClimberCommands.Stage1(climber))
+        //         .andThen(ClimberCommands.Stage2(climber))
+        //         .andThen(new WaitCommand(3))
+        //         .andThen(ClimberCommands.Stage3(climber)));
 
-        NamedCommands.registerCommand("ClimbPrep",
-                ClimberCommands.Stage1(climber).andThen(ClimberCommands.Stage2(climber)));
-        NamedCommands.registerCommand("ClimberExecute", ClimberCommands.Stage3(climber));
-        NamedCommands.registerCommand("ClimbExecute", ClimberCommands.Stage3(climber));
+        // NamedCommands.registerCommand("ClimbPrep",
+        //         ClimberCommands.Stage1(climber).andThen(ClimberCommands.Stage2(climber)));
+        // NamedCommands.registerCommand("ClimberExecute", ClimberCommands.Stage3(climber));
+        // NamedCommands.registerCommand("ClimbExecute", ClimberCommands.Stage3(climber));
 
-        NamedCommands.registerCommand("AutoFlywheel", new InstantCommand(() -> {
-            shooter.useAutoFlywheel = true;
-            shooter.autoFlywheel();
-            // shooter.AdjustHood(-2);
-        }));
+        // NamedCommands.registerCommand("AutoFlywheel", new InstantCommand(() -> {
+        //     shooter.useAutoFlywheel = true;
+        //     shooter.autoFlywheel();
+        //     // shooter.AdjustHood(-2);
+        // }));
 
         // NamedCommands.registerCommand("ClimberAlign", new ClimberAlign(drivetrain, climber));
 

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
+import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -20,35 +22,37 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.VisionSubsystem.VisionMeasurement;
 
 public class VisionSubsystem extends SubsystemBase {
 
     /**
      * A simple record to pass vision data back to the drivetrain.
      */
-    public record VisionMeasurement(Pose2d pose, double timestamp, Matrix<N3, N1> stdDevs) {}
+    public record VisionMeasurement(Pose2d pose, double timestamp, Matrix<N3, N1> stdDevs) {
+    }
 
     // =========================================================================
     // CONSTANTS & CONFIG
     // =========================================================================
     // TODO: Update these names to match the camera names in the PhotonVision UI
-    private static final String kLeftCameraName = "Left_Camera"; 
-    private static final String kRightCameraName = "Right_Camera"; 
+    private static final String kLeftCameraName = "Left_Camera";
+    private static final String kRightCameraName = "Right_Camera";
 
     // TODO: Update these transforms! 0, 0, 0 is center of robot
     // X = Forward, Y = Left, Z = Up. Rotation is in Radians.
-    
-    // Example: Left camera is 0.2m forward, 0.2m LEFT (positive Y), facing 90 deg to left
-    private static final Transform3d kRobotToLeftCamera = new Transform3d(
-        new Translation3d(inchToMeter(11), inchToMeter(-11), inchToMeter(18)), 
-        new Rotation3d(0, Math.toRadians(15), Math.toRadians(90))
-    );
 
-    // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 90 deg to right
+    // Example: Left camera is 0.2m forward, 0.2m LEFT (positive Y), facing 90 deg
+    // to left
+    private static final Transform3d kRobotToLeftCamera = new Transform3d(
+            new Translation3d(inchToMeter(11), inchToMeter(-11), inchToMeter(16)),
+            new Rotation3d(0, Math.toRadians(15), Math.toRadians(90)));
+
+    // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 90 deg
+    // to right
     private static final Transform3d kRobotToRightCamera = new Transform3d(
-        new Translation3d(inchToMeter(11), inchToMeter(11), inchToMeter(18)), 
-        new Rotation3d(0, Math.toRadians(15), Math.toRadians(-90))
-    );
+            new Translation3d(inchToMeter(11), inchToMeter(11), inchToMeter(16)),
+            new Rotation3d(0, Math.toRadians(15), Math.toRadians(-90)));
     // =========================================================================
 
     private PhotonCamera m_leftCamera;
@@ -65,22 +69,21 @@ public class VisionSubsystem extends SubsystemBase {
             // Attempt to load the AprilTagFieldLayout (automatically loads current season)
             // Use the specific game field (e.g., k2025Reefscape or k2026...).
             AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(
-                AprilTagFields.k2026RebuiltWelded
-            );
-            
+                    AprilTagFields.k2026RebuiltWelded);
+
             // --- Left Camera Setup ---
-            // m_leftCamera = new PhotonCamera(kLeftCameraName);
-            // m_leftEstimator = new PhotonPoseEstimator(
-            //     fieldLayout, 
-            //     kRobotToLeftCamera
-            // );
+            m_leftCamera = new PhotonCamera(kLeftCameraName);
+            m_leftEstimator = new PhotonPoseEstimator(
+                    fieldLayout,
+                    PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                    kRobotToLeftCamera);
 
             // --- Right Camera Setup ---
             m_rightCamera = new PhotonCamera(kRightCameraName);
             m_rightEstimator = new PhotonPoseEstimator(
-                fieldLayout, 
-                kRobotToRightCamera
-            );
+                    fieldLayout,
+                    PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                    kRobotToRightCamera);
 
         } catch (Exception e) {
             DriverStation.reportError("Failed to load AprilTagFieldLayout: " + e.getMessage(), true);
@@ -96,7 +99,7 @@ public class VisionSubsystem extends SubsystemBase {
     private Matrix<N3, N1> getEstimationStdDevs(Pose2d estimatedPose, PhotonPipelineResult result) {
         double avgDist = 0;
         var targets = result.getTargets();
-        
+
         if (targets.isEmpty()) {
             return VecBuilder.fill(1.0, 1.0, 1.0); // High uncertainty
         }
@@ -108,7 +111,7 @@ public class VisionSubsystem extends SubsystemBase {
         avgDist /= targets.size();
 
         // Baseline noise
-        double xyStdDev = 0.05; 
+        double xyStdDev = 0.05;
         double thetaStdDev = 0.05;
 
         // Scale noise by distance (trust closer tags more)
@@ -117,7 +120,7 @@ public class VisionSubsystem extends SubsystemBase {
 
         // If we see multiple tags, we can trust the estimate much more
         if (targets.size() > 1) {
-            xyStdDev /= 2.0; 
+            xyStdDev /= 2.0;
             thetaStdDev /= 2.0;
         }
 
@@ -132,32 +135,29 @@ public class VisionSubsystem extends SubsystemBase {
     public List<VisionMeasurement> getEstimatedGlobalPoses() {
         List<VisionMeasurement> measurements = new ArrayList<>();
 
-        // processCamera(m_leftEstimator, m_leftCamera).ifPresent(measurements::add);
+        processCamera(m_leftEstimator, m_leftCamera).ifPresent(measurements::add);
         processCamera(m_rightEstimator, m_rightCamera).ifPresent(measurements::add);
 
         return measurements;
     }
 
     private Optional<VisionMeasurement> processCamera(PhotonPoseEstimator estimator, PhotonCamera camera) {
-        if (estimator == null || camera == null) return Optional.empty();
+        if (estimator == null || camera == null)
+            return Optional.empty();
 
-        // 1. Get the latest result specifically
         PhotonPipelineResult result = camera.getLatestResult();
-        
-        // 2. Ignore if no result or empty (optional check)
-        if (!result.hasTargets()) return Optional.empty();
+        if (!result.hasTargets())
+            return Optional.empty();
 
-        // 3. Update estimator with this specific result
-        // This prevents race conditions where we might get a different result for stdDevs
-        // we may need to optimize the estimator type 
-        // https://javadocs.photonvision.org/release/org/photonvision/estimation/VisionEstimation.html
-        return estimator.estimateCoprocMultiTagPose(result).map(estimatedRobotPose -> {
+        // Use multi-tag if available, fall back to single-tag
+        Optional<EstimatedRobotPose> poseEstimate = result.getMultiTagResult().isPresent()
+                ? estimator.estimateCoprocMultiTagPose(result)
+                : estimator.update(result); // falls back to single-tag strategy
+
+        return poseEstimate.map(estimatedRobotPose -> {
             Pose2d estPose = estimatedRobotPose.estimatedPose.toPose2d();
             double timestamp = estimatedRobotPose.timestampSeconds;
-            
-            // Calculate confidence using the SAME result
             Matrix<N3, N1> deviation = getEstimationStdDevs(estPose, result);
-
             return new VisionMeasurement(estPose, timestamp, deviation);
         });
     }

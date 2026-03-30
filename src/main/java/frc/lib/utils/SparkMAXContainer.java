@@ -312,4 +312,9 @@ public class SparkMAXContainer implements MotorContainer {
     SmartDashboard.putNumber(key + "FF/V", motor.configAccessor.closedLoop.feedForward.getkV());
     SmartDashboard.putNumber(key + "FF/G", motor.configAccessor.closedLoop.feedForward.getkG());
   }
+
+  @Override
+  public void goToVoltage(double voltage) {
+    motor.setVoltage(voltage);
+  }
 }

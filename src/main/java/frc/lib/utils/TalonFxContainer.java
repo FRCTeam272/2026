@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 
 /** A container to generalize motor controllers */
 public class TalonFxContainer implements MotorContainer{
@@ -338,5 +339,10 @@ public class TalonFxContainer implements MotorContainer{
             SmartDashboard.putNumber(key + "FF/G", this.configurator.Slot2.kG);
         }
         
+    }
+
+    @Override
+    public void goToVoltage(double voltage) {
+        motor.setControl(new VoltageOut(voltage));
     }
 }

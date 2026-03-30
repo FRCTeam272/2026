@@ -54,6 +54,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     private VisionSubsystem m_visionSubsystem = new VisionSubsystem();
     private final Field2d m_field = new Field2d();
+    public boolean usePhotonVision = true;
 
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
@@ -395,47 +396,44 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
-        /*
-         * Periodically try to apply the operator perspective.
-         * If we haven't applied the operator perspective before, then we should apply
-         * it regardless of DS state.
-         * This allows us to correct the perspective in case the robot code restarts
-         * mid-match.
-         * Otherwise, only check and apply the operator perspective if the DS is
-         * disabled.
-         * This ensures driving behavior doesn't change until an explicit disable event
-         * occurs during testing.
-         */
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
-                        allianceColor == Alliance.Red
-                                ? kRedAlliancePerspectiveRotation
-                                : kBlueAlliancePerspectiveRotation);
+                    allianceColor == Alliance.Red
+                        ? kRedAlliancePerspectiveRotation   
+                        : kBlueAlliancePerspectiveRotation
+                );
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-        SmartDashboard.putData("Field", m_field);
-        m_field.setRobotPose(this.getState().Pose);
-
-        if (!DriverStation.isFMSAttached()) {
-            // Log the position of every angle motor in rotations
-            SmartDashboard.putNumber("Module 0 Angle Position",
-                    getModule(0).getSteerMotor().getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Module 1 Angle Position",
-                    getModule(1).getSteerMotor().getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Module 2 Angle Position",
-                    getModule(2).getSteerMotor().getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Module 3 Angle Position",
-                    getModule(3).getSteerMotor().getPosition().getValueAsDouble());
+        
+        // Debugging vision updates
+        // Toggle comment to disable / enable it
+        var visionMeasurements = m_visionSubsystem.getEstimatedGlobalPoses();
+        if (!visionMeasurements.isEmpty()) {
+            SmartDashboard.putBoolean("Vision/HasTargets", true);
+            visionMeasurements.forEach(measurement -> {
+                // IMPORTANT: We do NOT use Utils.fpgaToCurrentTime here because 
+                // PhotonVision already provides timestamps in the FPGA timebase.
+                if(!DriverStation.isFMSAttached() && DriverStation.isTestEnabled()){
+                    SmartDashboard.putNumber("Vision/Stamps/PoseX", measurement.pose().getX());
+                    SmartDashboard.putNumber("Vision/Stamps/PoseY", measurement.pose().getY());
+                    SmartDashboard.putNumber("Vision/Stamps/Timestamp", measurement.timestamp());
+                }
+                if(usePhotonVision){
+                    super.addVisionMeasurement(
+                        measurement.pose(),
+                        Utils.fpgaToCurrentTime(measurement.timestamp()),
+                        measurement.stdDevs()
+                    );
+                }                
+                
+            });
+        } else {
+            SmartDashboard.putBoolean("Vision/HasTargets", false);
         }
 
-        // TODO: toggle comment for vision
-        m_visionSubsystem.getEstimatedGlobalPoses().forEach(measurement -> {
-            this.addVisionMeasurement(
-                    measurement.pose(),
-                    measurement.timestamp(),
-                    measurement.stdDevs());
-        });
+        m_field.setRobotPose(this.getState().Pose);
+        SmartDashboard.putData("Field", m_field);
     }
 }
