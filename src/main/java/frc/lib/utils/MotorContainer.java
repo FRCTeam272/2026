@@ -58,6 +58,12 @@ public interface MotorContainer {
     public boolean goToPostion(double pos, int deadband);
 
     /**
+     * sends this specific motor to a specific voltage
+     * @param volatge the voltage to set the motor to, this is a value between -12 and 12, but
+     */
+    public void goToVoltage(double voltage);
+
+    /**
      * Sets the current limit of the motor
      * @param limit
      */
