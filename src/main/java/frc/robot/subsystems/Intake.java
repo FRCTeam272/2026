@@ -76,6 +76,7 @@ public class Intake extends SubsystemBase {
   public void intake(double speed) {
     rollerMotor.motor.set(speed);
   }
+  
 
   public void release() {
     rollerMotor.motor.set(-defult_speed);
