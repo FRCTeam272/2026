@@ -11,7 +11,12 @@ paths_to_flip = [
     "Lehigh-Double-Sweep-Part4.path"
 ]
 
+autos_to_flip = [
+    "12. Depot Double Hairpin.auto"
+]
+
 PATHS_DIR = os.path.join("src", "main", "deploy", "pathplanner", "paths")
+AUTOS_DIR = os.path.join("src", "main", "deploy", "pathplanner", "autos")
 
 
 def mirror_point(point):
@@ -56,6 +61,23 @@ def mirror_path(data):
 
     return mirrored
 
+def mirror_command(command):
+    """Recursively mirror path names in a command tree."""
+    if command is None:
+        return
+    cmd_type = command.get("type")
+    cmd_data = command.get("data", {})
+    if cmd_type == "path":
+        cmd_data["pathName"] = cmd_data["pathName"] + "-Mirrored"
+    # Recurse into nested commands
+    for child in cmd_data.get("commands", []):
+        mirror_command(child)
+
+
+def mirror_auto(data):
+    mirrored = copy.deepcopy(data)
+    mirror_command(mirrored.get("command"))
+    return mirrored
 
 for filename in paths_to_flip:
     input_path = os.path.join(PATHS_DIR, filename)
@@ -67,6 +89,22 @@ for filename in paths_to_flip:
         data = json.load(f)
 
     mirrored = mirror_path(data)
+
+    with open(output_path, "w") as f:
+        json.dump(mirrored, f, indent=2)
+
+    print(f"Mirrored: {filename} -> {output_filename}")
+
+for filename in autos_to_flip:
+    input_path = os.path.join(AUTOS_DIR, filename)
+    name, ext = os.path.splitext(filename)
+    output_filename = name + "-Mirrored" + ext
+    output_path = os.path.join(AUTOS_DIR, output_filename)
+
+    with open(input_path, "r") as f:
+        data = json.load(f)
+
+    mirrored = mirror_auto(data)
 
     with open(output_path, "w") as f:
         json.dump(mirrored, f, indent=2)

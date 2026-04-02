@@ -25,7 +25,7 @@
       },
       "nextControl": {
         "x": 5.734398990221071,
-        "y": 0.4655826117865986
+        "y": 0.46558261178659865
       },
       "isLocked": false,
       "linkedName": null
@@ -90,7 +90,7 @@
     "rotation": 90.61599497613042
   },
   "reversed": false,
-  "folder": "Lehigh-Sweep-HP",
+  "folder": "Lehigh-Double-Sweep-Depot",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 67.16634582208252
