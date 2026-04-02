@@ -17,7 +17,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "DeployAndStartIntake"
+                  "name": "DeployAndStartIntakeDelayed"
                 }
               }
             ]
@@ -36,15 +36,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Leihigh-Sweep-Part2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Leihigh-Sweep-Part2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "KillDeplayed"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutoFlywheel"
+            "name": "TrenchHood"
           }
         },
         {
@@ -60,9 +73,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 3.0
+            "name": "Kill"
           }
         },
         {
@@ -94,6 +107,12 @@
           "type": "named",
           "data": {
             "name": "SpinFlywheel"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "TrenchHood"
           }
         },
         {

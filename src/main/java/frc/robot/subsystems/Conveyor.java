@@ -29,7 +29,7 @@ public class Conveyor extends SubsystemBase {
 
     public void Load() {
         
-        conveyorMotor.motor.set(.99);
+        conveyorMotor.motor.set(-.99);
         // conveyorMotor.goToVoltage(-120);
     }
 

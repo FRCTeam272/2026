@@ -215,10 +215,10 @@ public class RobotContainer {
         DC.rightTrigger().onTrue(
             new InstantCommand(() -> {
                 conveyor.Load();
-                // regulator.Load();
-                // intake.setCurrentLimitOfDeployMotor(20);
-                // intake.retract();
-                // intake.intake(.85);
+                regulator.Load();
+                intake.setCurrentLimitOfDeployMotor(20);
+                intake.retract();
+                intake.intake(.85);
             })
         ).onFalse(
             new InstantCommand(() -> {

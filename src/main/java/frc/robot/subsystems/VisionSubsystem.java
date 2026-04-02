@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Inch;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +38,8 @@ public class VisionSubsystem extends SubsystemBase {
     // CONSTANTS & CONFIG
     // =========================================================================
     // TODO: Update these names to match the camera names in the PhotonVision UI
-    private static final String kLeftCameraName = "Left_Camera";
-    private static final String kRightCameraName = "Right_Camera";
+    private static final String kLeftCameraName = "FFF";
+    private static final String kRightCameraName = "overridename";
 
     // TODO: Update these transforms! 0, 0, 0 is center of robot
     // X = Forward, Y = Left, Z = Up. Rotation is in Radians.
@@ -51,8 +53,10 @@ public class VisionSubsystem extends SubsystemBase {
     // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 90 deg
     // to right
     private static final Transform3d kRobotToRightCamera = new Transform3d(
-            new Translation3d(inchToMeter(11), inchToMeter(11), inchToMeter(16)),
-            new Rotation3d(0, Math.toRadians(15), Math.toRadians(-90)));
+            new Translation3d(
+                inchToMeter(-11), inchToMeter(-11), inchToMeter(16)
+            ),
+            new Rotation3d(0, Math.toRadians(-90), Math.toRadians(-15)));
     // =========================================================================
 
     private PhotonCamera m_leftCamera;
@@ -72,11 +76,11 @@ public class VisionSubsystem extends SubsystemBase {
                     AprilTagFields.k2026RebuiltWelded);
 
             // --- Left Camera Setup ---
-            m_leftCamera = new PhotonCamera(kLeftCameraName);
-            m_leftEstimator = new PhotonPoseEstimator(
-                    fieldLayout,
-                    PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                    kRobotToLeftCamera);
+                // m_leftCamera = new PhotonCamera(kLeftCameraName);
+                // m_leftEstimator = new PhotonPoseEstimator(
+                //         fieldLayout,
+                //         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                //         kRobotToLeftCamera);
 
             // --- Right Camera Setup ---
             m_rightCamera = new PhotonCamera(kRightCameraName);

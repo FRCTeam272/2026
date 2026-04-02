@@ -69,7 +69,7 @@
   "folder": "Depot Trench Sweep",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -89.7963087790404
   },
   "useDefaultConstraints": true
 }
