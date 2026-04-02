@@ -60,11 +60,14 @@ public class AutoContainer {
                     shooter.SpinWheel(4700);
                     intake.stop();
                 }));
+        NamedCommands.registerCommand("TrenchHood", new InstantCommand(() -> {
+            shooter.AdjustHood(-4.8);
+        }));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
             conveyor.Load();
             regulator.Load();
             intake.setCurrentLimitOfDeployMotor(20);
-        }).alongWith(IntakeCommands.hopperAgitation(intake).withTimeout(3.5)));
+        }).alongWith(IntakeCommands.hopperAgitation(intake).withTimeout(1.5)));
         NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
             intake.stop();
         }));
@@ -77,13 +80,23 @@ public class AutoContainer {
                             intake.intake();
                         })));
         NamedCommands.registerCommand("DeployAndStartIntakeDelayed",
-                new WaitCommand(1.5).andThen(
+                new WaitCommand(1.1).andThen(
                         new InstantCommand(() -> {
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
                             intake.intake();
                         })));
+        NamedCommands.registerCommand("KillDeplayed", new WaitCommand(1.3).andThen(new InstantCommand(() -> {
+            intake.stop();
+            // shooter.TrueStop();
+            SmartDashboard.putNumber("FlyWheel/TargetVelocity", 0);
+            // shooter.targetHood = 0;
+            // shooter.forceSync();
+            // shooter.AdjustHood(0);
+            regulator.Stop();
+            conveyor.Stop();
+        })));
         NamedCommands.registerCommand("RetractIntake", new InstantCommand(() -> {
             intake.stop();
             intake.retract();
@@ -92,9 +105,9 @@ public class AutoContainer {
             intake.stop();
             shooter.TrueStop();
             SmartDashboard.putNumber("FlyWheel/TargetVelocity", 0);
-            shooter.targetHood = 0;
-            shooter.forceSync();
-            shooter.AdjustHood(0);
+            // shooter.targetHood = 0;
+            // shooter.forceSync();
+            // shooter.AdjustHood(0);
             regulator.Stop();
             conveyor.Stop();
         }));

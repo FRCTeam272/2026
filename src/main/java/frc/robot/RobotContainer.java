@@ -181,7 +181,7 @@ public class RobotContainer {
                     DriveBaseContainer.speedFactor = DriveBaseContainer.intakeSpeedFactor;
                     intake.setCurrentLimitOfDeployMotor(40);
                     intake.intake();
-                    conveyor.Load(-.2);
+                    conveyor.Load(-3);
                 }).alongWith(
                     new InstantCommand(() -> intake.deploy())
                     .andThen(new WaitCommand(2))

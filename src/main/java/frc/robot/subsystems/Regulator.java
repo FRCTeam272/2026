@@ -29,11 +29,7 @@ public class Regulator extends SubsystemBase {
     }
 
     public void Load() {
-        if (RegulatorUsePID) {
-            regulatorMotor.setVelocity(regulatorVelocity);
-        } else {
-            regulatorMotor.motor.set(regulatorSpeed);
-        }
+        regulatorMotor.goToVoltage(-12);
     }
 
     public void Load(double amount) {

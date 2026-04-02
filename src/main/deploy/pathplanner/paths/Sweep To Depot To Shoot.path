@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.806336567245911,
-        "y": 5.632936852000585
+        "x": 3.415488636363636,
+        "y": 7.498090909090909
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.715764970026333,
-        "y": 5.520168362572205
+        "x": 4.324917039144058,
+        "y": 7.385322419662529
       },
       "isLocked": false,
       "linkedName": "Lehigh-Depot-DoubleSweep-PT2"
@@ -32,15 +32,15 @@
     },
     {
       "anchor": {
-        "x": 0.5515018527307243,
+        "x": 0.71,
         "y": 6.115666344188084
       },
       "prevControl": {
-        "x": 0.9909909215636674,
+        "x": 1.149489068832943,
         "y": 5.999953398555458
       },
       "nextControl": {
-        "x": 0.3097410628328735,
+        "x": 0.4682392101021492,
         "y": 6.179319470332581
       },
       "isLocked": false,
@@ -64,15 +64,15 @@
     },
     {
       "anchor": {
-        "x": 0.5515018527307243,
+        "x": 0.61,
         "y": 5.79191515771028
       },
       "prevControl": {
-        "x": 1.0109848136343,
+        "x": 1.0694829609035759,
         "y": 5.520600852780948
       },
       "nextControl": {
-        "x": 0.00544635727241638,
+        "x": 0.0639445045416921,
         "y": 6.114348587911412
       },
       "isLocked": false,
@@ -126,7 +126,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -141,7 +141,7 @@
   "folder": "Lehigh-Sweep+Depot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -44.54958182654398
+    "rotation": -67.16634582208252
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

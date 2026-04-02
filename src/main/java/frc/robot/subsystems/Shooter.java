@@ -93,7 +93,7 @@ public class Shooter extends SubsystemBase {
   private void setupSmartDashboard() {
     SmartDashboard.putBoolean("Shooter/UseAutoFlywheel", useAutoFlywheel);
     SmartDashboard.putNumber("FlyWheel/TargetVelocity", targetVelocity);
-    SmartDashboard.putNumber("Hood/Target", 1);
+    SmartDashboard.putNumber("Hood/Target", 4.35);
     PIDSettings settings;
     switch (flywheel.currentSlot) {
       case 0:
@@ -225,26 +225,26 @@ public class Shooter extends SubsystemBase {
     var stage = 0;
     PIDSettings settings;
     // reference that to the table
-    if(distance <= 36){
+    if(distance <= 24){
       this.targetVelocity = 3600;
-      this.hoodTarget = (distance * .167) + .834; // multiple by negitive one cause its in the negitive space
+      this.hoodTarget = (distance * .276) - 2.70; // multiple by negitive one cause its in the negitive space
       settings = Constants.SHOOTER_LOW_PID_SETTINGS;
     }
-    else if(distance <= 71){
+    else if(distance <= 70){
       this.targetVelocity = 4150;
-      this.hoodTarget = (distance * .130) - 2.221; // multiple by negitive one cause its in the negitive space
+      this.hoodTarget = (distance * .088)-0.875; // multiple by negitive one cause its in the negitive space
       settings = Constants.SHOOTER_4150_PID_SETTINGS;
       stage = 1;
     }
-    else if(distance <= 116){
+    else if(distance <= 110){
       this.targetVelocity = 4700;
-      this.hoodTarget = (distance * .088) - 3.125;
+      this.hoodTarget = (distance * .079)-3.55;
       settings = Constants.SHOOTER_4700_PID_SETTINGS;
       stage = 2;
     }
     else {
       this.targetVelocity = 5500;
-      this.hoodTarget = (distance * .121) - 11.826;
+      this.hoodTarget = (distance * .087) - 5.05;
       settings = Constants.SHOOTER_5500_PID_SETTINGS;
       stage = 3;
     }
@@ -278,6 +278,7 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if(DriverStation.isAutonomous()) return;
     SmartDashboard.putNumber("Shooter/Distance", getDistanceFromTarget());
     // TODO: REMOVE
     SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
