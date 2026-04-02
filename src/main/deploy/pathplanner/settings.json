@@ -14,10 +14,11 @@
     "HP-Sweep",
     "HumanPlayerClimb",
     "HumanPlayerSideSweep",
+    "Lehigh-Depot",
     "Lehigh-Double-Sweep-Depot",
     "Lehigh-Sweep+Depot",
     "Lehigh-Sweep-HP-Side",
-    "Lehigh-Depot"
+    "Lehigh-Sweep-HP"
   ],
   "autoFolders": [
     "Cent",

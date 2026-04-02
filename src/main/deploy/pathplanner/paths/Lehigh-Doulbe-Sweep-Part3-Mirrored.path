@@ -1,0 +1,99 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.415488636363636,
+        "y": 0.5539090909090909
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.789864548160313,
+        "y": 0.48448929567531884
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.981886363636363,
+        "y": 0.43022727272727224
+      },
+      "prevControl": {
+        "x": 6.313007894110997,
+        "y": 0.38292419694518287
+      },
+      "nextControl": {
+        "x": 5.734398990221071,
+        "y": 0.4655826117865986
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.682988636363636,
+        "y": 2.460670454545454
+      },
+      "prevControl": {
+        "x": 5.673045022721651,
+        "y": 2.1623620452858923
+      },
+      "nextControl": {
+        "x": 5.703602272727272,
+        "y": 3.0790795454545448
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.631454545454545,
+        "y": 5.3774999999999995
+      },
+      "prevControl": {
+        "x": 5.621147727272727,
+        "y": 4.398352272727272
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 91.20648366797583
+    },
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 90.0
+    },
+    {
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": 90.7067678106924
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 90.61599497613042
+  },
+  "reversed": false,
+  "folder": "Lehigh-Sweep-HP",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 67.16634582208252
+  },
+  "useDefaultConstraints": true
+}
