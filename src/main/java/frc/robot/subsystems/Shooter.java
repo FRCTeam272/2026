@@ -79,11 +79,11 @@ public class Shooter extends SubsystemBase {
     hood.assignPIDValues(.2, 0, 0);
     hood.setCurrentLimit(40);
 
-    lastP = Constants.SHOOTER_LOW_PID_SETTINGS.kP;
-    lastI = Constants.SHOOTER_LOW_PID_SETTINGS.kI;
-    lastD = Constants.SHOOTER_LOW_PID_SETTINGS.kD;
-    lastV = Constants.SHOOTER_LOW_PID_SETTINGS.kV;
-    lastA = Constants.SHOOTER_LOW_PID_SETTINGS.kA;
+    lastP = Constants.SHOOTER_MID_PID_SETTINGS.kP;
+    lastI = Constants.SHOOTER_MID_PID_SETTINGS.kI;
+    lastD = Constants.SHOOTER_MID_PID_SETTINGS.kD;
+    lastV = Constants.SHOOTER_MID_PID_SETTINGS.kV;
+    lastA = Constants.SHOOTER_MID_PID_SETTINGS.kA;
 
     this.driveBase = driveBase;
 
@@ -141,8 +141,8 @@ public class Shooter extends SubsystemBase {
     var target = hood.getPosition() + value;
     if (target >= 0)
       driveHood();
-    if (target < -6.6)
-      target = -6.6;
+    if (target < -5.5)
+      target = -5.5;
     return hood.goToPostion(target, 0);
   }
 
