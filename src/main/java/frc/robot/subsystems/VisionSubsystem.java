@@ -156,7 +156,8 @@ public class VisionSubsystem extends SubsystemBase {
         // Use multi-tag if available, fall back to single-tag
         Optional<EstimatedRobotPose> poseEstimate = result.getMultiTagResult().isPresent()
                 ? estimator.estimateCoprocMultiTagPose(result)
-                : estimator.update(result); // falls back to single-tag strategy
+                : Optional.empty(); // single tag is significantly less accurate, so we ignore it in this example. You can enable it if you want, but be aware of the potential for large errors.
+                // estimator.update(result); // falls back to single-tag strategy
 
         return poseEstimate.map(estimatedRobotPose -> {
             Pose2d estPose = estimatedRobotPose.estimatedPose.toPose2d();
