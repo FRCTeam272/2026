@@ -32,7 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoFlywheel"
+            "name": "TrenchHood"
           }
         },
         {
@@ -54,34 +54,15 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Depot-Climb-Part2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "ClimbPrep"
-                }
-              }
-            ]
+            "name": "Kill"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ClimberAlign"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ClimbExecute"
+            "pathName": "Depot Pt2"
           }
         }
       ]

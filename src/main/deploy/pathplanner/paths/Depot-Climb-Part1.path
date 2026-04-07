@@ -80,12 +80,12 @@
     },
     {
       "anchor": {
-        "x": 2.3301052770882014,
-        "y": 4.804022889894859
+        "x": 2.673397727272727,
+        "y": 7.405329545454546
       },
       "prevControl": {
-        "x": 2.5636028690229056,
-        "y": 4.714698343656468
+        "x": 2.906895319207431,
+        "y": 7.316004999216155
       },
       "nextControl": null,
       "isLocked": false,
@@ -123,13 +123,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -25.416833108866747
+    "rotation": -49.68589983950272
   },
   "reversed": false,
   "folder": "Lehigh-Depot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.6368968990716
+    "rotation": 179.63689689907162
   },
   "useDefaultConstraints": true
 }

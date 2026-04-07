@@ -28,9 +28,9 @@ public class Constants {
         0.00195, 0.00001, 4700, 0
     );
 
-    public static final PIDSettings SHOOTER_5200_PID_SETTINGS = new PIDSettings( // note this is the same as LOW
-        0.0005, 0.0, 0.0,
-        0.00195, 0.00001, 5200, 0
+    public static final PIDSettings SHOOTER_AUTO_PID_SETTINGS = new PIDSettings( // note this is the same as LOW
+        0.0004, 0.0, 0.0,
+        0.00195, 0.00001, 5000, 0
     );
 
     public static final PIDSettings SHOOTER_5500_PID_SETTINGS = new PIDSettings( // note this is the same as LOW
@@ -41,7 +41,7 @@ public class Constants {
     public static final PIDSettings[] autoFlywheelSettings = new PIDSettings[] {
         SHOOTER_4150_PID_SETTINGS,
         SHOOTER_4700_PID_SETTINGS,
-        SHOOTER_5200_PID_SETTINGS,
+        SHOOTER_AUTO_PID_SETTINGS,
         SHOOTER_5500_PID_SETTINGS
     };
 

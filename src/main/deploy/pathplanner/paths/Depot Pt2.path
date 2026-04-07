@@ -8,36 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6262819998958697,
-        "y": 6.87905581464103
+        "x": 1.6633295454545454,
+        "y": 6.745693181818182
       },
       "isLocked": false,
       "linkedName": "Lehigh-Depot-PT1"
     },
     {
       "anchor": {
-        "x": 2.3301052770882014,
-        "y": 2.6897066205461444
+        "x": 3.446409090909091,
+        "y": 5.405806818181818
       },
       "prevControl": {
-        "x": 2.438518904223667,
-        "y": 4.46475320692735
+        "x": 2.2405113636363634,
+        "y": 5.405806818181818
       },
       "nextControl": {
-        "x": 2.3148645529595413,
-        "y": 2.4401716123247845
+        "x": 3.946409090909089,
+        "y": 5.405806818181818
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.0366319545852805,
-        "y": 2.873725768472547
+        "x": 5.992193181818181,
+        "y": 5.395499999999999
       },
       "prevControl": {
-        "x": 1.2797203215829833,
-        "y": 2.932104239079356
+        "x": 5.742193181818181,
+        "y": 5.395499999999999
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,14 +47,14 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 0.0
+      "rotationDegrees": 45.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -63,10 +63,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 45.83031548625815
   },
   "reversed": false,
-  "folder": "Lehigh-Depot",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -49.68589983950272

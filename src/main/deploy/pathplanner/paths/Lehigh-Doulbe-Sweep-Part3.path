@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.415488636363636,
-        "y": 7.498090909090909
+        "x": 2.9310681818181816,
+        "y": 7.425943181818181
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.789864548160313,
-        "y": 7.567510704324681
+        "x": 3.3054440936148586,
+        "y": 7.495362977051953
       },
       "isLocked": false,
       "linkedName": "Lehigh-Depot-DoubleSweep-PT2"
@@ -93,7 +93,7 @@
   "folder": "Lehigh-Double-Sweep-Depot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -67.16634582208252
+    "rotation": -62.10272896905237
   },
   "useDefaultConstraints": true
 }
