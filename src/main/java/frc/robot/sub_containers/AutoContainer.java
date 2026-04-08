@@ -29,7 +29,7 @@ public class AutoContainer {
     Regulator regulator;
     Conveyor conveyor;
     // Climber climber;
-    final PIDSettings pidSettings = Constants.SHOOTER_AUTO_PID_SETTINGS;
+    public static final PIDSettings pidSettings = Constants.SHOOTER_AUTO_PID_SETTINGS;
     private CommandSwerveDrivetrain drivetrain;
 
     public AutoContainer(RobotContainer rc, CommandSwerveDrivetrain drivetrain) {
@@ -49,7 +49,7 @@ public class AutoContainer {
         NamedCommands.registerCommand("DeployIntake",
                 new WaitCommand(.2).andThen(
                         new InstantCommand(() -> {
-                            shooter.SpinWheel(pidSettings.target_velocity);
+                            // shooter.SpinWheel(pidSettings.target_velocity);
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
@@ -72,7 +72,7 @@ public class AutoContainer {
         }));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
             
-            shooter.SpinWheel(pidSettings.target_velocity);
+            // shooter.SpinWheel(pidSettings.target_velocity);
             conveyor.Load();
             regulator.Load();
             intake.setCurrentLimitOfDeployMotor(20);
@@ -83,7 +83,7 @@ public class AutoContainer {
         NamedCommands.registerCommand("DeployAndStartIntake",
                 new WaitCommand(.2).andThen(
                         new InstantCommand(() -> {
-                            shooter.SpinWheel(pidSettings.target_velocity);
+                            // shooter.SpinWheel(pidSettings.target_velocity);
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
@@ -92,7 +92,7 @@ public class AutoContainer {
         NamedCommands.registerCommand("DeployAndStartIntakeDelayed",
                 new WaitCommand(1.1).andThen(
                         new InstantCommand(() -> {
-                            shooter.SpinWheel(pidSettings.target_velocity);
+                            // shooter.SpinWheel(pidSettings.target_velocity);
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
@@ -100,7 +100,7 @@ public class AutoContainer {
                         })));
         NamedCommands.registerCommand("KillDeplayed", new WaitCommand(1.3).andThen(new InstantCommand(() -> {
             intake.stop();
-            // shooter.TrueStop();
+            shooter.TrueStop();
             SmartDashboard.putNumber("FlyWheel/TargetVelocity", 0);
             // shooter.targetHood = 0;
             // shooter.forceSync();
@@ -153,7 +153,7 @@ public class AutoContainer {
         .andThen(new InstantCommand(() -> {
             System.out.println("SETTINGS SPEED PID & STARTING");
             shooter.UpdatePID(pidSettings);
-            shooter.SpinWheel(pidSettings.target_velocity);
+            // shooter.SpinWheel(pidSettings.target_velocity);
         }))
         .andThen(autoChooser.getSelected().withTimeout(20));
     }

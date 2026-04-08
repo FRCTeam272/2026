@@ -30,7 +30,7 @@ public class Constants {
 
     public static final PIDSettings SHOOTER_AUTO_PID_SETTINGS = new PIDSettings( // note this is the same as LOW
         0.0004, 0.0, 0.0,
-        0.00195, 0.00001, 5000, 0
+        0.00195, 0.00001, 5200, 0
     );
 
     public static final PIDSettings SHOOTER_5500_PID_SETTINGS = new PIDSettings( // note this is the same as LOW

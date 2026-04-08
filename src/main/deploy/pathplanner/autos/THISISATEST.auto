@@ -33,6 +33,18 @@
           "data": {
             "name": "Shoot"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Kill"
+          }
         }
       ]
     }

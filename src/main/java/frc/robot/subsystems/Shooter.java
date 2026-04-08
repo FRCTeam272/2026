@@ -13,6 +13,7 @@ import frc.lib.utils.SparkMAXContainer;
 import frc.lib.utils.TalonFxContainer;
 import frc.lib.utils.TrimPot;
 import frc.robot.Constants;
+import frc.robot.sub_containers.AutoContainer;
 import frc.robot.sub_containers.DriveBaseContainer;
 
 public class Shooter extends SubsystemBase {
@@ -61,10 +62,10 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     flywheel = new TalonFxContainer(FLYWHEEL_LOCATION, true);
     flywheelFollower = new TalonFxContainer(FLYWHEEL_FOLLOWER_LOCATION, true);
-
+    var settings = AutoContainer.pidSettings;
     for (var motor : new TalonFxContainer[] { flywheel, flywheelFollower }) {
 
-      motor.assignPIDSettings(Constants.SHOOTER_LOW_PID_SETTINGS, 0);
+      motor.assignPIDSettings(settings, 0);
       motor.assignPIDSettings(Constants.SHOOTER_MID_PID_SETTINGS, 1);
       motor.assignPIDSettings(Constants.SHOOTER_HIGH_PID_SETTINGS, 2);
 
@@ -80,14 +81,14 @@ public class Shooter extends SubsystemBase {
     hood.assignPIDValues(.2, 0, 0);
     hood.setCurrentLimit(40);
 
-    lastP = Constants.SHOOTER_AUTO_PID_SETTINGS.kI;
-    lastI = Constants.SHOOTER_AUTO_PID_SETTINGS.kP;
-    lastD = Constants.SHOOTER_AUTO_PID_SETTINGS.kD;
-    lastV = Constants.SHOOTER_AUTO_PID_SETTINGS.kV;
-    lastA = Constants.SHOOTER_AUTO_PID_SETTINGS.kA;
+    lastP = settings.kI;
+    lastI = settings.kP;
+    lastD = settings.kD;
+    lastV = settings.kV;
+    lastA = settings.kA;
 
     this.driveBase = driveBase;
-    this.UpdatePID(Constants.SHOOTER_AUTO_PID_SETTINGS);
+    this.UpdatePID(settings);
 
     this.setupSmartDashboard();
     this.forceSync();
