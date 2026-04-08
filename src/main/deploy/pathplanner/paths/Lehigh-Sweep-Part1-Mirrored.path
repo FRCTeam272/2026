@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.6630909090909087,
-        "y": 7.343488636363636
+        "x": 4.454644832432827,
+        "y": 0.8424006644275703
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.663090909090906,
-        "y": 7.343488636363636
+        "x": 5.597772951681478,
+        "y": 0.6691568097506773
       },
       "isLocked": false,
-      "linkedName": "SweepEnd"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.621386363636364,
-        "y": 4.024693181818182
+        "x": 8.156624999999998,
+        "y": 1.0280227272727274
       },
       "prevControl": {
-        "x": 3.621386363636364,
-        "y": 4.024693181818182
+        "x": 8.197852272727271,
+        "y": 0.5848295454545456
+      },
+      "nextControl": {
+        "x": 8.114231561483248,
+        "y": 1.483752191327791
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.012329545454545,
+        "y": 3.3779772727272723
+      },
+      "prevControl": {
+        "x": 7.983329293440775,
+        "y": 3.129664998799587
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 79.60222714530218
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Lehigh-Double-Sweep-Depot",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -59.5344550805401
+    "rotation": 89.7963087790404
   },
   "useDefaultConstraints": true
 }

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.lib.utils.PIDSettings;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ClimberAlign;
@@ -28,6 +29,7 @@ public class AutoContainer {
     Regulator regulator;
     Conveyor conveyor;
     // Climber climber;
+    public static final PIDSettings pidSettings = Constants.SHOOTER_AUTO_PID_SETTINGS;
     private CommandSwerveDrivetrain drivetrain;
 
     public AutoContainer(RobotContainer rc, CommandSwerveDrivetrain drivetrain) {
@@ -47,23 +49,30 @@ public class AutoContainer {
         NamedCommands.registerCommand("DeployIntake",
                 new WaitCommand(.2).andThen(
                         new InstantCommand(() -> {
+                            // shooter.SpinWheel(pidSettings.target_velocity);
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
                             intake.intake();
                         })));
         NamedCommands.registerCommand("StartIntake", new InstantCommand(() -> {
+            shooter.UpdatePID(pidSettings);
+            
+            shooter.SpinWheel(pidSettings.target_velocity);
             intake.intake();
         }));
         NamedCommands.registerCommand("SpinFlywheel",
                 new InstantCommand(() -> {
-                    shooter.SpinWheel(4700);
+                    shooter.UpdatePID(pidSettings);
+                    shooter.SpinWheel(pidSettings.target_velocity);
                     intake.stop();
                 }));
         NamedCommands.registerCommand("TrenchHood", new InstantCommand(() -> {
-            shooter.AdjustHood(-4.8);
+            shooter.AdjustHood(-5);
         }));
         NamedCommands.registerCommand("Shoot", new InstantCommand(() -> {
+            
+            // shooter.SpinWheel(pidSettings.target_velocity);
             conveyor.Load();
             regulator.Load();
             intake.setCurrentLimitOfDeployMotor(20);
@@ -74,6 +83,7 @@ public class AutoContainer {
         NamedCommands.registerCommand("DeployAndStartIntake",
                 new WaitCommand(.2).andThen(
                         new InstantCommand(() -> {
+                            // shooter.SpinWheel(pidSettings.target_velocity);
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
@@ -82,6 +92,7 @@ public class AutoContainer {
         NamedCommands.registerCommand("DeployAndStartIntakeDelayed",
                 new WaitCommand(1.1).andThen(
                         new InstantCommand(() -> {
+                            // shooter.SpinWheel(pidSettings.target_velocity);
                             intake.setCurrentLimitOfDeployMotor(40);
                             intake.jostle();
                             intake.deploy();
@@ -89,7 +100,7 @@ public class AutoContainer {
                         })));
         NamedCommands.registerCommand("KillDeplayed", new WaitCommand(1.3).andThen(new InstantCommand(() -> {
             intake.stop();
-            // shooter.TrueStop();
+            shooter.TrueStop();
             SmartDashboard.putNumber("FlyWheel/TargetVelocity", 0);
             // shooter.targetHood = 0;
             // shooter.forceSync();
@@ -138,6 +149,12 @@ public class AutoContainer {
 
     public Command getAutonomousCommand() {
         var delay = SmartDashboard.getNumber("Auto Delay (Seconds)", 0);
-        return new WaitCommand(delay).andThen(autoChooser.getSelected().withTimeout(20));
+        return new WaitCommand(delay)
+        .andThen(new InstantCommand(() -> {
+            System.out.println("SETTINGS SPEED PID & STARTING");
+            shooter.UpdatePID(pidSettings);
+            // shooter.SpinWheel(pidSettings.target_velocity);
+        }))
+        .andThen(autoChooser.getSelected().withTimeout(20));
     }
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -68,8 +69,38 @@ public class RobotContainer {
         // configurTestBindings();
         configureOperatorPanel();
         configureAutonmousBindings();
+
+        if(!DriverStation.isFMSAttached()){
+            OC.ClimberStage1.onTrue(
+                         createTestFunction("Deploy Intake", () -> intake.deploy())
+                .andThen(createTestFunction("Intake", () -> intake.intake()))
+                .andThen(createTestFunction("Stop Intake", () -> intake.stop()))
+                .andThen(createTestFunction("Retract Intake", () -> intake.retract()))
+                .andThen(createTestFunction("Hood: 2.5", () -> shooter.AdjustHood(2.5)))
+                .andThen(createTestFunction("Hood: 5", () -> shooter.AdjustHood(5)))
+                .andThen(createTestFunction("Hood: 0", () -> shooter.AdjustHood(0)))
+                .andThen(CreateShooterOverride(Constants.SHOOTER_LOW_PID_SETTINGS))
+                .andThen(createTestFunction("Shooter Override Close", () -> shooter.SpinWheel(Constants.SHOOTER_LOW_PID_SETTINGS.target_velocity)))
+                .andThen(CreateShooterOverride(Constants.SHOOTER_MID_PID_SETTINGS))
+                .andThen(createTestFunction("Shooter Override Mid", () -> shooter.SpinWheel(Constants.SHOOTER_MID_PID_SETTINGS.target_velocity)))
+                .andThen(CreateShooterOverride(Constants.SHOOTER_HIGH_PID_SETTINGS))
+                .andThen(createTestFunction("Shooter Override Far", () -> shooter.SpinWheel(Constants.SHOOTER_HIGH_PID_SETTINGS.target_velocity)))
+                .andThen(createTestFunction("Shooter Stop", () -> shooter.TrueStop()))
+                .andThen(createTestFunction("Regulator Load", () -> regulator.Load()))
+                .andThen(createTestFunction("Regulator Stop", () -> regulator.Stop()))
+                .andThen(createTestFunction("Conveyor Load", () -> conveyor.Load()))
+                .andThen(createTestFunction("Conveyor Stop", () -> conveyor.Stop()))
+            );
+        }
         
         shooter.setDriveBase(driveBaseContainer); 
+    }
+
+    public Command createTestFunction(String message, Runnable action) {
+        return new InstantCommand(() -> {
+            SmartDashboard.putString("Test Message", message);
+            action.run();
+        }).andThen(new WaitCommand(2));
     }
 
     public void configureAutonmousBindings(){

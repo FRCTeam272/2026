@@ -23,6 +23,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.VisionSubsystem.VisionMeasurement;
 
@@ -39,7 +40,7 @@ public class VisionSubsystem extends SubsystemBase {
     // =========================================================================
     // TODO: Update these names to match the camera names in the PhotonVision UI
     private static final String kLeftCameraName = "FFF";
-    private static final String kRightCameraName = "overridename";
+    private static final String kRightCameraName = "9281";
 
     // TODO: Update these transforms! 0, 0, 0 is center of robot
     // X = Forward, Y = Left, Z = Up. Rotation is in Radians.
@@ -153,10 +154,14 @@ public class VisionSubsystem extends SubsystemBase {
         if (!result.hasTargets())
             return Optional.empty();
 
+        var tagsPresent = result.getMultiTagResult().isPresent();
+
+        SmartDashboard.putBoolean("Multi targets are present", tagsPresent == true);
         // Use multi-tag if available, fall back to single-tag
-        Optional<EstimatedRobotPose> poseEstimate = result.getMultiTagResult().isPresent()
+        Optional<EstimatedRobotPose> poseEstimate = tagsPresent
                 ? estimator.estimateCoprocMultiTagPose(result)
-                : estimator.update(result); // falls back to single-tag strategy
+                : Optional.empty(); // single tag is significantly less accurate, so we ignore it in this example. You can enable it if you want, but be aware of the potential for large errors.
+                // estimator.update(result); // falls back to single-tag strategy
 
         return poseEstimate.map(estimatedRobotPose -> {
             Pose2d estPose = estimatedRobotPose.estimatedPose.toPose2d();

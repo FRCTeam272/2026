@@ -11,13 +11,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Lehigh-Human-Player-Hairpin-Part1"
+                  "pathName": "Lehigh-Sweep-Part1-Mirrored"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "DeployAndStartIntake"
+                  "name": "DeployAndStartIntakeDelayed"
                 }
               }
             ]
@@ -36,15 +36,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Lehigh-Human-Player-Hairpin-Part2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Leihigh-Sweep-Part2-Mirrored"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutoFlywheel"
+            "name": "TrenchHood"
           }
         },
         {
@@ -60,12 +67,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Kill"
@@ -76,15 +77,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Lehigh-Human-Player-Hairpin-Part3"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "DeployAndStartIntake"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Lehigh-Doulbe-Sweep-Part3-Mirrored"
                 }
               }
             ]
@@ -103,21 +104,15 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Lehigh-Human-Player-Hairpin-Part4"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "AutoFlywheel"
+            "name": "TrenchHood"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.2
+            "pathName": "Lehigh-Double-Sweep-Part4-Mirrored"
           }
         },
         {

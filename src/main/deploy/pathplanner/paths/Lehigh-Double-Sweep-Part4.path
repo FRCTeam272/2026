@@ -36,11 +36,11 @@
         "y": 7.632079545454545
       },
       "prevControl": {
-        "x": 4.55091858808303,
+        "x": 4.550918588083029,
         "y": 7.632079545454545
       },
       "nextControl": {
-        "x": 3.724693181818181,
+        "x": 3.6525454545454545,
         "y": 7.632079545454545
       },
       "isLocked": false,
@@ -48,16 +48,16 @@
     },
     {
       "anchor": {
-        "x": 3.1165909090909087,
-        "y": 7.312568181818182
+        "x": 2.6630909090909087,
+        "y": 7.343488636363636
       },
       "prevControl": {
-        "x": 3.539170454545454,
-        "y": 7.415636363636365
+        "x": 3.085670454545454,
+        "y": 7.446556818181819
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SweepEnd"
     }
   ],
   "rotationTargets": [
@@ -83,7 +83,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -62.87869659584129
+    "rotation": -59.5344550805401
   },
   "reversed": false,
   "folder": "Lehigh-Double-Sweep-Depot",

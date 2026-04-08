@@ -310,8 +310,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             Pose2d visionRobotPoseMeters,
             double timestampSeconds,
             Matrix<N3, N1> visionMeasurementStdDevs) {
-        super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds),
-                visionMeasurementStdDevs);
+        super.addVisionMeasurement(
+            visionRobotPoseMeters, 
+            timestampSeconds,
+            // Utils.fpgaToCurrentTime(timestampSeconds),
+            visionMeasurementStdDevs);
     }
 
     /**
@@ -396,6 +399,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+        SmartDashboard.putBoolean("Vision/IsEnabled", usePhotonVision);
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
