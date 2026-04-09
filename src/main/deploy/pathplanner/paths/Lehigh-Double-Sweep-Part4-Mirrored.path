@@ -25,7 +25,7 @@
       },
       "nextControl": {
         "x": 5.353170454545454,
-        "y": 0.4508409090909087
+        "y": 0.4508409090909086
       },
       "isLocked": false,
       "linkedName": null
@@ -41,23 +41,23 @@
       },
       "nextControl": {
         "x": 3.6525454545454545,
-        "y": 0.4199204545454549
+        "y": 0.41992045454545496
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6630909090909087,
-        "y": 0.7085113636363634
+        "x": 2.9310681818181816,
+        "y": 0.6260568181818185
       },
       "prevControl": {
-        "x": 3.085670454545454,
-        "y": 0.6054431818181802
+        "x": 3.353647727272727,
+        "y": 0.5229886363636354
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HumanPlayerShot2"
     }
   ],
   "rotationTargets": [
@@ -83,7 +83,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.5344550805401
+    "rotation": 62.10272896905237
   },
   "reversed": false,
   "folder": "Lehigh-Double-Sweep-Depot",

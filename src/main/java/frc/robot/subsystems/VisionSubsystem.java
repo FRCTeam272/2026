@@ -48,16 +48,16 @@ public class VisionSubsystem extends SubsystemBase {
     // Example: Left camera is 0.2m forward, 0.2m LEFT (positive Y), facing 90 deg
     // to left
     private static final Transform3d kRobotToLeftCamera = new Transform3d(
-            new Translation3d(inchToMeter(11), inchToMeter(-11), inchToMeter(16)),
+            new Translation3d(inchToMeter(-11), inchToMeter(11), inchToMeter(16)),
             new Rotation3d(0, Math.toRadians(15), Math.toRadians(90)));
 
     // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 90 deg
     // to right
     private static final Transform3d kRobotToRightCamera = new Transform3d(
-            new Translation3d(
-                inchToMeter(-11), inchToMeter(-11), inchToMeter(16)
-            ),
-            new Rotation3d(0, Math.toRadians(-90), Math.toRadians(-15)));
+        new Translation3d(
+            inchToMeter(-14), inchToMeter(50), inchToMeter(17)
+        ),
+        new Rotation3d(0, Math.toRadians(-15), Math.toRadians(-90)));
     // =========================================================================
 
     private PhotonCamera m_leftCamera;
@@ -140,7 +140,7 @@ public class VisionSubsystem extends SubsystemBase {
     public List<VisionMeasurement> getEstimatedGlobalPoses() {
         List<VisionMeasurement> measurements = new ArrayList<>();
 
-        processCamera(m_leftEstimator, m_leftCamera).ifPresent(measurements::add);
+        // processCamera(m_leftEstimator, m_leftCamera).ifPresent(measurements::add);
         processCamera(m_rightEstimator, m_rightCamera).ifPresent(measurements::add);
 
         return measurements;
@@ -151,12 +151,16 @@ public class VisionSubsystem extends SubsystemBase {
             return Optional.empty();
 
         PhotonPipelineResult result = camera.getLatestResult();
+        SmartDashboard.putBoolean("Vision/CameraConnected", camera.isConnected());
+        SmartDashboard.putNumber("Vision/ResultTimestamp", result.getTimestampSeconds());
+        SmartDashboard.putBoolean("Vision/ResultHasTargets", result.hasTargets());
+        
         if (!result.hasTargets())
             return Optional.empty();
 
         var tagsPresent = result.getMultiTagResult().isPresent();
 
-        SmartDashboard.putBoolean("Multi targets are present", tagsPresent == true);
+        SmartDashboard.putBoolean("Vision/Multi targets are present", tagsPresent == true);
         // Use multi-tag if available, fall back to single-tag
         Optional<EstimatedRobotPose> poseEstimate = tagsPresent
                 ? estimator.estimateCoprocMultiTagPose(result)

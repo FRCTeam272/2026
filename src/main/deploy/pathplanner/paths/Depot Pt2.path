@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6633295454545454,
-        "y": 6.745693181818182
+        "x": 1.1170681818181818,
+        "y": 6.828147727272727
       },
       "isLocked": false,
       "linkedName": "Lehigh-Depot-PT1"
@@ -20,24 +20,24 @@
         "y": 5.405806818181818
       },
       "prevControl": {
-        "x": 2.2405113636363634,
-        "y": 5.405806818181818
+        "x": 1.4984204545454543,
+        "y": 5.498568181818182
       },
       "nextControl": {
-        "x": 3.946409090909089,
-        "y": 5.405806818181818
+        "x": 3.9458431597713055,
+        "y": 5.382024243474094
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.992193181818181,
-        "y": 5.395499999999999
+        "x": 6.373545454545454,
+        "y": 5.405806818181818
       },
       "prevControl": {
-        "x": 5.742193181818181,
-        "y": 5.395499999999999
+        "x": 6.123545454545454,
+        "y": 5.405806818181818
       },
       "nextControl": null,
       "isLocked": false,
@@ -54,7 +54,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,

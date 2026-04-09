@@ -310,11 +310,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             Pose2d visionRobotPoseMeters,
             double timestampSeconds,
             Matrix<N3, N1> visionMeasurementStdDevs) {
+
         super.addVisionMeasurement(
             visionRobotPoseMeters, 
-            timestampSeconds,
-            // Utils.fpgaToCurrentTime(timestampSeconds),
-            visionMeasurementStdDevs);
+            // timestampSeconds,
+            Utils.fpgaToCurrentTime(timestampSeconds),
+            visionMeasurementStdDevs
+        );
     }
 
     /**
@@ -411,6 +413,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             });
         }
         
+        m_field.setRobotPose(this.getState().Pose);
+        SmartDashboard.putData("Field", m_field);
+    
+        if(DriverStation.isAutonomousEnabled()) return;
+
         // Debugging vision updates
         // Toggle comment to disable / enable it
         var visionMeasurements = m_visionSubsystem.getEstimatedGlobalPoses();
@@ -425,9 +432,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                     SmartDashboard.putNumber("Vision/Stamps/Timestamp", measurement.timestamp());
                 }
                 if(usePhotonVision){
-                    super.addVisionMeasurement(
+                    this.addVisionMeasurement(
                         measurement.pose(),
-                        Utils.fpgaToCurrentTime(measurement.timestamp()),
+                        measurement.timestamp(),
+                        // Utils.fpgaToCurrentTime(),
                         measurement.stdDevs()
                     );
                 }                
@@ -436,8 +444,5 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         } else {
             SmartDashboard.putBoolean("Vision/HasTargets", false);
         }
-
-        m_field.setRobotPose(this.getState().Pose);
-        SmartDashboard.putData("Field", m_field);
     }
 }
