@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.utils.PIDSettings;
+import frc.lib.utils.ShooterProfile;
 import frc.lib.utils.SparkMAXContainer;
 import frc.lib.utils.TalonFxContainer;
 import frc.lib.utils.TrimPot;
@@ -71,7 +72,7 @@ public class Shooter extends SubsystemBase {
 
       motor.setBreakMode(false);
       motor.configurator.Audio.BeepOnConfig = false;
-      motor.motor.getVelocity().setUpdateFrequency(20);
+      motor.motor.getVelocity().setUpdateFrequency(5[]\);
       motor.applyConfig();
     }
 
@@ -236,27 +237,15 @@ public class Shooter extends SubsystemBase {
     double distance = Math.abs(getDistanceFromTarget());
     SmartDashboard.putNumber("Shooter/Distance", distance);
     var stage = 0;
-    PIDSettings settings;
-    // reference that to the table
-    if (distance <= 24) {
-      this.targetVelocity = 3600;
-      this.hoodTarget = (distance * .276) - 2.70; // multiple by negitive one cause its in the negitive space
-      settings = Constants.SHOOTER_LOW_PID_SETTINGS;
-    } else if (distance <= 70) {
-      this.targetVelocity = 4150;
-      this.hoodTarget = (distance * .088) - 0.875; // multiple by negitive one cause its in the negitive space
-      settings = Constants.SHOOTER_4150_PID_SETTINGS;
-      stage = 1;
-    } else if (distance <= 110) {
-      this.targetVelocity = 4700;
-      this.hoodTarget = (distance * .079) - 3.55;
-      settings = Constants.SHOOTER_4700_PID_SETTINGS;
-      stage = 2;
-    } else {
-      this.targetVelocity = 5500;
-      this.hoodTarget = (distance * .087) - 5.05;
-      settings = Constants.SHOOTER_5500_PID_SETTINGS;
-      stage = 3;
+    PIDSettings settings = Constants.SHOOTER_MID_PID_SETTINGS;
+    
+    for (ShooterProfile profile : Constants.SHOOTER_PROFILES) {
+      if (profile.isInRange((int) distance)) {
+        settings = profile.settings;
+        hoodTarget = profile.calculateHood.apply(distance);
+        break;
+      }
+      stage++;
     }
 
     if (hoodTarget > 0) {
@@ -336,9 +325,6 @@ public class Shooter extends SubsystemBase {
         lastV = v;
         lastA = a;
       }
-
-      flywheel.getPID("Shooter/PID_Actual/");
-      flywheel.reportMotor("ShooterVals");
 
       flywheel.getPID("Shooter/PID_Actual/");
       flywheel.reportMotor("ShooterVals");

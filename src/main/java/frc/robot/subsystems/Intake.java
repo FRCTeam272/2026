@@ -43,7 +43,7 @@ public class Intake extends SubsystemBase {
       rollerMotor, 
       rollerFollowerMotor
     }) {
-      i.motor.getVelocity().setUpdateFrequency(20);
+      i.motor.getVelocity().setUpdateFrequency(5);
       i.assignPIDValues(0.01, 0, 0);
       i.setBreakMode(false);
     }

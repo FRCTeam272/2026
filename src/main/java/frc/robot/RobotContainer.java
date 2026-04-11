@@ -110,15 +110,15 @@ public class RobotContainer {
                                 .andThen(new InstantCommand(() -> intake.setCurrentLimitOfDeployMotor(40))))
                 .onTrue(edu.wpi.first.wpilibj2.command.Commands.print("Intake Impact Detected! Retracting..."));
 
-        new Trigger(driveBaseContainer.drivetrain.m_visionSubsystem::didReseedRecently)
-                .onTrue(
-                        new InstantCommand(() -> {
-                            DC.getHID().setRumble(RumbleType.kBothRumble, 0.3);
-                        }))
-                .onFalse(
-                        new InstantCommand(() -> {
-                            DC.getHID().setRumble(RumbleType.kBothRumble, 0);
-                        }));
+        // new Trigger(driveBaseContainer.drivetrain.m_visionSubsystem::didReseedRecently)
+        //         .onTrue(
+        //                 new InstantCommand(() -> {
+        //                     DC.getHID().setRumble(RumbleType.kBothRumble, 0.3);
+        //                 }))
+        //         .onFalse(
+        //                 new InstantCommand(() -> {
+        //                     DC.getHID().setRumble(RumbleType.kBothRumble, 0);
+        //                 }));
     }
 
     public void configureOperatorPanel() {
@@ -142,7 +142,7 @@ public class RobotContainer {
         OC.HoodTrimPotUp.onTrue(TrimPotCommands.AdjustShooterHoodTrim(shooter, .5));
         OC.HoodTrimPotDown.onTrue(TrimPotCommands.AdjustShooterHoodTrim(shooter, -.50));
         OC.ShooterTrimPotUp.onTrue(TrimPotCommands.AdjustShooterVelocityTrim(shooter, 50));
-        OC.ShooterTrimPotUp.onTrue(TrimPotCommands.AdjustShooterVelocityTrim(shooter, -50));
+        OC.ShooterTrimPotDown.onTrue(TrimPotCommands.AdjustShooterVelocityTrim(shooter, -50));
         OC.ForceCloseIntake.onTrue(new InstantCommand(() -> {
             intake.setCurrentLimitOfDeployMotor(20);
             intake.retract();

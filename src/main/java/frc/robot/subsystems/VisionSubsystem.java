@@ -165,15 +165,11 @@ public class VisionSubsystem extends SubsystemBase {
 
     private Optional<VisionMeasurement> processCamera(PhotonPoseEstimator estimator, PhotonCamera camera) {
         if (estimator == null || camera == null){
-            fail_count += 1;
+            
             return Optional.empty();
         }
 
-        if(fail_count > 500){
-            DriverStation.reportError("Vision processing failed too many times", true);
-            return Optional.empty();
-        }
-
+        
         PhotonPipelineResult result = camera.getLatestResult();
         SmartDashboard.putBoolean("Vision/CameraConnected", camera.isConnected());
         SmartDashboard.putNumber("Vision/ResultTimestamp", result.getTimestampSeconds());
@@ -195,7 +191,6 @@ public class VisionSubsystem extends SubsystemBase {
 
         if (poseEstimate.isPresent()) {
             double now = Timer.getFPGATimestamp();
-            fail_count = 0;
             if (now - m_lastReseedTimestamp >= m_reseedCooldownSeconds) {
                 m_lastReseedTimestamp = now;
             }
