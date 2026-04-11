@@ -23,11 +23,26 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.VisionSubsystem.VisionMeasurement;
 
 public class VisionSubsystem extends SubsystemBase {
+
+    // Add these fields
+    private double m_lastReseedTimestamp = 0;
+    private double m_reseedCooldownSeconds = 3; // tunable
+
+    public void setReseedCooldown(double seconds) {
+        m_reseedCooldownSeconds = seconds;
+    }
+
+    public boolean didReseedRecently() {
+        return (Timer.getFPGATimestamp() - m_lastReseedTimestamp) < 0.1; // within last 100ms
+    }
+
+    int fail_count = 0;
 
     /**
      * A simple record to pass vision data back to the drivetrain.
@@ -39,7 +54,7 @@ public class VisionSubsystem extends SubsystemBase {
     // CONSTANTS & CONFIG
     // =========================================================================
     // TODO: Update these names to match the camera names in the PhotonVision UI
-    private static final String kLeftCameraName = "FFF";
+    private static final String kBackCameraName = "9782";
     private static final String kRightCameraName = "9281";
 
     // TODO: Update these transforms! 0, 0, 0 is center of robot
@@ -47,22 +62,26 @@ public class VisionSubsystem extends SubsystemBase {
 
     // Example: Left camera is 0.2m forward, 0.2m LEFT (positive Y), facing 90 deg
     // to left
-    private static final Transform3d kRobotToLeftCamera = new Transform3d(
-            new Translation3d(inchToMeter(11), inchToMeter(-11), inchToMeter(16)),
-            new Rotation3d(0, Math.toRadians(15), Math.toRadians(90)));
+    private static final Transform3d kRobotToBackCamera = new Transform3d(
+            new Translation3d(inchToMeter(55), inchToMeter(-10), inchToMeter(10.25)),
+            new Rotation3d(Math.toRadians(0), Math.toRadians(-15), Math.toRadians(180)));
 
     // Example: Right camera is 0.2m forward, 0.2m RIGHT (negative Y), facing 90 deg
     // to right
     private static final Transform3d kRobotToRightCamera = new Transform3d(
             new Translation3d(
-                inchToMeter(-11), inchToMeter(-11), inchToMeter(16)
-            ),
-            new Rotation3d(0, Math.toRadians(-90), Math.toRadians(-15)));
+                    inchToMeter(-3), inchToMeter(65), inchToMeter(17)),
+            new Rotation3d(0, Math.toRadians(-15), Math.toRadians(-90)));
+    // Old and tested right setup
+    // new Translation3d(
+    //         inchToMeter(-14), inchToMeter(50), inchToMeter(17)
+    //     ),
+    //     new Rotation3d(0, Math.toRadians(-15), Math.toRadians(-90)));
     // =========================================================================
 
-    private PhotonCamera m_leftCamera;
+    private PhotonCamera m_backCamera;
     private PhotonCamera m_rightCamera;
-    private PhotonPoseEstimator m_leftEstimator;
+    private PhotonPoseEstimator m_backEstimator;
     private PhotonPoseEstimator m_rightEstimator;
 
     private static double inchToMeter(double inches) {
@@ -76,23 +95,21 @@ public class VisionSubsystem extends SubsystemBase {
             AprilTagFieldLayout fieldLayout = AprilTagFieldLayout.loadField(
                     AprilTagFields.k2026RebuiltWelded);
 
-            // --- Left Camera Setup ---
-                // m_leftCamera = new PhotonCamera(kLeftCameraName);
-                // m_leftEstimator = new PhotonPoseEstimator(
-                //         fieldLayout,
-                //         PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-                //         kRobotToLeftCamera);
-
             // --- Right Camera Setup ---
             m_rightCamera = new PhotonCamera(kRightCameraName);
             m_rightEstimator = new PhotonPoseEstimator(
                     fieldLayout,
                     PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
                     kRobotToRightCamera);
+            m_backCamera = new PhotonCamera(kBackCameraName);
+            m_backEstimator = new PhotonPoseEstimator(
+                    fieldLayout,
+                    PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+                    kRobotToBackCamera);
 
         } catch (Exception e) {
             DriverStation.reportError("Failed to load AprilTagFieldLayout: " + e.getMessage(), true);
-            m_leftEstimator = null;
+            m_backEstimator = null;
             m_rightEstimator = null;
         }
     }
@@ -140,28 +157,51 @@ public class VisionSubsystem extends SubsystemBase {
     public List<VisionMeasurement> getEstimatedGlobalPoses() {
         List<VisionMeasurement> measurements = new ArrayList<>();
 
-        processCamera(m_leftEstimator, m_leftCamera).ifPresent(measurements::add);
+        processCamera(m_backEstimator, m_backCamera).ifPresent(measurements::add);
         processCamera(m_rightEstimator, m_rightCamera).ifPresent(measurements::add);
 
         return measurements;
     }
 
     private Optional<VisionMeasurement> processCamera(PhotonPoseEstimator estimator, PhotonCamera camera) {
-        if (estimator == null || camera == null)
+        if (estimator == null || camera == null){
+            fail_count += 1;
             return Optional.empty();
+        }
+
+        if(fail_count > 500){
+            DriverStation.reportError("Vision processing failed too many times", true);
+            return Optional.empty();
+        }
 
         PhotonPipelineResult result = camera.getLatestResult();
+        SmartDashboard.putBoolean("Vision/CameraConnected", camera.isConnected());
+        SmartDashboard.putNumber("Vision/ResultTimestamp", result.getTimestampSeconds());
+        SmartDashboard.putBoolean("Vision/ResultHasTargets", result.hasTargets());
+
         if (!result.hasTargets())
             return Optional.empty();
 
         var tagsPresent = result.getMultiTagResult().isPresent();
 
-        SmartDashboard.putBoolean("Multi targets are present", tagsPresent == true);
+        SmartDashboard.putBoolean("Vision/Multi targets are present", tagsPresent == true);
         // Use multi-tag if available, fall back to single-tag
         Optional<EstimatedRobotPose> poseEstimate = tagsPresent
                 ? estimator.estimateCoprocMultiTagPose(result)
-                : Optional.empty(); // single tag is significantly less accurate, so we ignore it in this example. You can enable it if you want, but be aware of the potential for large errors.
-                // estimator.update(result); // falls back to single-tag strategy
+                : Optional.empty(); // single tag is significantly less accurate, so we ignore it in this example.
+                                    // You can enable it if you want, but be aware of the potential for large
+                                    // errors.
+        // estimator.update(result); // falls back to single-tag strategy
+
+        if (poseEstimate.isPresent()) {
+            double now = Timer.getFPGATimestamp();
+            fail_count = 0;
+            if (now - m_lastReseedTimestamp >= m_reseedCooldownSeconds) {
+                m_lastReseedTimestamp = now;
+            }
+        } else {
+            fail_count += 1;
+        }
 
         return poseEstimate.map(estimatedRobotPose -> {
             Pose2d estPose = estimatedRobotPose.estimatedPose.toPose2d();

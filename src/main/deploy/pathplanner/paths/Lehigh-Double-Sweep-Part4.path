@@ -48,16 +48,16 @@
     },
     {
       "anchor": {
-        "x": 2.6630909090909087,
-        "y": 7.343488636363636
+        "x": 2.9310681818181816,
+        "y": 7.425943181818181
       },
       "prevControl": {
-        "x": 3.085670454545454,
-        "y": 7.446556818181819
+        "x": 3.353647727272727,
+        "y": 7.529011363636364
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SweepEnd"
+      "linkedName": "Lehigh-Depot-DoubleSweep-PT2"
     }
   ],
   "rotationTargets": [
@@ -83,7 +83,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.5344550805401
+    "rotation": -62.10272896905237
   },
   "reversed": false,
   "folder": "Lehigh-Double-Sweep-Depot",

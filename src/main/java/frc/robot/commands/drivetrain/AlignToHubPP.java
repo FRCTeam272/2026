@@ -105,11 +105,12 @@ public class AlignToHubPP extends Command {
             rotationSpeed = 0;
         }
 
+        // JAKE I KNOW THIS LOOKS WRONG DON"T TOUCH IT DUMMY
         double leftX = leftXSupplier.getAsDouble();
         double leftY = leftYSupplier.getAsDouble();
 
         // Drive with supplied X and Y velocities, and calculated rotation
-        m_drivetrain.drive(leftX, leftY, rotationSpeed, true);
+        m_drivetrain.drive(-leftY, -leftX, rotationSpeed, true);
     }
 
     @Override
