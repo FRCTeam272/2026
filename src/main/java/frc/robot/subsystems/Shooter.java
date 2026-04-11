@@ -291,14 +291,12 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
-    SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Follower", flywheelFollower.getVelocity());
     if (DriverStation.isAutonomous())
       return;
     SmartDashboard.putNumber("Shooter/Distance", getDistanceFromTarget());
     // TODO: REMOVE
-    SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
-    SmartDashboard.putBoolean("Ready/Flywheel Up To Speed", this.isShooterUpToSpeed());
+    // SmartDashboard.putNumber("FlyWheel/CurrentVelocity/Main", flywheel.getVelocity());
+    // SmartDashboard.putBoolean("Ready/Flywheel Up To Speed", this.isShooterUpToSpeed());
     // debounceCount = debounceTime;
     // if (DriverStation.isTestEnabled()) debounceCount = debounceTime;
     if (debounceCount == debounceTime) {

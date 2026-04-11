@@ -52,7 +52,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective = false;
 
-    private VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+    public VisionSubsystem m_visionSubsystem = new VisionSubsystem();
     private final Field2d m_field = new Field2d();
     public boolean usePhotonVision = true;
 
@@ -417,6 +417,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putData("Field", m_field);
     
         if(DriverStation.isAutonomousEnabled()) return;
+        if(!usePhotonVision) return;
 
         // Debugging vision updates
         // Toggle comment to disable / enable it
@@ -440,7 +441,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                     );
                 }                
                 
-            });
+            }); 
         } else {
             SmartDashboard.putBoolean("Vision/HasTargets", false);
         }
